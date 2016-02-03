@@ -1,0 +1,6 @@
+[submodule "SARIT-corpus"]
+	path = SARIT-corpus
+	url = git@github.com:paddymcall/SARIT-corpus.git
+[submodule "Stylesheets"]
+	path = Stylesheets
+	url = git@github.com:paddymcall/Stylesheets.git
