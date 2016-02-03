@@ -13,3 +13,18 @@
 4) The LaTeX files *have* to be compiled with XeLaTeX from the TeXLive
    2015 version.
 
+
+** Improving the TeX output
+
+Please file an issue if you want to improve something.
+
+To make it easier to track and solve the problem, try and give
+information on the following points:
+
+1) Describe the problem, maybe add (a page of) the pdf showing the problem.
+2) where in the tex file does the problem occur/start?
+3) What does the TeX logfile say?
+4) What part of the XML file is the problem coming from?
+5) Where in the XSLT stylesheet does the transformation happen?
+
+The more infos you give, the better.
