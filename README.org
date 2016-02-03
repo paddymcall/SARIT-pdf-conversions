@@ -1,3 +1,15 @@
 #+TITLE: Conversions from TEI XML --> LaTeX --> PDF
 
 - clone with submodules: ~git clone --recursive~
+
+
+
+* Basic ideas
+
+1) Track *.tex files (and compilation logs in *.log) in file:./TeX/ subdirectory.
+2) Keep scripts in file:./bin/ (they're supposed to give you an idea).
+3) The LaTeX files are produced by converting the XML files in
+   file:./SARIT-corpus/ with the XSLT in [[file:Stylesheets/profiles/sarit/latex/to.xsl]]
+4) The LaTeX files *have* to be compiled with XeLaTeX from the TeXLive
+   2015 version.
+
