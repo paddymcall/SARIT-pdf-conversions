@@ -1,0 +1,3 @@
+#+TITLE: Conversions from TEI XML --> LaTeX --> PDF
+
+- clone with submodules: ~git clone --recursive~
