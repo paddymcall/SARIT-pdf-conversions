@@ -1,6 +1,7 @@
 #+TITLE: Conversions from TEI XML --> LaTeX --> PDF
 
 - clone with submodules: ~git clone --recursive~
+- update all submodules: ~git submodule foreach git pull~
 
 
 
