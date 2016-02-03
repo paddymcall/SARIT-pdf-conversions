@@ -3,16 +3,17 @@
 - clone with submodules: ~git clone --recursive~
 - update all submodules: ~git submodule foreach git pull~
 
-
-
 * Basic ideas
 
-1) Track *.tex files (and compilation logs in *.log) in file:./TeX/ subdirectory.
-2) Keep scripts in file:./bin/ (they're supposed to give you an idea).
-3) The LaTeX files are produced by converting the XML files in
-   file:./SARIT-corpus/ with the XSLT in [[file:Stylesheets/profiles/sarit/latex/to.xsl]]
-4) The LaTeX files *have* to be compiled with XeLaTeX from the TeXLive
-   2015 version.
+1) Track *.tex files in the file:./TeX/ subdirectory.
+2) The LaTeX files are produced by converting the XML files in
+   file:./SARIT-corpus/ with the XSLT in
+   [[file:Stylesheets/profiles/sarit/latex/to.xsl]]
+3) The LaTeX files *have* to be compiled with XeLaTeX from the
+   *TeXLive 2015* version, latest version.
+4) Keep and use scripts in file:./bin/ (they're supposed to give you
+   an idea, we won't develop any fancy programs; e.g.,
+   file:./bin/convert_sarit_to_tex.sh).
 
 
 ** Improving the TeX output
@@ -23,9 +24,10 @@ To make it easier to track and solve the problem, try and give
 information on the following points:
 
 1) Describe the problem, maybe add (a page of) the pdf showing the problem.
-2) where in the tex file does the problem occur/start?
-3) What does the TeX logfile say?
-4) What part of the XML file is the problem coming from?
-5) Where in the XSLT stylesheet does the transformation happen?
+2) Where in the tex file does the problem occur?
+3) What part of the XML file is the problem coming from?
+4) Where in the XSLT stylesheet does the transformation happen?
+5) What does the TeX logfile say, if anything?
+6) What makes the problem go away?
 
 The more infos you give, the better.
