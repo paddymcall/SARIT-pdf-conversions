@@ -116,26 +116,27 @@
 	   \makeevenfoot{ruled}{\rmlatinfont\thepage}{}{{\tiny\rmlatinfont \textit{Compiled: \today}}}
 	   
 	 
-	 \usepackage{eledmac,eledpar}
+\usepackage{reledmac}
 	 
-       % simplify what ledmac does with fonts, because it breaks. From the documentation of ledmac:
-       % The notes are actually given seven parameters: the page, line, and sub-line num-
-       % ber for the start of the lemma; the same three numbers for the end of the lemma;
-       % and the font specifier for the lemma. 
-       \makeatletter
-       \def\select@lemmafont#1|#2|#3|#4|#5|#6|#7|%
-       {}
-       \makeatother
-       \setlength{\stanzaindentbase}{20pt}
-     \setstanzaindents{8,2,2,2,2,2,2,2,2,2,2,}
-     % \setstanzapenalties{1,5000,10500}
-     \lineation{page}
-     % \linenummargin{inner}
-     \linenumberstyle{arabic}
-     \addtolength{\skip\Afootins}{1.5mm}
-     \renewcommand{\notenumfont}{\bfseries\footnotesize}
-     \sidenotemargin{outer}
-     \linenummargin{inner}
+% simplify what ledmac does with fonts, because it breaks. From the documentation of ledmac:
+% The notes are actually given seven parameters: the page, line, and sub-line num-
+% ber for the start of the lemma; the same three numbers for the end of the lemma;
+% and the font specifier for the lemma. 
+\makeatletter
+\def\select@lemmafont#1|#2|#3|#4|#5|#6|#7|%
+{}
+\makeatother
+\setlength{\stanzaindentbase}{20pt}
+\setstanzaindents{8,2,2,2,2,2,2,2,2,2,2,}
+% \setstanzapenalties{1,5000,10500}
+\lineation{page}
+% \linenummargin{inner}
+\linenumberstyle{arabic}
+\addtolength{\skip\Afootins}{1.5mm}
+% \renewcommand{\notenumfont}{\bfseries\footnotesize}
+\Xnotenumfont{\bfseries\footnotesize}
+\sidenotemargin{outer}
+\linenummargin{inner}
        
        \usepackage[pdftitle={Dharmakīrti's Pramāṇavārttika with a commentary by Manorathanandin},
        pdfauthor={SARIT: Search and Retrieval of Indic Texts. DFG/NEH Project (NEH-No. HG5004113), 2013-2016 }]{hyperref}
