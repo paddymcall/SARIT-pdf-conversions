@@ -51,10 +51,10 @@
 	  
 	      % author(s)
 	    {\Large Dharmakī\-rti and Manorathanandin}\\[0.167\textheight]
-	      % pretitle
-	    {\bfseries No pretitle}\\[\baselineskip]
+	    % maintitle
 	    {\Huge Pramā\-ṇavā\-rttika}\\[\baselineskip]
-	    {\small \begin{docTitle}  \begin{titlePart} Dharmakī\-rti's Pramā\-ṇavā\-rttika with a commentary by Manorathanandin\end{titlePart} \end{docTitle}}\\[\baselineskip]
+	    % titlesubtitle
+	    {\small  — Pramā\-ṇavā\-rttikavṛtti}\\[\baselineskip]
 	    {\Large SARIT}\\\vspace*{\baselineskip}\plogo\par
 	  \vspace*{3\baselineskip}
 	  \endgroup
@@ -147,16 +147,20 @@
        % \newcommand{\cref}{\href}
      
 \begin{document}
-\let\tabcellsep&
-	 \cleardoublepage
-	 \tableofcontents
-	 % \listoffigures
-	 % \listoftables
-	 \cleardoublepage
-         
+    
+     \makeCustomTitle
+     \let\tabcellsep&
 	\frontmatter
-      \begin{english}\begin{docTitle}  \begin{titlePart} Dharmakī\-rti's Pramā\-ṇavā\-rttika with a commentary by Manorathanandin\end{titlePart} \end{docTitle} \begin{docAuthor} Dharmakī\-rti\end{docAuthor} \begin{docAuthor} Manorathanandin\end{docAuthor}
-\chapter*{Index of verses in the Pramā\-ṇavā\-rttika}\begin{itemize}
+	\tableofcontents
+	% \listoffigures
+	% \listoftables
+	\cleardoublepage
+         \begin{english}
+      \chapter[Title Page]{Title Page}
+    \begin{docTitle}  \begin{titlePart} Dharmakī\-rti's Pramā\-ṇavā\-rttika with a commentary by Manorathanandin\end{titlePart} \end{docTitle} \begin{docAuthor} Dharmakī\-rti\end{docAuthor} \begin{docAuthor} Manorathanandin\end{docAuthor}
+      \cleardoublepage
+    
+\chapter[{Index of verses in the Pramā\-ṇavā\-rttika}]{Index of verses in the Pramā\-ṇavā\-rttika}\begin{itemize}
 \item \cref{div_pvv.1.1}
 \item \cref{div_pvv.1.2}
 \item \cref{div_pvv.1.3}
