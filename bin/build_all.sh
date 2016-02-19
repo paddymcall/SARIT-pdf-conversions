@@ -35,6 +35,18 @@ echo "Logging to ${LOGFILE}"
 xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  ${CORPUS} | \
     parallel --bar --jobs 0.5% $CONVERSIONSCRIPT {} ${OUTDIR} 1> ${LOGFILE} 2>&1
 
+
+# cd ${OUTDIR}
+
+# for i in `ls *tex`
+# do
+#     xelatex -shell-escape -no-pdf -etex -interaction=nonstopmode ${i}
+#     biber --nodieonerror --onlylog `basename ${i} .tex`
+#     xelatex -shell-escape -no-pdf -etex -interaction=nonstopmode ${i}
+#     biber --nodieonerror --onlylog `basename ${i} .tex`
+#     xelatex -shell-escape -etex -interaction=nonstopmode ${i}
+# done
+
 # or this, but loses logs:
 # parallel --bar --jobs 0.5% $CONVERSIONSCRIPT {} ${OUTDIR} 2> >(zenity --progress --auto-kill)
 

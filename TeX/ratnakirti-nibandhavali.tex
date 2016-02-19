@@ -93,8 +93,7 @@
        %% biblatex stuff start
 	 \usepackage[backend=biber,citestyle=authoryear,bibstyle=authoryear]{biblatex}
 	 
-	       \addbibresource{sarit.bib}
-	     
+		 \addbibresource[location=remote]{https://raw.githubusercontent.com/paddymcall/Stylesheets/HEAD/profiles/sarit/latex/bib/sarit.bib}
 	 \renewcommand*{\citesetup}{%
 	 \rmlatinfont
 	 \biburlsetup
@@ -149,13 +148,7 @@
 \begin{document}
     
      \makeCustomTitle
-     \let\tabcellsep&
-	\frontmatter
-	\tableofcontents
-	% \listoffigures
-	% \listoftables
-	\cleardoublepage
-        
+     \let\tabcellsep& 
 	  
 	% new div opening: depth here is 0
 	
