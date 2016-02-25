@@ -63,13 +63,8 @@ A *very* incomplete list:
 
 *** See also
 
-**** https://bhusunda.wordpress.com/2015/11/09/comparison-of-devanagari-fonts-on-os-x-using-the-807-documented-ligatures-of-classical-sanskrit-according-to-the-research-of-ulrich-stiehl/
-
-***** links to: https://spideroak.com/share/MJUHK43VNZSGC/stuff/Users/det/SpiderOak%20Hive/SpiderShare/Sanskrit6.numbers.pdf
-
-
-**** http://luc.devroye.org/indic.html
-
-**** http://www.sanskritweb.net/cakram/
-
-**** http://www.sanskritweb.net/fonts/index.html
+1) https://bhusunda.wordpress.com/2015/11/09/comparison-of-devanagari-fonts-on-os-x-using-the-807-documented-ligatures-of-classical-sanskrit-according-to-the-research-of-ulrich-stiehl/
+   1) links to: https://spideroak.com/share/MJUHK43VNZSGC/stuff/Users/det/SpiderOak%20Hive/SpiderShare/Sanskrit6.numbers.pdf
+2) http://luc.devroye.org/indic.html
+3) http://www.sanskritweb.net/cakram/
+4) http://www.sanskritweb.net/fonts/index.html
