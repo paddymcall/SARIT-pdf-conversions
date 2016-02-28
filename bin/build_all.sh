@@ -6,6 +6,7 @@ set -o nounset # don't allow uninitalized vars
 
 BASEDIR=$(realpath $(dirname ${0})"/../")
 CONVERSIONSCRIPT=$(realpath ${BASEDIR}"/bin/convert_sarit_to_tex.sh")
+COMPILETEXSCRIPT=$(realpath ${BASEDIR}"/bin/compile_xetex.sh")
 
 CORPUS=${1:-}
 
@@ -36,7 +37,10 @@ xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href
     parallel --bar --jobs 0.5% $CONVERSIONSCRIPT {} ${OUTDIR} 1> ${LOGFILE} 2>&1
 
 
-# cd ${OUTDIR}
+cd ${OUTDIR}
+
+ls *tex | parallel --bar --jobs 0.5% ${COMPILETEXSCRIPT} {} 
+
 
 # for i in `ls *tex`
 # do
