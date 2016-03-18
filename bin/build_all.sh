@@ -34,12 +34,12 @@ cd $XDIR
 echo "Logging to ${LOGFILE}"
 
 xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  ${CORPUS} | \
-    parallel --bar --jobs 0.5% $CONVERSIONSCRIPT {} ${OUTDIR} 1> ${LOGFILE} 2>&1
+    parallel --bar --jobs -1 $CONVERSIONSCRIPT {} ${OUTDIR} 1> ${LOGFILE} 2>&1
 
 
 cd ${OUTDIR}
 
-ls *tex | parallel --bar --jobs 0.5% ${COMPILETEXSCRIPT} {} 
+ls *tex | parallel --bar --jobs -1 ${COMPILETEXSCRIPT} {} 
 
 
 # for i in `ls *tex`
