@@ -1,0 +1,845 @@
+\documentclass[article,12pt,a4paper]{memoir}
+  \usepackage{euler}
+  \usepackage{polyglossia}
+  \PolyglossiaSetup{sanskrit}{
+  hyphenmins={2,3},% default is {1,3}
+  }
+  \setdefaultlanguage{sanskrit}
+  % english should be available, notes and stuff
+  \setotherlanguage{english}
+  \setotherlanguage[numerals=arabic]{tibetan}
+  \usepackage{fontspec}
+  \catcode`⃥=\active \def⃥{\textbackslash}
+  \catcode`❴=\active \def❴{\{}
+  \catcode`〔=\active \def〔{{[}}% translate 〔OPENING TORTOISE SHELL BRACKET
+  \catcode`〕=\active \def〕{{]}}% translate 〕CLOSING TORTOISE SHELL BRACKET
+  \catcode`❴=\active \def❴{\{}
+  \catcode`❵=\active \def❵{\}}
+  \catcode` =\active \def {\,}
+  %% show a lot of tolerance
+  \tolerance=9000
+  \def\textJapanese{\fontspec{Kochi Mincho}}
+  \def\textChinese{\fontspec{HAN NOM A}}
+  \def\textKorean{\fontspec{Baekmuk Gulim} }
+  % make sure English font is there
+  \newfontfamily\englishfont[Mapping=tex-text]{TeX Gyre Schola}
+    % set up a devanagari font
+  \newfontfamily\devanagarifont[Script=Devanagari,Mapping=devanagarinumerals]{Chandas}
+	\newfontfamily\rmlatinfont[Mapping=tex-text]{TeX Gyre Pagella}
+	\newfontfamily\tibetanfont[Script=Tibetan,Scale=1.2]{Tibetan Machine Uni}
+  \newcommand\bo\tibetanfont
+  
+    \defaultfontfeatures{Scale=MatchLowercase,Mapping=tex-text}
+	\setmainfont{Chandas}
+    \setsansfont{TeX Gyre Bonum}
+  
+  \setmonofont{DejaVu Sans Mono}
+	  %% page layout start: fit to a4 and US letterpaper (example in memoir.pdf)
+	  %% page layout start
+	  % stocksize (actual size of paper in the printer) is a4 as per class
+	  % options;
+	  
+	  % trimming, i.e., which part should be cut out of the stock (this also
+	  % sets \paperheight and \paperwidth):
+	  % \settrimmedsize{0.9\stockheight}{0.9\stockwidth}{*}
+	  % \settrimmedsize{225mm}{150mm}{*}
+	  % % say where you want to trim
+	  \setlength{\trimtop}{\stockheight}    % \trimtop = \stockheight
+	  \addtolength{\trimtop}{-\paperheight} %           - \paperheight
+	  \setlength{\trimedge}{\stockwidth}    % \trimedge = \stockwidth
+	  \addtolength{\trimedge}{-\paperwidth} %           - \paperwidth
+	  % % this makes trims equal on top and bottom (which means you must cut
+	  % % twice). if in doubt, cut on top, so that dust won't settle when book
+	  % % is in shelf
+	  \settrims{0.5\trimtop}{0.5\trimedge}
+
+	  % figure out which font you're using
+	  \setxlvchars
+	  \setlxvchars
+	  % \typeout{LENGTH: lxvchars: \the\lxvchars}
+	  % \typeout{LENGTH: xlvchars: \the\xlvchars}
+
+	  % set the size of the text block next:
+	  % this sets \textheight and \textwidth (not the whole page including
+	  % headers and footers)
+	  \settypeblocksize{230mm}{130mm}{*}
+
+	  % left and right margins:
+	  % this way spine and edge margins are the same
+	  % \setlrmargins{*}{*}{*}
+	  \setlrmargins{*}{*}{1.5}
+
+	  % upper and lower, same logic as before
+	  % \setulmargins{*}{*}{*}% upper = lower margin
+	  % \uppermargin = \topmargin + \headheight + \headsep
+	  %\setulmargins{*}{*}{1.5}% 1.5*upper = lower margin
+	  \setulmargins{*}{*}{1.5}% 
+
+	  % header and footer spacings
+	  \setheadfoot{2\baselineskip}{2\baselineskip}
+
+	  % \setheaderspaces{ headdrop }{ headsep }{ ratio }
+	  \setheaderspaces{*}{*}{1.5}
+
+	  % see memman p. 51 for this solution to widows/orphans 
+	  \setlength{\topskip}{1.6\topskip}
+	  % fix up layout
+	  \checkandfixthelayout
+	  \sloppybottom
+	  %% page layout end
+	
+	    % numbering depth
+	    \maxtocdepth{section}
+	    \setsecnumdepth{all}
+	    \newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
+	    \newenvironment{docDate}{}{\ifvmode\par\fi }
+	    \newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
+	    % \newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
+	    \newcommand{\docTitle}[1]{#1}
+	    \newenvironment{titlePart}{ }{ }
+	    \newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
+	    % setup title page; see CTAN /info/latex-samples/TitlePages/, and memoir
+	  \newcommand*{\plogo}{\fbox{$\mathcal{SARIT}$}}
+	  \newcommand*{\makeCustomTitle}{\begin{english}\begingroup% from example titleTH, T&H Typography
+	  \thispagestyle{empty}
+	  \raggedleft
+	  \vspace*{\baselineskip}
+	  
+	      % author(s)
+	    {\Large Dharmakīrti and Manorathanandin}\\[0.167\textheight]
+	    % maintitle
+	    {\Huge Pramāṇavārttika}\\[\baselineskip]
+	    % titlesubtitle
+	    {\small  — Pramāṇavārttikavṛtti}\\[\baselineskip]
+	    {\Large SARIT}\\\vspace*{\baselineskip}\plogo\par
+	  \vspace*{3\baselineskip}
+	  \endgroup
+	  \end{english}}
+	  \newcommand{\gap}[1]{}
+	  \newcommand{\corr}[1]{($^{x}$#1)}
+	  \newcommand{\sic}[1]{($^{!}$#1)}
+	  \newcommand{\reg}[1]{#1}
+	  \newcommand{\orig}[1]{#1}
+	  \newcommand{\abbr}[1]{#1}
+	  \newcommand{\expan}[1]{#1}
+	  \newcommand{\unclear}[1]{($^{?}$#1)}
+	  \newcommand{\add}[1]{($^{+}$#1)}
+	  \newcommand{\deletion}[1]{($^{-}$#1)}
+	  \newcommand{\pratIka}[1]{\textcolor{cyan}{#1}}
+	  \newcommand{\name}[1]{#1}
+	  \newcommand{\persName}[1]{#1}
+	  \newcommand{\placeName}[1]{#1}
+	  % running latexPackages template
+     \usepackage[x11names]{xcolor}
+     \definecolor{shadecolor}{gray}{0.95}
+     \usepackage{longtable}
+     \usepackage{ctable}
+     \usepackage{rotating}
+     \usepackage{lscape}
+     \usepackage{ragged2e}
+     
+	 \usepackage{titling}
+	 \usepackage{marginnote}
+	 \renewcommand*{\marginfont}{\color{black}\rmlatinfont\scriptsize}
+	 \setlength\marginparwidth{.75in}
+	 \usepackage{graphicx}
+	 \usepackage{csquotes}
+       
+	 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
+       %% biblatex stuff start
+	 \usepackage[backend=biber,%
+	 citestyle=authoryear,%
+	 bibstyle=authoryear,%
+	 language=english,%
+	 sortlocale=en_US,%
+	 autolang=langname,%
+	 ]{biblatex}
+	 
+		 \addbibresource[location=remote]{https://raw.githubusercontent.com/paddymcall/Stylesheets/HEAD/profiles/sarit/latex/bib/sarit.bib}
+	 \renewcommand*{\citesetup}{%
+	 \rmlatinfont
+	 \biburlsetup
+	 \frenchspacing}
+	 \renewcommand{\bibfont}{\rmlatinfont}
+	 \DeclareFieldFormat{postnote}{:#1}
+	 \renewcommand{\postnotedelim}{}
+	 \urlstyle{same}
+\defbibheading{bibliography}[\textenglish{\refname}]{%
+  \section*{#1}%
+  \markboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}}
+
+\defbibheading{biblist}[\textenglish{\biblistname}]{%
+  \section*{#1}%
+  \markboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}}
+
+
+
+\defbibenvironment{shorthand}
+  {\list
+     {\textenglish{\printfield[shorthandwidth]{shorthand}}}
+     {\setlength{\labelwidth}{\shorthandwidth}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}%
+      \renewcommand*{\makelabel}[1]{##1\hss}}}
+  {\endlist}
+  {\item}
+	 %% biblatex stuff end
+	 
+	 \setcounter{errorcontextlines}{400}
+       
+	 \usepackage{lscape}
+	 \usepackage{minted}
+       
+	   % pagestyles
+	   \pagestyle{ruled}
+	   
+	   \makeoddfoot{ruled}{{\tiny\rmlatinfont \textit{Compiled: \today}}}{}{\rmlatinfont\thepage}
+	   \makeevenfoot{ruled}{\rmlatinfont\thepage}{}{{\tiny\rmlatinfont \textit{Compiled: \today}}}
+	   
+	 
+	 \usepackage[noend,series={A}]{reledmac}
+	 
+       % simplify what ledmac does with fonts, because it breaks. From the documentation of ledmac:
+       % The notes are actually given seven parameters: the page, line, and sub-line num-
+       % ber for the start of the lemma; the same three numbers for the end of the lemma;
+       % and the font specifier for the lemma. 
+       \makeatletter
+       \def\select@lemmafont#1|#2|#3|#4|#5|#6|#7|%
+       {}
+       \makeatother
+       \setlength{\stanzaindentbase}{20pt}
+     \setstanzaindents{8,2,2,2,2,}
+     % \setstanzapenalties{1,5000,10500}
+     \lineation{page}
+     % \linenummargin{inner}
+     \linenumberstyle{arabic}
+     \firstlinenum{5}
+    \linenumincrement{5}
+    \renewcommand*{\numlabfont}{\normalfont\scriptsize\color{black}}
+    \addtolength{\skip\Afootins}{1.5mm}
+    \Xnotenumfont{\bfseries\footnotesize}
+    \sidenotemargin{outer}
+    \linenummargin{inner}
+    
+       \usepackage[destlabel=true,% use labels as destination names; ; see dvipdfmx.cfg, option 0x0010, if using xelatex
+       pdftitle={Dharmakīrti's Pramāṇavārttika with a commentary by Manorathanandin},
+       pdfauthor={SARIT: Search and Retrieval of Indic Texts. DFG/NEH Project (NEH-No. HG5004113), 2013-2016 }]{hyperref}
+       \hyperbaseurl{}
+       \usepackage[english]{cleveref}% clashes with eledmac < 1.10.1!
+       % \newcommand{\cref}{\href}
+     
+\begin{document}
+    
+     \makeCustomTitle
+     \let\tabcellsep&
+	\frontmatter
+	\tableofcontents
+	% \listoffigures
+	% \listoftables
+	\cleardoublepage
+         \begin{english}
+      \chapter[Title Page]{Title Page}
+    \begin{docTitle}  \begin{titlePart} Dharmakīrti's Pramāṇavārttika with a commentary by Manorathanandin\end{titlePart} \end{docTitle} \begin{docAuthor} Dharmakīrti\end{docAuthor} \begin{docAuthor} Manorathanandin\end{docAuthor}
+      \cleardoublepage
+    \begin{sanskrit}\par
+नमो मञ्जुश्रिये ॥\end{sanskrit}\end{english}\mainmatter 
+	  
+	% new div opening: depth here is 0
+	
+	    
+	    \begingroup
+	    \beginnumbering% beginning numbering from div depth=0
+	    
+	  
+\chapter[{प्रथमः परिच्छेदः ॥: प्रमाणसिद्धिः}]{प्रथमः परिच्छेदः ॥: प्रमाणसिद्धिः}\leavevmode\marginnote{\textenglish{1b/MA}}
+	  
+	% new div opening: depth here is 1
+	
+	  
+	% new div opening: depth here is 2
+	
+	    
+	    \stanza[\smallbreak]
+	विमुक्तावरणक्लेशं दीप्ताखिलगुणश्रियं ।&स्वैकवेद्यात्मसम्पत्तिं नमस्यामि महामुनिम् ॥\&[\smallbreak]
+
+
+	
+	    
+	    \stanza[\smallbreak]
+	स्वयमपि कृतिनां महद्भिरन्यैरपि गमितो बहुविस्तरैर्न्न योयम् ।&तदपि च सुगमो न मद्विधानामिति विवृतिच्छलतः करोमि चिन्ताम् ॥\&[\smallbreak]
+
+
+	
+	    
+	    \stanza[\smallbreak]
+	अहमपि न निजैकलाभलुब्धो न च परकृत्यरसाभिलाषमुक्तः ।&फलति पुनरियं परार्थवाञ्छाव्रततिरभीष्टफलानि पुण्यभाजाम् ॥\&[\smallbreak]
+
+
+	\label{div_pvv.1.1}\edlabel{div_pvv.1.1}
+	  
+	% new div opening: depth here is 2
+	
+
+	  \begin{center}%% label @type='head'
+	\textbf{क. नमस्कारश्लोकः}
+	\end{center}
+	
+
+	  \pstart शास्त्रा\edlabel{pvv.1-1}\footnote{\label{pvv.1-1}  १ स्तुत्या पुण्योपचयात् ।}दावविध्नेन तत्समाप्त्यर्थं भगवति प्रसादजनने श्रोतृ\edlabel{pvv.1-2}\footnote{\label{pvv.1-2}  २ व्याख्यातुश्चेति परार्थदर्शनात् ।}जनानुग्रहार्थञ्च स्तुतिपूर्वकमाचार्यो नमस्कारश्लोकमाह ।
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	विधूतकल्पनाजालगम्भीरोदारमूर्तये ।&नमः समन्तभद्राय समन्तस्फरणत्विषे ॥ १ ॥\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart विधूतं\edlabel{pvv.1-3}\footnote{\label{pvv.1-3}  ३ सर्व्वावरणविगमात् ।} विध्वस्तं अनुत्पत्तिकधर्मतामापादितं {\color{DodgerBlue3}“कल्पना”} ग्राह्यग्राहकाध्यारोपः सैव {\color{DodgerBlue3}“जालं”} बन्धनहेतुत्वात् यासां ता विधूतकल्पनाजालाः । एतेन धर्मकाय उक्तः\edlabel{pvv.1-4}\footnote{\label{pvv.1-4}  ४ पूजेयं नमः शब्दात्प्रणामतः शिष्टैश्च तेश्च । तच्च स्वपरार्थतदुभयसम्पत्तिस्ततः अवृत्तिहानिगाम्भीर्य्यौदार्यविशेषैस्त्रिभिः स्वार्थ उक्तः ।} । द्वयशून्यताया धर्मधातुत्वात् (।) तदधिगमस्य धर्मकायत्वात् । गम्भीराश्च खड्ग\leavevmode\marginnote{\textenglish{002/s}} श्रावकाद्यविषयत्वात् । उदाराश्च सकलज्ञेयसत्वार्थव्यापनादिति {\color{DodgerBlue3}“गम्भीरोदाराः”} । आभ्यां साम्भोगिकनैर्म्माणिककायावुक्तौ तयोरेव स्वरूपत्वात् । विधूतकल्पनाजाला गम्भीरोदारा {\color{DodgerBlue3}“मूर्त्तयो”} यस्य स {\color{DodgerBlue3}“विधूतकल्पनाजालगम्भोरोदारमर्त्तिः”} (।) एतेन स्वार्थसम्पदुक्ता त्रिकायलक्षणत्वात्तस्याः ।
+	\pend
+      
+
+	  \pstart {\color{DodgerBlue3}“समन्तं”} निरवशेषं भद्रं कल्याणं परार्थसम्पत्सम्भारलक्षणं यस्मादसौ {\color{DodgerBlue3}“समन्तभद्रः”} (।) अनया भगवन्नामव्युत्पत्त्या परार्थसम्पदभिहिता\edlabel{pvv.2-1}\footnote{\label{pvv.2-1}  १ तदर्थिनां यथा ।} । समन्ततः स्फरन्तीति समन्तस्फरण्यः त्विषः ताव (त्) त्विषो देशना यस्य स {\color{DodgerBlue3}“समन्तस्फरणत्विट्”} वस्तुतत्त्वावभासनोपायता च त्विड्देशनयोः साधर्म्यं (।) अनेन परार्थसम्पदुपायो दर्शितः । देशनाद्वारेण भगवता जगदर्थकरणात् । एतेन स्तुतिरुक्ता असाधारणानां स्वपरार्थसम्पत्तितदुपायानामुपदर्शनात् । सर्व्वत्र नमःश\edlabel{pvv.2-2}\footnote{\label{pvv.2-2}  २ अकारान्तः सकारान्तस्तृतीयार्थ इत्यन्ये । जनकायः ।}ब्दयोगाच्चतुर्थी । अनेन नमस्कारोभिहितः । यदा तु समन्तभद्रशब्दो रूढ्या बोधिसत्त्वविशेषे वर्तते तदापि पदव्याख्यानं पूर्ववदेव । अयन्तु विशेषः । विधूतकल्पनाजालत्वं बोधिसत्त्वभूम्यावरणप्रहाणतो वेदितव्यं । गाम्भीर्यन्तु खड्गश्रावकाविषयत्वात् । औदार्यन्तु दर्श भूमीश्वरबोधिसत्त्वमाहात्म्यातिशयतः । कायत्रयन्तु बोधिसत्त्वानामप्यस्ति प्रकर्षनिष्ठागमनात्तु भगवतां व्यवस्थाप्यते । देशना च प्रसिद्धैव तेषां ॥ (१) ॥
+	\pend
+      \label{div_pvv.1.2}\edlabel{div_pvv.1.2}
+	  
+	% new div opening: depth here is 2
+	
+
+	  \begin{center}%% label @type='head'
+	\textbf{ख. शास्त्रारम्भप्रयोजनम्}
+	\end{center}
+	
+
+	  \pstart श्रोतृदोषबाहुल्याच्छास्त्रेण परोपकारमपश्यन् सूक्ताभ्यासभावितचित्ततामेवात्मनः शास्त्रारम्भकारणन्दर्शयन् वक्रोक्त्या दोषतापनयनेन शास्त्रे श्रोतृन् प्रवर्तयितुम(ा) ह ।
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\edlabel{pvv.2-asterisk}\footnote{\label{pvv.2-asterisk}  * द्रष्टव्यं परिशिष्टं १।१-४} प्रायः प्राकृतसक्तिरप्रतिबलप्रज्ञो जनः केवलं,नानर्थ्येव सुभाषितैः परिगता विद्वेष्ट्यपीर्ष्यामलैः ।&तेनायं न परोपकार इति नश्चिन्तापि चेतस्ततः,सूक्ताभ्यासविबर्द्धितव्यसनमित्यत्रानुबद्धस्पृहम् ॥ २ ॥\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart {\color{DodgerBlue3}“प्रायो”} भूयान् बाहुल्येन वा {\color{DodgerBlue3}“जनः प्राकृतेषु”} बहिःशास्त्रेषु {\color{DodgerBlue3}“सक्ति”}रभिष्वङ्गो यस्य स प्राकृतसक्तिरनेन कुप्रज्ञत्वं श्रोतृदोष उक्तः । {\color{DodgerBlue3}“अप्रतिबला”} शास्त्रार्थग्रहणं प्रत्य{\color{DodgerBlue3}“शक्ता प्रज्ञा”} यस्यासावप्रतिबलप्रज्ञः अनेनाज्ञत्वमुक्तं । {\color{DodgerBlue3}“केवलं, नानर्थ्येव सूभाषितैः”} । किन्तु सुभाषिताभिधायिनं ईर्ष्या परसंपत्तौ चेतसो व्यारोषः सैव मलश्चित्त\edlabel{pvv.2-3}\footnote{\label{pvv.2-3}  ३ आत्मात्मीयास्त्रैधातुकाश्च चैत्ताः सवासनाः ।}मलिनी\leavevmode\marginnote{\textenglish{003/s}} करणात् । तैः {\color{DodgerBlue3}“परिगतो”} युक्तः सन् {\color{DodgerBlue3}“विद्वेष्ट्यपि । ईर्ष्यामलैरिति”} व्यक्त्यपेक्षया बहुवचनं । अनेन यथाक्रममनर्थित्वममाध्यस्थ्यञ्चोक्तं (।) {\color{DodgerBlue3}“तेन श्रोतृदोषकलार्पेन अयमा”}रिप्सितो वार्त्तिकाख्यो ग्रन्थः (।) परमुपकरोतीति {\color{DodgerBlue3}“परोपकार”} इति {\color{DodgerBlue3}“नोऽस्माकञ्चिन्तापि”} नास्ति । कथन्तर्हि शास्त्रकरणे प्रवृत्तिरित्याह चेतश्चिरं {\color{DodgerBlue3}“दीर्घकालं \leavevmode\marginnote{\textenglish{2a/MA}} सूक्त”}स्या{\color{DodgerBlue3}“भ्यासेन विवर्द्धितव्यसनं”} विस्तारिताभिष्वङ्ग{\color{DodgerBlue3}“मिति”}हेतो{\color{DodgerBlue3}“रत्र वार्तिककरणेऽनुबद्धस्पृहं”} जाताभिलाषं । एतेन कुप्रज्ञतादिदोषजातमात्मनो बोधिताः श्रोतारस्तत्परिहारेण शास्त्रे प्रवर्तिता एव भवन्ति ॥ (२)
+	\pend
+      
+	  
+	% new div opening: depth here is 2
+	
+
+	  \begin{center}%% label @type='head'
+	\textbf{ग. प्रमाणसिद्धिः}
+	\end{center}
+	
+
+	  \pstart अयमाचा र्यो बृहदाचार्यीय प्र मा ण स मु च्च य शा स्त्रे वार्त्तिकं चिकीर्षुः स्वतः कृतभगवन्नमस्कार(:) तच्छास्त्रारम्भसमये तदाचार्यकृतभगवन्नमस्कारश्लोकं व्याख्यातुकामः प्रथमं\edlabel{pvv.3-1}\footnote{\label{pvv.3-1}  १ द्वितीयां सम्वित्तिसिद्धिम् । प्रमाणं भूतो जातो भगवान् मानमिव किन्तदित्याह ।} प्रमाणसामान्यलक्षणमाह (।)
+	\pend
+      
+	  
+	% new div opening: depth here is 1
+	
+\chapter[{१. प्रमाणलक्षणम्}]{१. प्रमाणलक्षणम्}
+
+	  \begin{center}%% label @type='head'
+	\textbf{(१) अविसंवादि ज्ञानम्}
+	\end{center}
+	\label{div_pvv.1.3}\edlabel{div_pvv.1.3}
+	  
+	% new div opening: depth here is 2
+	
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.3a}\edlabel{pv.1.3a}\flagstanza{\tiny\textenglish{...v.1.3a}}प्रमाणमविसंवादि ज्ञानं;\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart ज्ञानं प्रमाणं\edlabel{pvv.3-2}\footnote{\label{pvv.3-2}  २ प्रमाणं सम्यग्ज्ञानमपूर्व्वगोचरमिति लक्षणं ।}नाज्ञानमिन्द्रियार्थसन्निकर्षादि । कीदृशमविसंवादि । विसंवादनं विसंवादो वञ्जनं तद्योगाद्विसंवादि । न तथाऽसावविसंवादि । अविसम्वादनमुक्तमित्यर्थः । किं पुनरित्याह (।)
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.3b}\edlabel{pv.1.3b}\flagstanza{\tiny\textenglish{...v.1.3b}}अर्थक्रियास्थितिः ।&अविसंवादनं;\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart यथोपदर्शितार्थस्य क्रियायाः स्थितिः प्रमाणयोग्यताऽविसंवादनं(।) अतश्च यतो ज्ञानादर्थं परिच्छिद्यापि\edlabel{pvv.3-3}\footnote{\label{pvv.3-3}  ३ मरुमरीच्यादौ ।} न प्रवर्तते प्रवृत्तो वा कुतश्चित्प्रतिबन्धादेरर्थक्रियान्नाधिगच्छति । तदपि प्रमाणमेव प्रमाणयोग्यतालक्षणस्याविसंवादस्य सत्त्वात् । सैव प्रमाणयोग्यता कथमसत्यामर्थक्रियाप्राप्तौ निश्चीयत इति चेत् (।) यत्तावदसकृद्व्यवहाराभ्यासाद्दर्शनमात्रेणोपलक्षितभ्रमविविक्तस्वरूपविशेषं साधनाध्यक्षं तस्य\edlabel{pvv.3-4}\footnote{\label{pvv.3-4}  ४ प्रमेयस्य ।} \leavevmode\marginnote{\textenglish{004/s}} स्वत एव प्रमाणयोग्यतानिश्चयः कृत्रिमाकृत्रिममणिरुप्यादितत्वनिश्चयवत् । अंनुमानस्य च साध्यप्रतिबद्धजन्मनो व्यभिचाराशङ्काविरहात् । अर्थक्रियानिर्भासन्तु प्रत्यक्षं स्वत एवार्थक्रियानुभवात्मकं न तत्र परार्थक्रियाऽपेक्ष्यत इति तदपि स्वतो निश्चितप्रामाण्यं । अत एवार्थक्रियापरंपरानुसरणादनवस्थादोषोपि दुस्थ एव । यत्त्वनभ्यस्तदशायां संदिग्धप्रामाण्यमुत्पत्तौ\edlabel{pvv.4-1}\footnote{\label{pvv.4-1}  १ सत्यां ।} तस्यार्थक्रियाज्ञानादनुमानाद्वा प्रामाण्यं निश्चीयते । एतच्चाविसंवादनं बाह्यार्थेतरवादयोः समानं प्रमाणलक्षणं (।) वि ज्ञा न नयेपि\edlabel{pvv.4-2}\footnote{\label{pvv.4-2}  २ अव्यापकत्वं निरस्यन्नाह ।} साधननिर्भासज्ञानानन्तर\edlabel{pvv.4-3}\footnote{\label{pvv.4-3}  ३ वह्निज्ञानान्तरं दाहादिज्ञानं ।} मर्थंक्रिया\edlabel{pvv.4-4}\footnote{\label{pvv.4-4}  ४ रविचन्द्राम्बुदचित्रादीनां दर्शनमेवार्थक्रियास्थितिः ।}निर्भासज्ञानमेव\edlabel{pvv.4-5}\footnote{\label{pvv.4-5}  ५ यदर्थाकारं ज्ञानं तद् बाह्यार्थाविनाभावि यथा अर्थक्रियानिर्भासं ।} संवादः । अतो विज्ञप्तिमात्रत्वे प्रमाणेतरविभागव्यवहारोऽसंकीर्ण्णः।
+	\pend
+      
+
+	  \pstart ननु शब्दगन्धरसस्पर्शान् चित्ररूपञ्च पश्यतो ज्ञानस्य परमर्थक्रियाज्ञानं नास्तीति तत्प्रमाणन्न\edlabel{pvv.4-6}\footnote{\label{pvv.4-6}  ६ विना भ्रान्तिं प्रयुक्ते ।} स्यादित्याह ।
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.3c}\edlabel{pv.1.3c}\flagstanza{\tiny\textenglish{...v.1.3c}}शाब्देप्यभिप्रायनिवेदनात् ॥ ३ ॥\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart {\color{DodgerBlue3}“शाब्दे”} शब्दजनिते ज्ञानेऽपि शब्दाद् गन्धादिविषयेऽपि {\color{DodgerBlue3}“अभिप्राय”}स्याभिप्रेतार्थक्रिया (या) {\color{DodgerBlue3}“निवेदनात्”} प्रतिपादनात्प्रामाण्यं (।) अर्थक्रिया हि क्वचित्स्वरूपप्रतिपत्तिरेव । क्वचित्ततोऽन्या यथासम्भवं व्यवहारविषयः । तत्प्रापणञ्च प्रामाण्यमिति नाव्यापकं प्रमाणलक्षणम् । (३)
+	\pend
+      \label{div_pvv.1.4}\edlabel{div_pvv.1.4}
+	  
+	% new div opening: depth here is 2
+	
+
+	  \pstart ननु शब्दस्यार्थप्रतिबन्धाभावान्न प्रामाण्यं स्यादिष्यते चानुमानत्वादित्याह(।)
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	वक्तृव्यापारविषयो योर्थो बुद्धौ प्रकाशते ।&प्रामाण्यं तत्र शब्दस्य नार्थतत्त्वनिबन्धनम् ॥ ४ ॥\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart {\color{DodgerBlue3}“वक्तृर्व्यापारो”} विवक्षा {\color{DodgerBlue3}“तस्य विषयो योऽर्थः”} समारोपितबही रूपो ज्ञानाकारः प्रकाशते {\color{DodgerBlue3}“बुद्धौ”} विवक्षा\edlabel{pvv.4-7}\footnote{\label{pvv.4-7}  ७ संकेतबलात् ।}त्मिकायां (।) {\color{DodgerBlue3}“तत्र शब्दस्य प्रामाण्यं”} लिङ्गत्वं । शब्दादुच्चरिताद्विवक्षितार्थप्रतिभासी विकल्पो\edlabel{pvv.4-8}\footnote{\label{pvv.4-8}  ८ विकल्पशब्द . . . न नदी . . . . . . । . . .}नुमीयत इत्यर्थः । तत्कार्यत्वात्तच्छब्दस्य । {\color{DodgerBlue3}“न पुनरर्थतत्त्वनिबन्धनं”} तत्प्रतिबन्धाभावात् ॥ (४)
+	\pend
+      \label{div_pvv.1.5}\edlabel{div_pvv.1.5}
+	  
+	% new div opening: depth here is 2
+	
+
+	  \pstart ननु घ\edlabel{pvv.4-9}\footnote{\label{pvv.4-9}  ९ येन ज्ञात्वा प्रवृत्तस्यार्थसंवादस्तच्चेत्प्रमाणं घटविकल्पोपि स्यात्प्रमा ॥}टोयमित्यादिज्ञानात्प्रवर्तमानस्य सम्बन्धोस्त्येवेति तत् प्रमाणं स्यात् (।) इत्याह ।
+	\pend
+      \leavevmode\marginnote{\textenglish{005/s}}
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	गृहीतग्रहणान्नेष्टं सांवृतं, धोप्रमाणता ।&प्रवृत्तेस्तत्प्रधानत्वात् हेयोपादेयवस्तुनि ॥ ५ ॥\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart {\color{DodgerBlue3}“गृहीतग्रहणान्नेष्टं सांवृतं”} दर्शनोत्तरकालं सांवृतं विकल्पज्ञानं प्रमाणं नेष्टं \leavevmode\marginnote{\textenglish{2b/MA}} दर्शनगृहीतस्यैव ग्रहणात् तेनैव च प्रापयितुं शक्यत्वात् सांवृतम\edlabel{pvv.5-1}\footnote{\label{pvv.5-1}  १ . . . . . . . घटः । तद्गतसत्ता महासामान्यं । तत्संख्यान्तर्ग्गतः । उत्क्षेपणं कर्म तस्यैवैते व्यपदेशा इति सांवृताः ।}किञ्चित्करमेव । कस्मात्पुनर्द्धियः {\color{DodgerBlue3}“प्रमाण”}तेष्यते नेन्द्रियादेः(।) {\color{DodgerBlue3}“हेयोपादेयवस्तु”}विषयायाः {\color{DodgerBlue3}“प्रवृत्ते\edlabel{pvv.5-2}\footnote{\label{pvv.5-2}  २ ज्ञात्वैव पुंसः प्रवृत्तेः ।}स्तत्प्रधानत्वात्”} ज्ञानप्रधानत्वात् धिय एव प्रामाण्यं (।) न हीन्द्रियमस्तीत्येव प्रवृत्तिः किन्तर्हि ज्ञानसद्भवात् साधकतमञ्च प्रमाणं तस्याव्यवहितव्यापारत्वात् । (५)
+	\pend
+      \label{div_pvv.1.6}\edlabel{div_pvv.1.6}
+	  
+	% new div opening: depth here is 2
+	
+
+	  \pstart एवं फलार्थिनां प्रवृत्तिव्यवहारकारित्वेन धियः प्रामाण्यं प्रतिपादितं । साम्प्रतमधिगमफलविभागकारित्वमाह ।
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.6a}\edlabel{pv.1.6a}\flagstanza{\tiny\textenglish{...v.1.6a}}विषयाकारभेदाच्च धियोधिगमभेदतः ।\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart {\color{DodgerBlue3}“धियो”} विषयस्येवाकारो {\color{DodgerBlue3}“विषयाकारः\edlabel{pvv.5-3}\footnote{\label{pvv.5-3}  ३ रूपं}”} नीलादिस्तस्य {\color{DodgerBlue3}“भेदात् विशेषादधिगम\edlabel{pvv.5-4}\footnote{\label{pvv.5-4}  ४ धियः ।}”} स्यार्थप्रतीते{\color{DodgerBlue3}“र्भेदा”}द्विशेषाद्धिय एव प्रामाण्यं नीलस्वरूपं हि ज्ञानं नीलप्रतीतिरन्यादृशमन्यथेति धीरेव प्रमाणं ।
+	\pend
+      
+
+	  \pstart ननु यथाधिगमसाधन\edlabel{pvv.5-5}\footnote{\label{pvv.5-5}  ५ अधिगमस्य साधनमिन्द्रियादुत्पत्तेः ॥}माकारस्तथेन्द्रियमपि तदुत्पत्तेरत आह (।)
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.6b}\edlabel{pv.1.6b}\flagstanza{\tiny\textenglish{...v.1.6b}}भावादेवास्य तद्भावे;\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart तस्याकारस्य {\color{DodgerBlue3}“भावेऽस्या”}धिगमस्य {\color{DodgerBlue3}“भावादेव”} साधनमव्यवहितत्वात्‌न त्विन्द्रियादि तद्भावेपि ज्ञानानुत्पत्तावधिगमाभावात् । कश्चि\edlabel{pvv.5-6}\footnote{\label{pvv.5-6}  ६ मीमांसकः ।}दाह (।) सर्वज्ञानानामबाधितत्वलक्षणं प्रामाण्यं \edlabel{pvv.5-7}\footnote{\label{pvv.5-7}  ७ उत्तरकालभाविनानभ्यासजेन चेत् ।}स्वत एव सिध्यते\edlabel{pvv.5-8}\footnote{\label{pvv.5-8}  ८ विषयाकारस्य स्वसम्वेदनात् ज्ञानसत्तासिद्धिः ।} बाधकारणदोषज्ञानाभ्यां क्वचित्तदपोह्यते यथा शुक्तिकायां रजतज्ञाने\edlabel{pvv.5-9}\footnote{\label{pvv.5-9}  ९ स्वतः प्रामाण्यस्य ज्ञाते ज्ञाने तदात्मभूतस्य प्रामाण्यस्यापि ज्ञातत्वात् ।} चन्द्रद्वयदर्शने वा । तच्चेदमयुक्तं यतः (।)
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.6c}\edlabel{pv.1.6c}\flagstanza{\tiny\textenglish{...v.1.6c}}स्वरूपस्य स्वतो गतिः ॥ ६ ॥\&[\smallbreak]
+
+
+	
+	  \endgroup
+	\leavevmode\marginnote{\textenglish{006/s}}
+
+	  \pstart {\color{DodgerBlue3}“स्वरूपस्य स्वतो गति\edlabel{pvv.6-1}\footnote{\label{pvv.6-1}  १ ज्ञानं । साधनं ।}”} र्न प्रामाण्यस्य । स्वतो हि प्रामाण्यस्याभिव्यक्ति\edlabel{pvv.6-1-bis}\footnote{\label{pvv.6-1-bis}  १ ज्ञानं । साधनं ।}र्व्वक्तव्या । न तूत्पत्तिः । ज्ञानात्मभूतस्य स्वस्मादुत्पत्तिविरोधात् । यदि च स्वतोऽबाधितत्वं प्रामाण्यमभिव्यक्त्या व्यवस्थापितं न तस्य बाधकानां सहस्रेणापि बाधोयुक्तः । अथ सम्भवति बाधके बाधकादर्शनं यत्र तत्राबाधितत्वमपोद्यते बाधकदर्शनेन । एवन्तर्हि बाधकादर्शनान्नाबाधितत्वं किन्तर्हि बाधकाभावात् । तस्य चादर्शनादन्यन्न साधनं । तच्चेदसाधनं नाबाधितत्वं नाम प्रामाण्यं नाप्यस्य स्वतः सिद्धिः । अतः प्रथमं बाधकादर्शनात्प्रसक्तमबाधितत्वं बाधदर्शनादपोद्यत इति किमत्रायुक्तं । ईदृश एव बाध्य\edlabel{pvv.6-2}\footnote{\label{pvv.6-2}  २ सतो न वाचा सम्वादे वाऽसतः स्वयमेवासत्त्वात् । ---सिद्धान्ती}बाधकभावः सर्व्वतः ॥
+	\pend
+      
+
+	  \pstart कीदशोऽत्र प्रस\edlabel{pvv.6-3}\footnote{\label{pvv.6-3}  ३ अबाधितत्वं प्रसक्तमिति ।}ङ्गार्थः (।) किं सत्त्वमुत सत्त्वनिश्चयौ । सम्भावनामात्रम्वा । तत्र न तावदनयोः पक्षयोरपवादो युक्तः । सतः केनचिदपि बाधितुमशक्यत्वात् अन्त्येपि न स्व\edlabel{pvv.6-4}\footnote{\label{pvv.6-4}  ४ प्रमाणमिदमिति निश्चयरूपा न च व्यक्तिः । प्रमाणतदाभासयोरुत्पत्तिकाले संशयादभ्यासम्विना ॥}तोऽबाधितत्वनिश्चयः तद्विरुद्धत्वात् सम्भावनायाः । अनिश्चितमेव तत्राबाधितत्वं कथ\edlabel{pvv.6-5}\footnote{\label{pvv.6-5}  ५ निश्चितत्वादित्वेन ।}मन्यथोत्पद्यत इति चेत् । न तर्हि स्वतःप्रामाण्यनिश्चय इति यत्रापि बाधदर्शनं नास्ति तत्राप्यनाश्वास एव (।) एवञ्च बाध्यबाधकभावः {\color{DodgerBlue3}“सदसत्तापक्षयोरसङ्ग\edlabel{pvv.6-6}\footnote{\label{pvv.6-6}  ६ स्वतःप्रमाण्यसिद्धिरित्युत्पत्तिर्व्यक्तिर्व्वा स्यात् सिद्धः शब्दः सिद्ध ओदनवत् । नोत्पत्तिः । जाताजातज्ञानयोरकारकत्वात् । असत्त्वे नाजातस्य जातस्य प्रामाण्यात्सत्वात् ।}तो”} वेदितव्यः ॥(६)
+	\pend
+      \label{div_pvv.1.7}\edlabel{div_pvv.1.7}
+	  
+	% new div opening: depth here is 2
+	
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.7a}\edlabel{pv.1.7a}\flagstanza{\tiny\textenglish{...v.1.7a}}\edlabel{pvv.6-asterisk}\footnote{\label{pvv.6-asterisk}  * द्रष्टव्यं परिशिष्टं १।६} प्रामाण्यं व्यवहारेण;\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart यदि स्वरूपमात्रं स्वतो गम्यते न प्रामाण्यं कथन्तर्हि तदवगम्यमित्याह । {\color{DodgerBlue3}“प्रामाण्यम्व्यवहारेणार्थक्रियाज्ञानेन”} (।) यस्य साधनज्ञानस्य तादात्म्यादनुभूतेपि प्रामाण्ये साशङ्का व्यवहर्त्तारोऽनभ्यासवशादनुत्पन्नानुरूपनिश्चयाः तत्रार्थक्रियाज्ञानेन प्रामाण्यनिश्चयः । अन्यत्र तु विभ्र\edlabel{pvv.6-7}\footnote{\label{pvv.6-7}  ७ इति बहिरर्थे प्रामाण्याभावोस्य ।}मशङ्कासङ्कोचादुत्पत्तावेव स्वरूप\edlabel{pvv.6-8}\footnote{\label{pvv.6-8}  ८ स्वसम्वेदनेन ।}स्य प्रामाण्यस्य स्वतो गतिरित्युक्तं ॥ अथवा\edlabel{pvv.6-9}\footnote{\label{pvv.6-9}  ९ स्वरूपस्य स्वतो गतिः । प्रामाण्यं व्यवहारेणेत्यस्य व्याख्यान्तरमाह ।} चक्षुर्विज्ञानेन रूपक्षण एको दृश्यते न भावी प्राप्यो नापि स्पर्शः तत्कयमन्यदर्शनमन्यप्राप्त्या प्रमाणं । एवं ह्यतिप्रसङ्गः स्यात् । \leavevmode\marginnote{\textenglish{007/s}} अनुमानञ्च व्याप्तिग्रहणसापेक्षं व्याप्तिश्च प्रत्यक्षेण पुरोवर्त्तिरूपमात्रग्राहिणा कथं शक्यग्रहा । देशकालव्यक्तिव्याप्त्या च व्याप्तिरुच्यते यत्र यत्र धूमस्तत्र तत्राग्नि\leavevmode\marginnote{\textenglish{3a/MA}}रिति प्रत्यक्षपृष्ठजश्च विकल्पो न प्रमाणं प्रमाणव्यापारानुकारी त्वसाविष्यते । यत्रायमध्यक्षव्यापारमतिक्रम्याधिकमारोपयति {\color{DodgerBlue3}“तत्र न प्रमाणं अमूलकत्वात्तस्य”} प्रमाणप्रमेयस्य । विजातीयव्यावृत्तेरध्यक्षेण दृष्टत्वादस्त्येव मूलमिति चेत् न सजातीयव्यावृत्त्या विशेषितत्वात्तस्याः । अन्यथा शाबलेयनाशम्प्रतियता प्रत्यक्षेण गोमात्रनाशो व्यवस्थाप्येत । अनुमानाच्च व्याप्तिग्रहणेऽनवस्थापत्तिः । अत आह । {\color{DodgerBlue3}“स्वरूपस्य स्वतो गतिः”} ॥
+	\pend
+      
+
+	  \pstart स्वरूपमात्रं स्वतो गम्यते न प्राप्यरूपसापेक्षं प्रामाण्यन्नाम किञ्चिदस्ति । कथन्तर्हि तद्व्यवस्थेत्याह । {\color{DodgerBlue3}“प्रामाण्यम्व्यवहारेण ।”}
+	\pend
+      
+
+	  \pstart सांव्यवहारिकस्येदं प्रमाणस्य लक्षणं संव्यवहारश्च भाविभूतरूपादिक्षणानामेकत्वेन संवादविषयोनवगीतः सर्व्वस्य । साध्यसाधनयोरेकव्यक्ति\edlabel{pvv.7-1}\footnote{\label{pvv.7-1}  १ यदि धूमो वह्नेरन्यतोपि जायेतेह वह्नेर्न जायेत द्विकारणमकारणं यतः ।}दर्शने {\color{DodgerBlue3}“समस्त”}तज्जातीयतथात्वव्यवस्थानं सम्वा\edlabel{pvv.7-2}\footnote{\label{pvv.7-2}  २ साध्याधिगतिः साधनं सारूप्ये तयोः ।} दमवधारयन्ति व्यवह\edlabel{pvv.7-3}\footnote{\label{pvv.7-3}  ३ प्रागदृष्टो धूमाधीः ।}र्त्तारः । तदनुरोधात् प्रामाण्यम्व्यवस्थाप्यते । तत्त्वतस्तु स्वसम्वेदनमात्रमप्रवृत्तिनिवृत्तिकं ॥
+	\pend
+      
+
+	  \pstart ननु यत्र तावदभ्यस्तसाधनज्ञानादिषु निरस्तभ्रमा व्यवहारिणस्तेषां स्वत एव प्रामाण्यनिश्चयः यत्त्वनभ्यस्तसाधनं ज्ञानं तस्यापि व्यवहारेणेति निष्फलं शास्त्रप्रणयनमित्याह ।
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.7b}\edlabel{pv.1.7b}\flagstanza{\tiny\textenglish{...v.1.7b}}शास्त्रं मोहनिर्तनं ।\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart यदि व्यवहारतः प्रमाणस्वरूपसिद्धिः परस्परविरो\edlabel{pvv.7-4}\footnote{\label{pvv.7-4}  ४ सम्यग्ज्ञानाद् धर्मास्तित्वपरलोकनिश्चयः ततो मोक्षाधिगमात् प्रत्यक्षपृष्ठविकल्पाख्यं (।)}धीनि लक्षणशास्त्राणि न स्युः । तस्माच्छास्त्रेण लक्षणोपदर्शनात् तद्विषयः संमोहो निवर्तनीयः । येन\edlabel{pvv.7-5}\footnote{\label{pvv.7-5}  ५ अस्याज्ञातस्य ग्राह्यत्वेपि नायमर्थः ।} परलोकनिःश्रेयसादेर्व्यवहाराप्रसिद्धस्य सिद्धिर्भवति ।
+	\pend
+      
+
+	  \begin{center}%% label @type='head'
+	\textbf{(२) अज्ञातार्थप्रकाशकम्}
+	\end{center}
+	
+
+	  \pstart तदेवमविसम्वादनं प्रमाणलक्षणमुक्तभिदानीमन्यदाह ।
+	\pend
+      \leavevmode\marginnote{\textenglish{008/s}}
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.7c}\edlabel{pv.1.7c}\flagstanza{\tiny\textenglish{...v.1.7c}}अज्ञातार्थप्रकाशो वा;\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart प्रकाशनं प्रकाशोऽज्ञा\edlabel{pvv.8-1}\footnote{\label{pvv.8-1}  १ बुद्धोप्यन्याज्ज्ञातज्ञानात् अत्राप्यविसम्वादादेव ।} तस्यार्थस्य प्रकाशो ज्ञानं (।) तत्प्रमाणं । अर्थग्रहणेन द्विचन्द्रादिज्ञानस्य निरासः । अज्ञातग्रहणेन साम्वृतस्यावयव्यादिविषयस्य । पृथग् गृहीतानामेव रूपादीनामेकत्वेन विकल्पनात् (।) स्मरणञ्च पूर्वगृहीतार्थविकल्परूपत्वान्नाधिकग्राहि (।) गृहीते च प्राक्तनमेव प्रमाणं । इदानीन्तु स्मरणमप्र\edlabel{pvv.8-2}\footnote{\label{pvv.8-2}  २ पूर्व्वदृष्टस्य यदस्तित्वं ।} वर्तकं तस्यैव सन्देहात् ॥
+	\pend
+      
+
+	  \pstart नन्वविसम्वादादेवाज्ञातार्थप्रकाशो ज्ञातव्यः । अन्यथा पीतशंखज्ञानमपि प्रमाणं स्यात् । तथा चाविसम्वादित्वमेव प्रमाणमस्तु किमनेनाभि\edlabel{pvv.8-3}\footnote{\label{pvv.8-3}  ३ ज्ञानञ्चासच्च स्यान्न बाह्ये प्रकाशकं यथा विकल्पकं ।} हितेन (।) स्यादेतद्यदि सम्भवित्वमात्रे लक्षणं स्यात् । किं नूद्दिष्ट\edlabel{pvv.8-4}\footnote{\label{pvv.8-4}  ४ यद्यनधि (गम) विषयं प्रमाणं प्रत्यक्षाग्र(?गृ) हीतं सामान्यं स्वलक्ष णविषयत्वात् परन्तु प्रत्यक्षग्राह्यं रूपिसमवायात्तच्चाक्षुषमाह मीमांसकादेः ।} त्वेनान्यथा ज्ञानत्वसत्त्वादिकमपि लक्षणं स्यात् ।
+	\pend
+      
+
+	  \pstart नन्वविसम्वादिभ्योऽज्ञातार्थप्रकाशकं ज्ञायते\edlabel{pvv.8-5}\footnote{\label{pvv.8-5}  ५ विसम्वादिनः प्रकाशकत्वायोगात् ।}न तु ज्ञानत्वादिभ्य इति पूर्व्वस्यापेक्षणीयता लक्षणेन । न तु परेषामिति विशेषः । यद्येवं तदाऽविसम्वादित्वेप्यज्ञातार्थप्रकाशनमपेक्षत एव (।) नान्यथा सांवृतस्य निरासः शक्यः कर्त्तुं (।) तस्मादुभयमपि परस्परसापेक्षमेव लक्षणम्बोद्धव्यं ॥ (७)
+	\pend
+      \label{div_pvv.1.8}\edlabel{div_pvv.1.8}
+	  
+	% new div opening: depth here is 2
+	
+
+	  \pstart ननु स्वलक्षणप्रतीतेरूर्द्ध्वं सामा\edlabel{pvv.8-6}\footnote{\label{pvv.8-6}  ६ प्रमाणसमुच्चये आगमे च ।} न्यविषयं ज्ञानमज्ञातार्थप्रकाशकत्वात्प्रमाणं प्राप्तं तदेवाह (।)
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.7d}\edlabel{pv.1.7d}\flagstanza{\tiny\textenglish{...v.1.7d}}स्वरूपाधिगतेः परम् ॥ ७ ॥\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.8a}\edlabel{pv.1.8a}\flagstanza{\tiny\textenglish{...v.1.8a}}प्राप्तं सामान्यविज्ञानं ;\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart प्रमाणमिति शेषः\edlabel{pvv.8-7}\footnote{\label{pvv.8-7}  ७ अस्तु वाऽनधिगमस्तथापि ।} ।
+	\pend
+      
+
+	  \pstart अत्राह ।
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.8b}\edlabel{pv.1.8b}\flagstanza{\tiny\textenglish{...v.1.8b}}अविज्ञाते स्वलक्षणे (।)&यज्ज्ञानमित्यभिप्रायात्;\&[\smallbreak]
+
+
+	
+	  \endgroup
+	\leavevmode\marginnote{\textenglish{009/s}}
+
+	  \pstart अज्ञातस्वलक्षणविष\edlabel{pvv.9-1}\footnote{\label{pvv.9-1}  १ ज्ञानत्वादीनां ।} यं {\color{DodgerBlue3}“यज्ज्ञानं”}तत्प्रमाणं न ज्ञातविषय{\color{DodgerBlue3}“मित्यभिप्रायान्नातिप्र”}स\edlabel{pvv.9-2}\footnote{\label{pvv.9-2}  २ अनधिगते स्वलक्षणे यदनधि (गम) विषयमिति सविशेषणं लक्षणं वाच्यं ।} ङ्गः ॥ एवन्तर्हि अनुमानमपि सामा\edlabel{pvv.9-3}\footnote{\label{pvv.9-3}  ३ शब्दः प्रत्यक्षोऽन्यथाऽश्रयासिद्धिः स्यात् । दृष्टस्य शब्दानित्यत्वस्य प्रत्यायनात् ज्ञातस्य ग्राह्यत्वे . . . . . .।}न्यविषयत्वात् प्रमाणं न स्यात् । नैतदस्ति तदपि च लक्ष\edlabel{pvv.9-4}\footnote{\label{pvv.9-4}  ४ अध्यक्षेण तु स एवागृहीतो यत्र निश्चयो जनितः । व्यावहारिकाधिकारात् अन्यापोहविषयाच्च ॥} णमेवानित्यादिरूपतया विषयीकरोति ॥
+	\pend
+      \leavevmode\marginnote{\textenglish{3b/MA}}
+
+	  \pstart किं पुनरधिगतस्वलक्षणविषयमेव प्रमाणमिष्टं ।
+	\pend
+      
+	  \bigskip
+	  \begingroup
+	
+	    \large
+	  
+	    
+	    \stanza[\smallbreak]
+	\label{pv.1.8d}\edlabel{pv.1.8d}\flagstanza{\tiny\textenglish{...v.1.8d}}स्वलक्षणविचारतः ॥ ८ ॥\&[\smallbreak]
+
+
+	
+	  \endgroup
+	
+
+	  \pstart {\color{DodgerBlue3}“स्वलक्षणविचारतो”}ऽर्थक्रियार्थिभिः स्वलक्षण\edlabel{pvv.9-5}\footnote{\label{pvv.9-5}  ५ अनुपलब्धिश्च प्रदेशः ज्ञानम्वेति वस्तुतो वस्त्वधिष्ठानैव ।} मेव प्रमाणेनान्विष्यते तस्यैवार्थक्रियासाधनत्वा\edlabel{pvv.9-6}\footnote{\label{pvv.9-6}  ६ आत्माकाशादौ तद्वस्तुभूतशून्या तद्बुद्धिरेवाश्रयः ।}त् । यदेव च तैरन्विष्यते तदेव शास्त्रे विचार्यते सांव्यवहारिकप्रमाणाधिकारात्\edlabel{pvv.9-7}\footnote{\label{pvv.9-7}  ७ आकाशादिविभुत्ववदीश्वरप्रामाण्यं कटाक्षयति । द्विविधेन यथोक्तेन लक्षणेन निर्दिष्टं यदेतत् प्रमाणं । प्रमाणसाधर्म्यन्तु साधयिष्यमाणं सिद्धं कृत्वोदाहृतं ।}॥ (८)
+	\pend
+      
+	    
+	    \endnumbering% ending numbering from div
+	    \endgroup
+	    
+	  % running endDocumentHook
+     \backmatter 
+	 \chapter{The TEI Header}
+	 \begin{minted}[fontfamily=rmfamily,fontsize=\footnotesize,breaklines=true]{xml}
+       <teiHeader xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
+   <fileDesc>
+      <titleStmt>
+         <title type="main" subtype="base-text">Pramāṇavārttika</title>
+         <title type="sub" subtype="commentary">Pramāṇavārttikavṛtti</title>
+         <author role="base-author">Dharmakīrti</author>
+         <author role="commentator">Manorathanandin</author>
+         <funder>Deutsche Forschungsgemeinschaft</funder>
+         <funder>The National Endowment for the Humanities</funder>
+         <principal>
+					       <persName>Birgit Kellner</persName>
+				     </principal>
+         <respStmt>
+            <resp>data entry by</resp>
+            <name key="name_swift">SWIFT Information Technologies, Mumbai</name>
+         </respStmt>
+         <respStmt>
+            <resp>prepared for SARIT by</resp>
+            <persName key="name_person_lo">Liudmila Olalde</persName>
+         </respStmt>
+      </titleStmt>
+      <editionStmt>
+         <p> </p>
+      </editionStmt>
+      <publicationStmt>
+         <publisher>SARIT: Search and Retrieval of Indic Texts. DFG/NEH Project (NEH-No. HG5004113), 2013-2016 </publisher>
+         <idno>2014-04-15</idno>
+         <availability status="restricted">
+            <p>Copyright Notice:</p>
+            <p>Copyright 2014 SARIT</p>
+            <licence> 
+						         <p>Distributed under a <ref target="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International licence.</ref> Under this licence, you are free to:</p>
+						         <list>
+                  <item>Share — copy and redistribute the material in any medium or format.</item>
+                  <item>Adapt — remix, transform, and build upon the material for any purpose, even commercially.</item>
+               </list>
+						         <p>The licensor cannot revoke these freedoms as long as you follow the license terms.</p>
+						         <p>Under the following terms:</p>
+						         <list>
+                  <item>Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</item>
+                  <item>ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</item>
+               </list>
+						         <p>More information and fuller details of this license are given on the Creative Commons website.</p>
+					       </licence>
+            <p>SARIT assumes no responsibility for unauthorised use that infringes the rights of any copyright owners, known or unknown.</p>
+         </availability>
+         <date>2014</date>
+      </publicationStmt>
+      <sourceDesc>
+         <bibl xml:id="pvv-sankrtyayana-book">
+					       <title type="main">
+               <persName>Dharmakīrti</persName>'s Pramāṇavārttika</title>
+					       <title type="sub">with a commentary by <persName>Manorathanandin</persName>
+            </title>
+					       <author>Dharmakīrti</author>
+					       <author>Manorathanandin</author>
+					       <editor key="name_person_rs">Rāhula Sāṅkṛtyāyana</editor>
+					       <publisher>Bihar and Orissa Research Society</publisher>
+					       <pubPlace>Patna</pubPlace>
+					       <date>1938-1940</date>
+					       <note>Appendix to the Journal of the Bihar and Orissa Research Society</note>
+					       <note>The manuscript consulted by Sāṅkṛtyāyana is described below.</note>
+				     </bibl>
+         <msDesc>
+            <msIdentifier>
+               <idno/>
+               <altIdentifier>
+                  <idno>Manuscript nr. 237 (henceforth MA).</idno>
+                  <note>In: Sāṅkṛtyāyana, "Second Search of Sanskrit Palm-leaf Mss. in Tibet". JBORS 23,1 (1937) 1-57.</note>
+               </altIdentifier>
+            </msIdentifier>
+            <msContents>
+               <msItem>
+                  <author>Manorathanandin</author>
+                  <title>Pramāṇavārttikavṛtti</title>
+               </msItem>
+            </msContents>
+            <physDesc>
+               <objectDesc>
+                  <p>Written by Vibhūticandra in early old Bengali script (Sāṅkṛtyāyana refers to the script as Kuṭilā), the manuscript comprises 105 leaves of seven lines each that according to Sāṅkṛtyāyana measure 67.31 x 5.80 cm.</p>
+               </objectDesc>
+            </physDesc>
+            <history>
+               <p>On July 28, 1936, Sāṅkṛtyāyana found this paper manuscript of Manorathanandin’s Pramāṇavārttikavṛtti in the hermitage Zha lu ri phug.</p>
+            </history>
+         </msDesc>
+      </sourceDesc>
+   </fileDesc>
+   <encodingDesc>
+      <p>In the source file, there were two types of line breaks: returns (and possible surrounding space) and hyphens+returns. These were replaced with lb-elements. I didn't check whether the source was consequent in this respect. The ed-attribute "s" refers to Sāṅkṛtyāyana's edition<ref sameAs="#pvv-sankrtyayana-book"/>.</p>
+      <p>The folio numbers on the margins were encoded as pb-elements. The ed-attribute "MA" refers to the manuscript used by Sāṅkṛtyāyana. The line numbers in the manuscript were encoded as lb-elements with the ed-attribute "MA".</p>
+      <p>The text is structured in three div-levels:<list>
+            <item>Four chapters encoded as: div n="..." type="chapter" subtype="pariccheda"</item>
+            <item>Subchapters encoded as: div n="[roman numbers]" type="subchapter". The subchapter number is not reflected in the verse numbers.</item>
+            <item>The lowest div-level encloses a verse (or a group of verses) and its corresponding commentary, e.g.: div n="3.121 3.122abc" for a div enclosing verses 121 and the first three padas of 122 of the first pariccheda as well their commentary.</item>
+         </list>
+      </p>
+      <p>The notes represent marginal notes on the manuscript MA, written by Vibhūticandra. The editor Rāhula Sāṅkṛtyāyana is responsible for linking them with particular passages in the text. His linkages await further study. In some places his notes are prefixed with question marks, which we interpret as indicating Sāṅkṛtyāyana's uncertainty regarding where they belong. We placed them right after the immediately preceding note in the text, as a convention.</p>
+      <p>The verse numbers are those of Sāṅkṛtyāyana's edition<ref sameAs="#pvv-sankrtyayana-book"/>.</p>
+      <p>Abbreviations used in the attributes ed, cRef and xml:id's in this file: <!-- this is a provisory list and has to be replaced by a refsDecl -->
+				<list>
+            <item>Divy = Divyāvadāna; the page number refers to P.L. Vaidya, Divyāvadāna, The Mithila Institute of Post-Graduate Studies and Research in Sanskrit Learning, Darbhanga 1959 (Buddhist Sanskrit Texts, 20)</item>
+            <item>MA = Sanskrit manuscript of Manorathanandin's Pramāṇavārttikavṛtti used by Sāṅkṛtyāyana</item>
+            <item>ps = Pramāṇasamuccaya; the verse numbers correspond to <ref target="http://www.ikga.oeaw.ac.at/Mat/dignaga_PS_1.pdf">Steinkellner, Dignāga's Pramāṇasamuccaya, Chapter 1</ref>
+            </item>
+            <item>psv = Pramāṇasamuccayavṛtti; the verse numbers correspond to to <ref target="http://www.ikga.oeaw.ac.at/Mat/dignaga_PS_1.pdf">Steinkellner, Dignāga's Pramāṇasamuccaya, Chapter 1</ref>
+            </item>
+            <item>pv = Dharmakīrti's Pramāṇavārttika</item>
+            <item>pvv = Manorathanandin's Pramāṇavārttikavṛtti</item>
+            <item>ns = Gautama's Nyayasutra</item>
+            <item>VāPa = Bhartṛhari's Vākyapadīya</item>
+            <item>śv = Kumārila's Ślokavārttika</item>
+            <item>pvsv = Dharmakīrti's Pramāṇavārttikasvavṛtti</item>
+            <item>ts = Tattvasaṅgraha; the verse numbers correspond to Krishnamacharya's edition of Tattvasaṅgrahapañjikā</item>
+         </list>
+      </p>
+   </encodingDesc>
+   <profileDesc><!-- ... --></profileDesc>
+   <revisionDesc>
+      <change who="#lo" when="2014-05-18">I corrected the verse number of verse 2.450.</change>
+      <change who="#lo" when="2014-06-04">I corrected the verse number of verse 4.116.</change>
+      <change who="#lo" when="2014-06-04">I corrected the folio number 65b, which was wrong in the printed edition.</change>
+      <change who="#lo" when="2014-06-30">I changed फलभि to फलमि on p. 214, line 15 from below.</change>
+      <change who="#lo" when="2014-07-23">I corrected the verse number (३।१६३) in footnote 345-12. In the printed edition it reads (३।१६५).</change>
+      <change who="#lo" when="2014-07-23">In footnote 370-3 I changed प्रवर्त्तत to प्रवर्त्तेत.</change>
+      <change who="#lo" when="2015-08-18">Added TOC.</change>
+      <change who="#lo" when="2015-12-30">Added @xml:lang to the front-element.</change>
+   </revisionDesc>
+</teiHeader>
+	 \end{minted}
+       
+      \clearpage
+      \begin{english}
+      \nocite{*}
+      \printshorthands
+      \printbibliography
+      \end{english}
+    
+\end{document}
