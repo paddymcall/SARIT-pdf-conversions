@@ -11,12 +11,12 @@ COMPILETEXSCRIPT=$(realpath ${BASEDIR}"/bin/compile_xetex.sh")
 STARTDIR=$(pwd)
 OUTDIR=$(realpath $BASEDIR"/TeX/")
 XMLDIR=$(realpath $BASEDIR"/SARIT-corpus/")
-LOGFILE=$(realpath $OUTDIR"/pdf-conversion.log")
+#LOGFILE=$(realpath $OUTDIR"/pdf-conversion.log")
 
 function cleanup {
     cd $STARTDIR
     echo "Results are in ${OUTDIR}."
-    echo "Logfile is in ${LOGFILE}"
+#    echo "Logfile is in ${LOGFILE}"
 }
 trap cleanup EXIT
 
