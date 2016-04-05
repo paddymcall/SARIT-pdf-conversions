@@ -20,21 +20,17 @@ STARTDIR=$(pwd)
 CORPUS=$(realpath ${CORPUS})
 XDIR=$(dirname ${CORPUS})
 OUTDIR=$(mktemp --tmpdir -d "pdf-conv-XXXX")
-LOGFILE=$(realpath $OUTDIR"/pdf-conversion.log")
 
 function cleanup {
     cd $STARTDIR
     echo "Results are in ${OUTDIR}."
-    echo "Logfile is in ${LOGFILE}"
 }
 trap cleanup EXIT
 
 cd $XDIR
 
-echo "Logging to ${LOGFILE}"
-
 xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  ${CORPUS} | \
-    parallel --bar --jobs -1 $CONVERSIONSCRIPT {} ${OUTDIR} 1> ${LOGFILE} 2>&1
+    parallel --bar --jobs -1 $CONVERSIONSCRIPT {} ${OUTDIR}
 
 
 cd ${OUTDIR}
