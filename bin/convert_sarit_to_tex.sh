@@ -32,7 +32,15 @@ OUTPUT=${OUTDIR}/$(basename ${XMLFILE} .xml).tex
 
 echo "Converting ${XMLFILE} to ${OUTPUT}."
 
-saxonb-xslt -ext:on -xsl:${STYLESHEET} -s:${XMLFILE} -o:${OUTPUT} # \
+if type emacs > /dev/null 2>&1  && [ -f ${BASEDIR}/bin/hyphenate.sh ]; then
+    echo "Hyphenating"
+    cat ${XMLFILE} | ${BASEDIR}/bin/hyphenate.sh | saxonb-xslt -ext:on -xsl:${STYLESHEET} -s:- -o:${OUTPUT}
+else
+    echo "Not hyphenating"
+    cat ${XMLFILE} | saxonb-xslt -ext:on -xsl:${STYLESHEET} -s:- -o:${OUTPUT}
+fi
+
+ # \
 # reencode=false  \
 # documentclass=memoir \
 # userpackage=bibsetup \
