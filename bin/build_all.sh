@@ -23,7 +23,7 @@ OUTDIR=$(mktemp --tmpdir -d "pdf-conv-XXXX")
 
 function cleanup {
     cd $STARTDIR
-    echo "Results are in ${OUTDIR}."
+    echo "Cleaning up.  Results should be in ${OUTDIR}."
 }
 trap cleanup EXIT
 
@@ -31,7 +31,6 @@ cd $XDIR
 
 xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  ${CORPUS} | \
     parallel --jobs -1 ${CONVERSIONSCRIPT} {} ${OUTDIR}
-
 
 cd ${OUTDIR}
 

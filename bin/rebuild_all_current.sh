@@ -26,6 +26,8 @@ find $OUTDIR -type f -iname "*.tex"  -printf '%f\n' | \
 
 cd $OUTDIR
 
-ls *tex | \
+find ./ -type f -iname "*.tex"  -printf '%f\n' | \
+    sed 's/.tex$//' | \
     parallel --jobs -1 ${COMPILETEXSCRIPT} {} 
+
 
