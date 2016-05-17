@@ -21,11 +21,11 @@ trap cleanup EXIT
 
 find $OUTDIR -type f -iname "*.tex"  -printf '%f\n' | \
     sed 's/tex$/xml/' | \
-    parallel --bar --jobs 1 $CONVERSIONSCRIPT $XMLDIR/{} $OUTDIR
+    parallel --jobs 1 $CONVERSIONSCRIPT $XMLDIR/{} $OUTDIR
 
 
 cd $OUTDIR
 
 ls *tex | \
-    parallel --bar --jobs -1 ${COMPILETEXSCRIPT} {} 
+    parallel --jobs -1 ${COMPILETEXSCRIPT} {} 
 

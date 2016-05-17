@@ -30,12 +30,12 @@ trap cleanup EXIT
 cd $XDIR
 
 xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  ${CORPUS} | \
-    parallel --bar --jobs -1 $CONVERSIONSCRIPT {} ${OUTDIR}
+    parallel --jobs -1 ${CONVERSIONSCRIPT} {} ${OUTDIR}
 
 
 cd ${OUTDIR}
 
-ls *tex | parallel --bar --jobs -1 ${COMPILETEXSCRIPT} {} 
+ls *tex | parallel --jobs -1 ${COMPILETEXSCRIPT} {} 
 
 
 # for i in `ls *tex`
@@ -48,5 +48,5 @@ ls *tex | parallel --bar --jobs -1 ${COMPILETEXSCRIPT} {}
 # done
 
 # or this, but loses logs:
-# parallel --bar --jobs 0.5% $CONVERSIONSCRIPT {} ${OUTDIR} 2> >(zenity --progress --auto-kill)
+# parallel --jobs 0.5% $CONVERSIONSCRIPT {} ${OUTDIR} 2> >(zenity --progress --auto-kill)
 

@@ -27,4 +27,10 @@ trap cleanup EXIT
 cd ${TEXDIR}
 
 # -8bit needed for the "^^I"/tab problem in minted environment
-latexmk -f -silent -pdflatex="xelatex -8bit -shell-escape %O %S" -pdf -dvi- -ps- ${COMPILEFILE}
+latexmk -f -gg -time -rules \
+	-xelatex \
+	-file-line-error \
+	-8bit \
+	-shell-escape \
+	-interaction=nonstopmode \
+	${COMPILEFILE}

@@ -30,7 +30,7 @@ fi
 
 OUTPUT=${OUTDIR}/$(basename ${XMLFILE} .xml).tex
 
-echo "Converting ${XMLFILE} to ${OUTPUT}."
+echo "Converting ${XMLFILE} to ${OUTPUT}"
 
 saxonb-xslt -ext:on -xsl:${STYLESHEET} -s:${XMLFILE} -o:${OUTPUT} # \
 # reencode=false  \
@@ -46,3 +46,4 @@ saxonb-xslt -ext:on -xsl:${STYLESHEET} -s:${XMLFILE} -o:${OUTPUT} # \
 
 # xelatex -shell-escape $output.tex
 
+echo "Converted ${XMLFILE} to ${OUTPUT}"
