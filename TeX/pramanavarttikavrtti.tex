@@ -18,9 +18,9 @@
   \catcode`〕=\active \def〕{{]}}% translate 〕CLOSING TORTOISE SHELL BRACKET
   \catcode` =\active \def {\,}
   \catcode`·=\active \def·{\textbullet}
-  %% BREAK PERMITTED HERE
-  \catcode`=\active \def{\discretionary{-}{}{}\nobreak\hspace{0pt}}
-  \catcode`ꣵ=\active \defꣵ{
+  %% BREAK PERMITTED HERE: \discretionary{-}{}{}\nobreak\hspace{0pt}
+  \catcode`=\active \def{\-}
+  \catcode`ꣵ=\active \defꣵ{%
   म्\textsuperscript{cb}%for candrabindu
   }
   %% show a lot of tolerance
@@ -218,6 +218,7 @@
        pdftitle={Dharmakīrti's Pramāṇavārttika with a commentary by Manorathanandin},
        pdfauthor={SARIT: Search and Retrieval of Indic Texts. DFG/NEH Project (NEH-No. HG5004113), 2013-2016 }]{hyperref}
        \hyperbaseurl{}
+       \renewcommand\UrlFont{\rmlatinfont}
        \usepackage[english]{cleveref}% clashes with eledmac < 1.10.1!
        % \newcommand{\cref}{\href}
      
@@ -1351,14 +1352,14 @@
 	  
 	    
 	    \stanza[\smallbreak]
-	\label{pv.1.27}\flagstanza{\tiny\textenglish{...v.1.27}}स्वभावपरिणा\edtext{}{\lemma{*}\Afootnote{{\rmlatinfont Correction: }मे न {\rmlatinfont (sic!)}; मेन {\rmlatinfont (corr by \href{frw}{frw})}}} हेतुरङ् कुरजन्मनि ।&भूम्यादिस्तस्य संस्कारे तद्विशेषस्य दर्शनात् ॥ २७ ॥\&[\smallbreak]
+	\label{pv.1.27}\flagstanza{\tiny\textenglish{...v.1.27}}स्वभावपरिणा\edtext{}{\lemma{*}\Afootnote{{\rmlatinfont Correction: }मे न {\rmlatinfont (sic!)}; मेन {\rmlatinfont (corr by \url{frw})}}} हेतुरङ् कुरजन्मनि ।&भूम्यादिस्तस्य संस्कारे तद्विशेषस्य दर्शनात् ॥ २७ ॥\&[\smallbreak]
 
 
 	
 	  \endgroup
 	
 
-	  \pstart उपसर्पणप्रत्यया\edtext{}{\edlabel{pvv.18-5}\lemma{या}\Bfootnote{आद्युत्पत्तौ जगतो निमित्तमिति चेन्न तेनैवानेकान्त ईश्वरान्तरप्रसङ्गात् {\tiny $_{lb}$}तन्मात्रहेतुत्वे कर्मनैफल्यं ॥}}ददृष्टसह\edtext{}{\edlabel{pvv.18-6}\lemma{ह}\Bfootnote{वृष्ट्यादि ।}} कारिणः प्राप्तकार्योत्पादानुगु{\tiny $_{6}$}णातिशया {\color{DodgerBlue3}भूम्यादिः {\tiny $_{lb}$}स्वभावपरिणा\edtext{}{\lemma{*}\Afootnote{{\rmlatinfont Correction: }मे न {\rmlatinfont (sic!)}; मेन {\rmlatinfont (corr by \href{frw}{frw})}}}} कार्यानुगुणातिशयतारतम्यमुक्तापरापरक्षणलक्षणेनान्त्यावस्था{\tiny $_{lb}$}\leavevmode\ledsidenote{\textenglish{019/s}} प्राप्ताऽ{\color{DodgerBlue3}ङ्कुरजन्मनि हेतु}र्भवति (।) स तु पूर्व्वपरैकरूपः क्रमाक्रमयोरर्थक्रिया{\tiny $_{lb}$}विरोधात् । कुत एतदिति चेत् तस्य भूम्यादेः कर्षणपांसुप्रक्षेपादिना {\color{DodgerBlue3}संस्कारे} तस्याङकुरस्य पुष्टतरादि{\color{DodgerBlue3}विशेषस्य दर्शनात्} । (२७)
+	  \pstart उपसर्पणप्रत्यया\edtext{}{\edlabel{pvv.18-5}\lemma{या}\Bfootnote{आद्युत्पत्तौ जगतो निमित्तमिति चेन्न तेनैवानेकान्त ईश्वरान्तरप्रसङ्गात् {\tiny $_{lb}$}तन्मात्रहेतुत्वे कर्मनैफल्यं ॥}}ददृष्टसह\edtext{}{\edlabel{pvv.18-6}\lemma{ह}\Bfootnote{वृष्ट्यादि ।}} कारिणः प्राप्तकार्योत्पादानुगु{\tiny $_{6}$}णातिशया {\color{DodgerBlue3}भूम्यादिः {\tiny $_{lb}$}स्वभावपरिणा\edtext{}{\lemma{*}\Afootnote{{\rmlatinfont Correction: }मे न {\rmlatinfont (sic!)}; मेन {\rmlatinfont (corr by \url{frw})}}}} कार्यानुगुणातिशयतारतम्यमुक्तापरापरक्षणलक्षणेनान्त्यावस्था{\tiny $_{lb}$}\leavevmode\ledsidenote{\textenglish{019/s}} प्राप्ताऽ{\color{DodgerBlue3}ङ्कुरजन्मनि हेतु}र्भवति (।) स तु पूर्व्वपरैकरूपः क्रमाक्रमयोरर्थक्रिया{\tiny $_{lb}$}विरोधात् । कुत एतदिति चेत् तस्य भूम्यादेः कर्षणपांसुप्रक्षेपादिना {\color{DodgerBlue3}संस्कारे} तस्याङकुरस्य पुष्टतरादि{\color{DodgerBlue3}विशेषस्य दर्शनात्} । (२७)
 	\pend
       \label{div_pvv.1.28}
 	  

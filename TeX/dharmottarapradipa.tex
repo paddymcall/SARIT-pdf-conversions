@@ -18,9 +18,9 @@
   \catcode`〕=\active \def〕{{]}}% translate 〕CLOSING TORTOISE SHELL BRACKET
   \catcode` =\active \def {\,}
   \catcode`·=\active \def·{\textbullet}
-  %% BREAK PERMITTED HERE
-  \catcode`=\active \def{\discretionary{-}{}{}\nobreak\hspace{0pt}}
-  \catcode`ꣵ=\active \defꣵ{
+  %% BREAK PERMITTED HERE: \discretionary{-}{}{}\nobreak\hspace{0pt}
+  \catcode`=\active \def{\-}
+  \catcode`ꣵ=\active \defꣵ{%
   म्\textsuperscript{cb}%for candrabindu
   }
   %% show a lot of tolerance
@@ -219,6 +219,7 @@
        pdfauthor={SARIT: Search and Retrieval of Indic Texts. DFG/NEH Project (NEH-No.
 	HG5004113), 2013-2016 }]{hyperref}
        \hyperbaseurl{}
+       \renewcommand\UrlFont{\rmlatinfont}
        \usepackage[english]{cleveref}% clashes with eledmac < 1.10.1!
        % \newcommand{\cref}{\href}
      
