@@ -6,8 +6,26 @@ set -o nounset # don't allow uninitalized vars
 
 OLDIFS=$IFS
 IFS=$(echo -en "\n\b")
+
 STARTDIR="$(pwd)"
-OUTDIR="$(mktemp --tmpdir -d "pdf-conv-XXXX")"
+CORPUS="${1:-}"
+
+if [ -z "${CORPUS}" ]
+then
+    echo "Please specify name of corpus file (usually SARIT-corpus/saritcorpus.xml)."
+    exit 1
+fi
+
+OUTDIR="${2:-}"
+
+if [ -z "${OUTDIR}" ]; then
+    OUTDIR="$(mktemp --tmpdir -d "pdf-conv-XXXX")"
+elif [ ! -d "${OUTDIR}" ]; then
+    echo "This is not a directory: ${OUTDIR}"
+    exit 1
+fi
+
+echo "Will save output to $OUTDIR"
 
 function cleanup {
     cd $STARTDIR
@@ -19,13 +37,7 @@ trap cleanup EXIT
 BASEDIR="$(realpath $(dirname ${0})"/../")"
 CONVERSIONSCRIPT="$(realpath ${BASEDIR}"/bin/convert_sarit_to_tex.sh")"
 COMPILETEXSCRIPT="$(realpath ${BASEDIR}"/bin/compile_xetex.sh")"
-CORPUS="${1:-}"
 
-if [ -z "${CORPUS}" ]
-    then
-    echo "Please specify name of corpus file (usually SARIT-corpus/saritcorpus.xml)."
-    exit 1
-fi
 
 CORPUS="$(realpath ${CORPUS})"
 XDIR="$(dirname ${CORPUS})"
