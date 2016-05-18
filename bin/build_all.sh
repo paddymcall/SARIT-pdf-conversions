@@ -52,8 +52,11 @@ xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href
 
 cd "${OUTDIR}"
 
-find ./ "*tex" | parallel -q --jobs -1 "${COMPILETEXSCRIPT}" "{}"
+find ./ -type f -iname "*tex" | parallel -q --jobs -1 "${COMPILETEXSCRIPT}" "{}"
 
+if type pdfinfo > /dev/null 2>&1; then
+    find ./ -type f -iname "*pdf" | parallel -q --jobs -1 pdfinfo "{}" 
+fi
 
 # for i in `ls *tex`
 # do
