@@ -3,32 +3,41 @@
 set -o errexit # exit on error 
 set -o nounset # don't allow uninitalized vars
 
-BASEDIR=$(dirname ${0})"/.."
-XMLFILE=${1:-}
-OUTDIR=${2:-}
-STYLESHEET=$(realpath ${BASEDIR}/"./Stylesheets/profiles/sarit/latex/to.xsl")
+OLDIFS=$IFS
+IFS=$(echo -en "\n\b")
+
+BASEDIR="$(dirname ${0})/../"
+XMLFILE="${1:-}"
+OUTDIR="${2:-}"
+STYLESHEET="$(realpath ${BASEDIR}./Stylesheets/profiles/sarit/latex/to.xsl)"
+
+function cleanup {
+    IFS=$OLDIFS
+    echo "Cleaning up.  Results should be in ${OUTDIR}."
+}
+trap cleanup EXIT
 
 if [ -z "${XMLFILE}" ]; then
     echo "You need to specify a file for conversion."
     exit 1
 elif [ -f "${XMLFILE}" ]; then
-    XMLFILE=`realpath $XMLFILE`
+    XMLFILE="$(realpath $XMLFILE)"
 else
     echo "${XMLFILE} not found."
     exit 1
 fi
 
 if [ -z ${OUTDIR} ] && [ -d ${BASEDIR}/"TeX/" ]; then
-    OUTDIR=$(realpath ${BASEDIR}"/TeX/")
+    OUTDIR="$(realpath ${BASEDIR}/TeX/)"
     echo "OUTDIR is: ${OUTDIR}"
 elif [ -d "${OUTDIR}" ]; then
-    OUTDIR=$(realpath ${OUTDIR})
+    OUTDIR="$(realpath ${OUTDIR})"
 else
     echo "Target directory ${OUTDIR} does not exist."
     exit 1
 fi
 
-OUTPUT=${OUTDIR}/$(basename ${XMLFILE} .xml).tex
+OUTPUT="${OUTDIR}/$(basename ${XMLFILE} .xml).tex"
 
 echo "Converting ${XMLFILE} to ${OUTPUT}"
 

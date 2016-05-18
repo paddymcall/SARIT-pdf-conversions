@@ -4,11 +4,21 @@
 set -o errexit # exit on error 
 set -o nounset # don't allow uninitalized vars
 
-BASEDIR=$(realpath $(dirname ${0})"/../")
-CONVERSIONSCRIPT=$(realpath ${BASEDIR}"/bin/convert_sarit_to_tex.sh")
-COMPILETEXSCRIPT=$(realpath ${BASEDIR}"/bin/compile_xetex.sh")
+OLDIFS=$IFS
+IFS=$(echo -en "\n\b")
+STARTDIR="$(pwd)"
 
-CORPUS=${1:-}
+function cleanup {
+    cd $STARTDIR
+    IFS=$OLDIFS
+    echo "Cleaning up"
+}
+trap cleanup EXIT
+
+BASEDIR="$(realpath $(dirname ${0})"/../")"
+CONVERSIONSCRIPT="$(realpath ${BASEDIR}"/bin/convert_sarit_to_tex.sh")"
+COMPILETEXSCRIPT="$(realpath ${BASEDIR}"/bin/compile_xetex.sh")"
+CORPUS="${1:-}"
 
 if [ -z "${CORPUS}" ]
     then
@@ -16,10 +26,9 @@ if [ -z "${CORPUS}" ]
     exit 1
 fi
 
-STARTDIR=$(pwd)
-CORPUS=$(realpath ${CORPUS})
-XDIR=$(dirname ${CORPUS})
-OUTDIR=$(mktemp --tmpdir -d "pdf-conv-XXXX")
+CORPUS="$(realpath ${CORPUS})"
+XDIR="$(dirname ${CORPUS})"
+OUTDIR="$(mktemp --tmpdir -d "pdf-conv-XXXX")"
 
 function cleanup {
     cd $STARTDIR

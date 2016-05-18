@@ -4,9 +4,18 @@
 set -o errexit # exit on error 
 set -o nounset # don't allow uninitalized vars
 
-BASEDIR=$(realpath $(dirname ${0})"/../")
+OLDIFS=$IFS
+IFS=$(echo -en "\n\b")
 
-TEXFILE=${1:-}
+BASEDIR="$(realpath $(dirname ${0})/../)"
+
+TEXFILE="${1:-}"
+
+function cleanup {
+    IFS=$OLDIFS
+    echo "Cleaning up"
+}
+trap cleanup EXIT
 
 if [ -z "${TEXFILE}" ]
     then
@@ -14,9 +23,9 @@ if [ -z "${TEXFILE}" ]
     exit 1
 fi
 
-STARTDIR=$(pwd)
-TEXDIR=$(dirname ${TEXFILE})
-COMPILEFILE=$(basename ${TEXFILE} ".tex")
+STARTDIR="$(pwd)"
+TEXDIR="$(dirname ${TEXFILE})"
+COMPILEFILE="$(basename ${TEXFILE} .tex)"
 
 function cleanup {
     cd ${STARTDIR}
