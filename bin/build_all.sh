@@ -40,7 +40,7 @@ xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href
 
 cd "${OUTDIR}"
 
-find ./ "*tex" | parallel --jobs -1 "${COMPILETEXSCRIPT}" "{}"
+find ./ "*tex" | parallel -q --jobs -1 "${COMPILETEXSCRIPT}" "{}"
 
 
 # for i in `ls *tex`
