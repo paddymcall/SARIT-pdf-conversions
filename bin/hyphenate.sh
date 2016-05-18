@@ -5,8 +5,8 @@
   '(2309 2310 2366 2311 2367 2312 2368 2313 2369 2314 2370 2315 2371 2316 2402 2317 2373 2318 2374 2319 2375 2320 2376 2321 2377 2322 2378 2323 2379 2324 2380 2400 2372 2401 2403))
 
 (defvar hyph-hack/long-word-regex
-  ;; (rx-to-string '(>= 60 (syntax word)))
-  "\\(?:\\sw\\{60,\\}\\)")
+  ;; (rx-to-string '(>= 50 (syntax word)))
+  "\\(?:\\sw\\{50,\\}\\)")
 
 (defvar hyph-hack/vowels-iast-regex;; not complete
   ;; (regexp-opt (list "a" "ā" "i" "ī" "u" "ū" "ṛ" "ḷ"))
@@ -52,7 +52,11 @@ devanāgarī."
 
 This function tries to break suspiciously long words that LaTeX
 might crash on.  To change length of string to work on, check
-`hyph-hack/long-word-regex'."
+`hyph-hack/long-word-regex'.
+
+See
+http://tex.stackexchange.com/questions/294933/long-sanskrit-string-doesnt-get-hyphenated and 
+the thread starting here http://tug.org/pipermail/xetex/2016-March/026542.html."
   (let ((end-of-match 1)
 	(case-fold-search nil)
 	results)
@@ -63,8 +67,9 @@ might crash on.  To change length of string to work on, check
 	(setq end-of-match (match-end 0))
 	(goto-char (match-beginning 0))
 	(while (re-search-forward hyph-hack/vowels-iast-regex end-of-match t)
-	  (insert hyph-hack/break-permitted)
-	  (setq end-of-match (+ end-of-match 1)))
+	  (when (looking-at "\\w\\w")
+	    (insert hyph-hack/break-permitted)
+	    (setq end-of-match (+ end-of-match 1))))
 	(goto-char end-of-match)
 	(setq end-of-match nil))
       (buffer-substring-no-properties (point-min) (point-max)))))

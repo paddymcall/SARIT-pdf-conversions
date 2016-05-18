@@ -4,6 +4,9 @@
 set -o errexit # exit on error 
 set -o nounset # don't allow uninitalized vars
 
+OLDIFS=$IFS
+IFS=$(echo -en "\n\b")
+
 BASEDIR=$(realpath $(dirname ${0})"/../")
 CONVERSIONSCRIPT=$(realpath ${BASEDIR}"/bin/convert_sarit_to_tex.sh")
 COMPILETEXSCRIPT=$(realpath ${BASEDIR}"/bin/compile_xetex.sh")
@@ -13,6 +16,7 @@ OUTDIR=$(realpath $BASEDIR"/TeX/")
 XMLDIR=$(realpath $BASEDIR"/SARIT-corpus/")
 
 function cleanup {
+    IFS=$OLDIFS
     cd $STARTDIR
     echo "Results are in ${OUTDIR}."
 }
@@ -21,13 +25,13 @@ trap cleanup EXIT
 
 find $OUTDIR -type f -iname "*.tex"  -printf '%f\n' | \
     sed 's/tex$/xml/' | \
-    parallel --jobs 1 $CONVERSIONSCRIPT $XMLDIR/{} $OUTDIR
+    parallel -q --jobs 1 "$CONVERSIONSCRIPT" "$XMLDIR/"{} "$OUTDIR"
 
 
-cd $OUTDIR
+cd "$OUTDIR"
 
 find ./ -type f -iname "*.tex"  -printf '%f\n' | \
     sed 's/.tex$//' | \
-    parallel --jobs -1 ${COMPILETEXSCRIPT} {} 
+    parallel -q --jobs -1 "${COMPILETEXSCRIPT}" {} 
 
 
