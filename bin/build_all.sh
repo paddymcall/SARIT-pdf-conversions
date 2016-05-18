@@ -7,11 +7,12 @@ set -o nounset # don't allow uninitalized vars
 OLDIFS=$IFS
 IFS=$(echo -en "\n\b")
 STARTDIR="$(pwd)"
+OUTDIR="$(mktemp --tmpdir -d "pdf-conv-XXXX")"
 
 function cleanup {
     cd $STARTDIR
     IFS=$OLDIFS
-    echo "Cleaning up"
+    echo "Cleaning up, results should be in ${OUTDIR}"
 }
 trap cleanup EXIT
 
@@ -28,22 +29,18 @@ fi
 
 CORPUS="$(realpath ${CORPUS})"
 XDIR="$(dirname ${CORPUS})"
-OUTDIR="$(mktemp --tmpdir -d "pdf-conv-XXXX")"
 
-function cleanup {
-    cd $STARTDIR
-    echo "Cleaning up.  Results should be in ${OUTDIR}."
-}
-trap cleanup EXIT
 
-cd $XDIR
+cd "$XDIR"
 
-xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  ${CORPUS} | \
-    parallel --jobs -1 ${CONVERSIONSCRIPT} {} ${OUTDIR}
+echo "Calling xmlstarlet"
 
-cd ${OUTDIR}
+xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  "${CORPUS}" | \
+    parallel -q --jobs -1 "${CONVERSIONSCRIPT}" "{}" "${OUTDIR}"
 
-ls *tex | parallel --jobs -1 ${COMPILETEXSCRIPT} {} 
+cd "${OUTDIR}"
+
+find ./ "*tex" | parallel --jobs -1 "${COMPILETEXSCRIPT}" "{}"
 
 
 # for i in `ls *tex`
