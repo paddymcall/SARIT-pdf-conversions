@@ -25,6 +25,8 @@ elif [ ! -d "${OUTDIR}" ]; then
     exit 1
 fi
 
+OUTDIR="$(realpath "${OUTDIR}")"
+
 echo "Will save output to $OUTDIR"
 
 function cleanup {
