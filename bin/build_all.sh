@@ -27,7 +27,7 @@ fi
 
 OUTDIR="$(realpath "${OUTDIR}")"
 
-echo "Will save output to $OUTDIR"
+echo "Will save output to ${OUTDIR}"
 
 function cleanup {
     cd $STARTDIR
