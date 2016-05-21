@@ -11,7 +11,7 @@ before_install:
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
   - sudo apt-get -qq update
-  - sudo apt-get install -qq emacs24 jing xmlstarlet libxml2-utils parallel libxml2 fonts-tibetan-machine fonts-texgyre ttf-indic-fonts realpath
+  - sudo apt-get install -qq emacs24 jing xmlstarlet libxml2-utils parallel libxml2 fonts-tibetan-machine fonts-texgyre ttf-indic-fonts realpath libsaxonb-java
   # install tex, see https://github.com/scottkosty/install-tl-ubuntu/
   - wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
   - sudo ./install-tl-ubuntu
