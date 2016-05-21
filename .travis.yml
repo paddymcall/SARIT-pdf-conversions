@@ -1,0 +1,14 @@
+sudo: required
+dist: trusty
+language: bash
+
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -qq jing xmlstarlet libxml2-utils parallel libxml2 fonts-tibetan-machine fonts-texgyre ttf-indic-fonts
+  - wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
+  - sudo ./install-tl-ubuntu
+  - mkdir output
+
+script:
+  - bash ./bin/build_all.sh ./SARIT-corpus/saritcorpus.xml ./output/
