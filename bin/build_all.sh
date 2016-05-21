@@ -54,6 +54,12 @@ xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href
 
 cd "${OUTDIR}"
 
+echo "We have these tex files:"
+
+find ./ -type f -iname "*tex"
+
+echo "Compiling to PDF"
+
 find ./ -type f -iname "*tex" | parallel --gnu -q --jobs -1 "${COMPILETEXSCRIPT}" "{}"
 
 if type pdfinfo > /dev/null 2>&1; then

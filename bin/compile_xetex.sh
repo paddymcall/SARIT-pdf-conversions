@@ -8,10 +8,12 @@ OLDIFS=$IFS
 IFS=$(echo -en "\n\b")
 
 BASEDIR="$(realpath $(dirname ${0})/../)"
+STARTDIR="$(pwd)"
 
 TEXFILE="${1:-}"
 
 function cleanup {
+    cd ${STARTDIR}
     IFS=$OLDIFS
     echo "Cleaning up"
 }
@@ -23,15 +25,8 @@ if [ -z "${TEXFILE}" ]
     exit 1
 fi
 
-STARTDIR="$(pwd)"
 TEXDIR="$(dirname ${TEXFILE})"
 COMPILEFILE="$(basename ${TEXFILE} .tex)"
-
-function cleanup {
-    cd ${STARTDIR}
-    echo "Results are in ${TEXDIR}."
-}
-trap cleanup EXIT
 
 cd ${TEXDIR}
 

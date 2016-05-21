@@ -15,6 +15,7 @@ before_install:
   # install tex, see https://github.com/scottkosty/install-tl-ubuntu/
   - wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
   - sudo ./install-tl-ubuntu
+  - cat /etc/environment
   - mkdir output
 
 script:
