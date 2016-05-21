@@ -14,9 +14,13 @@ before_install:
   - sudo apt-get install -qq emacs24 jing xmlstarlet libxml2-utils parallel libxml2 fonts-tibetan-machine fonts-texgyre ttf-indic-fonts realpath libsaxonb-java
   # install tex, see https://github.com/scottkosty/install-tl-ubuntu/
   - wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
-  - sudo ./install-tl-ubuntu
+  # - sudo ./install-tl-ubuntu
   - cat /etc/environment
-  - mkdir output
 
 script:
-  - bash ./bin/build_all.sh ./SARIT-corpus/saritcorpus.xml ./output/
+  - for i in `xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  ./SARIT-corpus/saritcorpus.xml`; do ./bin/convert_sarit_to_tex.sh ./SARIT-corpus/"$i"; done
+  - cd ./TeX
+  - for i in `ls *tex`; do echo xelatex -shell-escape -8bit -interaction=nonstopmode "$i"; done
+  - for i in `ls *tex`; do echo biber `basename "$i" tex`; done
+  - for i in `ls *tex`; do echo xelatex -shell-escape -8bit -interaction=nonstopmode "$i"; done
+  - for i in `ls *tex`; do echo xelatex -shell-escape -8bit -interaction=nonstopmode "$i"; done
