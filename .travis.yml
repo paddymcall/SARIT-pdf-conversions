@@ -2,8 +2,14 @@ sudo: required
 dist: trusty
 language: bash
 
+# Handle git submodules yourself
+git:
+  submodules: false
 
 before_install:
+  # Use sed to replace the SSH URL with the public URL, then initialize submodules
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
   - sudo apt-get -qq update
   - sudo apt-get install -qq jing xmlstarlet libxml2-utils parallel libxml2 fonts-tibetan-machine fonts-texgyre ttf-indic-fonts
   - wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
