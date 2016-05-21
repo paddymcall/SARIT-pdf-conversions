@@ -48,14 +48,15 @@ cd "$XDIR"
 echo "Calling xmlstarlet"
 
 xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  "${CORPUS}" | \
-    parallel -q --jobs -1 "${CONVERSIONSCRIPT}" "{}" "${OUTDIR}"
+    parallel --gnu -q --jobs -1 "${CONVERSIONSCRIPT}" "{}" "${OUTDIR}"
 
 cd "${OUTDIR}"
 
-find ./ -type f -iname "*tex" | parallel -q --jobs -1 "${COMPILETEXSCRIPT}" "{}"
+find ./ -type f -iname "*tex" | parallel --gnu -q --jobs -1 "${COMPILETEXSCRIPT}" "{}"
 
 if type pdfinfo > /dev/null 2>&1; then
-    find ./ -type f -iname "*pdf" | parallel -q --jobs -1 pdfinfo "{}" 
+    echo "Stats about the generated pdfs: "
+    find ./ -type f -iname "*pdf" | parallel --gnu -q --jobs -1 pdfinfo "{}" 
 fi
 
 # for i in `ls *tex`
