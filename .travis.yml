@@ -24,8 +24,8 @@ script:
   - cd ./TeX
   - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
   - echo "Checking TeX syntax"
-  - for i in `ls *tex`; do echo "xelatex -no-pdf -shell-escape -8bit -interaction=batchmode \"$i\""; done > /tmp/tex.txt
-  - parallel --bar < /tmp/tex.txt  > general.log
+  - for i in `ls *tex`; do echo "echo Compiling \"$i\" && xelatex -no-pdf -shell-escape -8bit -interaction=batchmode \"$i\""; done > /tmp/tex.txt
+  - parallel < /tmp/tex.txt  > general.log
   # - for i in `ls *tex`; do echo "Compiling $i" ; time xelatex -file-line-error -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; echo "Log: "; tail -n 20 travislog.txt ; done
   # - for i in `ls *tex`; do biber `basename "$i" tex` >> travislog.txt 2>&1 ; done
   # - for i in `ls *tex`; do echo "Compiling $i" ; time xelatex -file-line-error -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; echo "Log: "; tail -n 20 travislog.txt; done
