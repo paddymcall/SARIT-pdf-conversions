@@ -20,7 +20,6 @@ before_install:
 script:
   - xmlstarlet sel -N xi="http://www.w3.org/2001/XInclude" -t -m "//xi:include/@href" -o "./bin/convert_sarit_to_tex.sh " -o "SARIT-corpus/" -v "." -n  "./SARIT-corpus/saritcorpus.xml" > /tmp/conv.txt
   - parallel < /tmp/conv.txt > /dev/null 2>&1
-  ## this won't work: travis unconditional termination of jobs after 1hr for free accounts
   - cd ./TeX
   - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
   - echo "Checking TeX syntax"
@@ -33,8 +32,8 @@ script:
   - parallel < /tmp/tex.txt  >> general.log
 
 after_script:
-  - echo "PDF stats:"
-  - for i in `ls ./*pdf`; do echo "==== For $i"; pdfinfo "$i"; done
+  # - echo "PDF stats:"
+  # - for i in `ls ./*pdf`; do echo "==== For $i"; pdfinfo "$i"; done
   - echo "Erorrs in log files:"
   - rgrep -i error ./*log
   - echo "Last 40 lines of log files:"
