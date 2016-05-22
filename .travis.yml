@@ -31,19 +31,10 @@ script:
   - parallel < /tmp/bibtex.txt  >> general.log
   - echo "Second latex run ..."
   - parallel < /tmp/tex.txt  >> general.log
-  # - for i in `ls *tex`; do echo "Compiling $i" ; time xelatex -file-line-error -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; echo "Log: "; tail -n 20 travislog.txt ; done
-  # - for i in `ls *tex`; do biber `basename "$i" tex` >> travislog.txt 2>&1 ; done
-  # - for i in `ls *tex`; do echo "Compiling $i" ; time xelatex -file-line-error -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; echo "Log: "; tail -n 20 travislog.txt; done
-  # - for i in `ls *tex`; do biber `basename "$i" tex` >> travislog.txt 2>&1 ; done
-  # - for i in `ls *tex`; do echo "Compiling $i" ; time xelatex -file-line-error -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; echo "Log: "; tail -n 20 travislog.txt; done
-  # - echo "Error list: "
-  # - rgrep -i error ./*log
-  # - echo "Last 100 lines of log: "
-  # - tail -n 100 travislog.txt
-  # - echo "PDFinfos:"
-  # - for i in `ls *pdf`; do echo "PDFinfo for $i:"; pdfinfo "$i"; echo "======="; done
 
 after_script:
+  - echo "PDF stats:"
+  - for i in `ls ./*pdf`; do echo "==== For $i"; pdfinfo "$i"; done
   - echo "Erorrs in log files:"
   - rgrep -i error ./*log
   - echo "Last 40 lines of log files:"

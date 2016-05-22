@@ -36,5 +36,5 @@ latexmk -f -gg -time -rules \
 	-file-line-error \
 	-8bit \
 	-shell-escape \
-	-interaction=nonstopmode \
+	-interaction=batchmode \
 	${COMPILEFILE}
