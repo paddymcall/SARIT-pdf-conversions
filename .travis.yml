@@ -11,20 +11,31 @@ before_install:
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
   - sudo apt-get -qq update
-  - sudo apt-get install -qq emacs24 jing xmlstarlet libxml2-utils parallel libxml2 fonts-tibetan-machine fonts-texgyre ttf-indic-fonts realpath libsaxonb-java
+  - sudo apt-get install -qq emacs24 jing xmlstarlet libxml2-utils parallel libxml2 fonts-tibetan-machine fonts-texgyre ttf-indic-fonts realpath libsaxonb-java time poppler-utils python-pygments
   # install tex, see https://github.com/scottkosty/install-tl-ubuntu/
   - wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
   - sudo ./install-tl-ubuntu
   # - cat /etc/environment
 
 script:
-  - for i in `xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  ./SARIT-corpus/saritcorpus.xml`; do ./bin/convert_sarit_to_tex.sh ./SARIT-corpus/"$i"; done > travislog.txt 2>&1
+  - xmlstarlet sel -N xi="http://www.w3.org/2001/XInclude" -t -m "//xi:include/@href" -o "./bin/convert_sarit_to_tex.sh " -o "SARIT-corpus/" -v "." -n  "./SARIT-corpus/saritcorpus.xml" > /tmp/conv.txt
+  - parallel < conv.txt > /dev/null 2>&1
+  ## this won't work: travis unconditional termination of jobs after 1hr for free accounts
   - cd ./TeX
-  - echo "Compiling TeX"
-  - for i in `ls *tex`; do echo "Compiling $i" && xelatex -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 && tail -n 20 travislog.txt ; done
-  - for i in `ls *tex`; do biber `basename "$i" tex` >> travislog.txt 2>&1 ; done
-  - for i in `ls *tex`; do echo "Compiling $i" && xelatex -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 && tail -n 20 travislog.txt; done
-  - for i in `ls *tex`; do biber `basename "$i" tex` >> travislog.txt 2>&1 ; done
-  - for i in `ls *tex`; do echo "Compiling $i" && xelatex -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 && tail -n 20 travislog.txt; done
+  - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
+  - echo "Checking TeX syntax"
+  - for i in `ls *tex`; do echo "xelatex -no-pdf -shell-escape -8bit -interaction=batchmode \"$i\""; done > /tmp/tex.txt
+  - parallel --bar < /tmp/tex.txt  > general.log
   - rgrep -i error ./*log
-  - tail -n 100 travislog.txt
+  - tail -n 40 ./*log
+  # - for i in `ls *tex`; do echo "Compiling $i" ; time xelatex -file-line-error -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; echo "Log: "; tail -n 20 travislog.txt ; done
+  # - for i in `ls *tex`; do biber `basename "$i" tex` >> travislog.txt 2>&1 ; done
+  # - for i in `ls *tex`; do echo "Compiling $i" ; time xelatex -file-line-error -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; echo "Log: "; tail -n 20 travislog.txt; done
+  # - for i in `ls *tex`; do biber `basename "$i" tex` >> travislog.txt 2>&1 ; done
+  # - for i in `ls *tex`; do echo "Compiling $i" ; time xelatex -file-line-error -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; echo "Log: "; tail -n 20 travislog.txt; done
+  # - echo "Error list: "
+  # - rgrep -i error ./*log
+  # - echo "Last 100 lines of log: "
+  # - tail -n 100 travislog.txt
+  # - echo "PDFinfos:"
+  # - for i in `ls *pdf`; do echo "PDFinfo for $i:"; pdfinfo "$i"; echo "======="; done
