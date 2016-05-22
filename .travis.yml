@@ -21,9 +21,10 @@ script:
   - for i in `xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  ./SARIT-corpus/saritcorpus.xml`; do ./bin/convert_sarit_to_tex.sh ./SARIT-corpus/"$i"; done > travislog.txt 2>&1
   - cd ./TeX
   - echo "Compiling TeX"
-  - for i in `ls *tex`; do xelatex -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; done
+  - for i in `ls *tex`; do echo "Compiling $i" && xelatex -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 && tail -n 20 travislog.txt ; done
   - for i in `ls *tex`; do biber `basename "$i" tex` >> travislog.txt 2>&1 ; done
-  - for i in `ls *tex`; do xelatex -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; done
+  - for i in `ls *tex`; do echo "Compiling $i" && xelatex -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 && tail -n 20 travislog.txt; done
   - for i in `ls *tex`; do biber `basename "$i" tex` >> travislog.txt 2>&1 ; done
-  - for i in `ls *tex`; do xelatex -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 ; done
+  - for i in `ls *tex`; do echo "Compiling $i" && xelatex -shell-escape -8bit -interaction=nonstopmode "$i" >> travislog.txt 2>&1 && tail -n 20 travislog.txt; done
+  - rgrep -i error ./*log
   - tail -n 100 travislog.txt
