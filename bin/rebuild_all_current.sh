@@ -7,13 +7,13 @@ set -o nounset # don't allow uninitalized vars
 OLDIFS=$IFS
 IFS=$(echo -en "\n\b")
 
-BASEDIR=$(realpath $(dirname ${0})"/../")
-CONVERSIONSCRIPT=$(realpath ${BASEDIR}"/bin/convert_sarit_to_tex.sh")
-COMPILETEXSCRIPT=$(realpath ${BASEDIR}"/bin/compile_xetex.sh")
+BASEDIR=$(realpath $(dirname "${0}")/../)
+CONVERSIONSCRIPT=$(realpath "${BASEDIR}"/bin/convert_sarit_to_tex.sh)
+COMPILETEXSCRIPT=$(realpath "${BASEDIR}"/bin/compile_xetex.sh)
 
 STARTDIR=$(pwd)
-OUTDIR=$(realpath $BASEDIR"/TeX/")
-XMLDIR=$(realpath $BASEDIR"/SARIT-corpus/")
+OUTDIR=$(realpath "$BASEDIR"/TeX/)
+XMLDIR=$(realpath "$BASEDIR"/SARIT-corpus/)
 
 function cleanup {
     IFS=$OLDIFS
@@ -22,13 +22,19 @@ function cleanup {
 }
 trap cleanup EXIT
 
+echo "Converting to tex..."
 
-find $OUTDIR -type f -iname "*.tex"  -printf '%f\n' | \
+for i in `find "$OUTDIR" -type f -iname "*.tex"`; do
+    echo `basename "$i" .tex`.xml
+done
+
+find "$OUTDIR" -type f -iname "*.tex"  -printf '%f\n' | \
     sed 's/tex$/xml/' | \
     parallel -q --jobs 1 "$CONVERSIONSCRIPT" "$XMLDIR/"{} "$OUTDIR"
 
-
 cd "$OUTDIR"
+
+echo "Compiling tex files"
 
 find ./ -type f -iname "*.tex"  -printf '%f\n' | \
     sed 's/.tex$//' | \
