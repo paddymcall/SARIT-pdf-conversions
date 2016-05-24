@@ -34,9 +34,10 @@ script:
 after_script:
   # - echo "PDF stats:"
   # - for i in `ls ./*pdf`; do echo "==== For $i"; pdfinfo "$i"; done
-  - echo "Erorrs in log files:"
-  - rgrep -i error ./*log
   - echo "Last 40 lines of log files:"
   - tail -n 40 ./*log
+  - echo "Erorrs in log files (if > 2 problematic):"
+  - rgrep -c -i error ./*log
+
 
   
