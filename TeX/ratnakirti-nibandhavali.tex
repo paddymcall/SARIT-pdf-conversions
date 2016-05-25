@@ -1,7 +1,8 @@
-\documentclass[article,12pt,a4paper]{memoir}%
+\documentclass[article,12pt,broadsheetpaper]{memoir}%
     \usepackage{syntonly}%
     %%\syntaxonly%
     
+	  \usepackage[normalem]{ulem}
 	  \usepackage{eulervm}
 	  \usepackage{xltxtra}
   \usepackage{polyglossia}
@@ -11,6 +12,7 @@
   \setdefaultlanguage{sanskrit}
   % english should be available, notes and stuff
   \setotherlanguage{english}
+  \setotherlanguage{german}
   \setotherlanguage[numerals=arabic]{tibetan}
   \usepackage{fontspec}
   %% redefine some chars (either changed by parsing, or not commonly in font)
@@ -45,59 +47,9 @@
     \setsansfont{TeX Gyre Bonum}
   
   \setmonofont{DejaVu Sans Mono}
-	  %% page layout start: fit to a4 and US letterpaper (example in memoir.pdf)
-	  %% page layout start
-	  % stocksize (actual size of paper in the printer) is a4 as per class
-	  % options;
+	    \usepackage{savetrees}
 	  
-	  % trimming, i.e., which part should be cut out of the stock (this also
-	  % sets \paperheight and \paperwidth):
-	  % \settrimmedsize{0.9\stockheight}{0.9\stockwidth}{*}
-	  % \settrimmedsize{225mm}{150mm}{*}
-	  % % say where you want to trim
-	  \setlength{\trimtop}{\stockheight}    % \trimtop = \stockheight
-	  \addtolength{\trimtop}{-\paperheight} %           - \paperheight
-	  \setlength{\trimedge}{\stockwidth}    % \trimedge = \stockwidth
-	  \addtolength{\trimedge}{-\paperwidth} %           - \paperwidth
-	  % % this makes trims equal on top and bottom (which means you must cut
-	  % % twice). if in doubt, cut on top, so that dust won't settle when book
-	  % % is in shelf
-	  \settrims{0.5\trimtop}{0.5\trimedge}
-
-	  % figure out which font you're using
-	  \setxlvchars
-	  \setlxvchars
-	  % \typeout{LENGTH: lxvchars: \the\lxvchars}
-	  % \typeout{LENGTH: xlvchars: \the\xlvchars}
-
-	  % set the size of the text block next:
-	  % this sets \textheight and \textwidth (not the whole page including
-	  % headers and footers)
-	  \settypeblocksize{230mm}{130mm}{*}
-
-	  % left and right margins:
-	  % this way spine and edge margins are the same
-	  % \setlrmargins{*}{*}{*}
-	  \setlrmargins{*}{*}{1.5}
-
-	  % upper and lower, same logic as before
-	  % \setulmargins{*}{*}{*}% upper = lower margin
-	  % \uppermargin = \topmargin + \headheight + \headsep
-	  %\setulmargins{*}{*}{1.5}% 1.5*upper = lower margin
-	  \setulmargins{*}{*}{1.5}% 
-
-	  % header and footer spacings
-	  \setheadfoot{2\baselineskip}{2\baselineskip}
-
-	  % \setheaderspaces{ headdrop }{ headsep }{ ratio }
-	  \setheaderspaces{*}{*}{1.5}
-
-	  % see memman p. 51 for this solution to widows/orphans 
-	  \setlength{\topskip}{1.6\topskip}
-	  % fix up layout
-	  \checkandfixthelayout
 	  \sloppybottom
-	  %% page layout end
 	
 	    % numbering depth
 	    \maxtocdepth{section}
@@ -1745,7 +1697,7 @@
 	    \endnumbering% ending numbering from div
 	    \endgroup
 	    
-	  \label{īśvarasādhanadūṣaṇam}
+	  
 	  
 	% new div opening: depth here is 0
 	
@@ -3765,7 +3717,7 @@
 	    \endnumbering% ending numbering from div
 	    \endgroup
 	    
-	  \label{Pramāṇāntarbhāvaprakaraṇam}
+	  
 	  
 	% new div opening: depth here is 0
 	
@@ -3788,7 +3740,7 @@
       
 	    
 	    \stanza[\smallbreak]
-	pramāṇam apramāṇaṃ ced vicārāvasaro hataḥ |&bruvatā niyataṃ kiñcit sādhyaṃ vā bādhyam eva vā ||&tatrāyuktiṃ bruvāṇasya ślāghā sadasi kīdṛśī |&nānumāyāḥ parā yuktiḥ kiṃ siddhaṃ tadanādare ||&svīkṛtā tena sety asmāt tanmatyā bādhanaṃ yadi |&abādhane 'syāḥ svīkārāt tadbhiyā bādha\leavevmode\ledsidenote{\textenglish{pb in\cite{RNAms}}}\label{RNAms_51b}naṃ katham ||&sādhyaṃ na kiñcid iti cet bādhāyā api sādhyatā |&sāpi neti vaco vyarthaṃ praśnamātre 'pi kiṃ phalam ||&phalaṃ yadi giraḥ kvāpi nānyat tac cāvabodhanāt |&vācaḥ pratyāyane śaktā nākṣadhūmādi sundaram ||&saṃvṛtau mānam iṣṭaṃ ced vicāro 'py eṣa saṃvṛtiḥ |&saṃvṛtāv api neṣṭaṃ ced vadan jetā yathā tathā || \edtext{}{\lemma{||}\Bfootnote{(JNA 363f.)}}&saṃvṛtiś ca vinā mānaṃ vāṅmātreṇa na sidhyati |&mānato yadi durvāraḥ pramāṇasya pari{\tiny $_{lb}$}grahaḥ ||\&[\smallbreak]
+	pramāṇam apramāṇaṃ ced vicārāvasaro hataḥ |&bruvatā niyataṃ kiñcit sādhyaṃ vā bādhyam eva vā ||&tatrāyuktiṃ bruvāṇasya ślāghā sadasi kīdṛśī |&nānumāyāḥ parā yuktiḥ kiṃ siddhaṃ tadanādare ||&svīkṛtā tena sety asmāt tanmatyā bādhanaṃ yadi |&abādhane 'syāḥ svīkārāt tadbhiyā bādha\leavevmode\ledsidenote{\textenglish{pb in\cite{}}}\label{RNAms_51b}naṃ katham ||&sādhyaṃ na kiñcid iti cet bādhāyā api sādhyatā |&sāpi neti vaco vyarthaṃ praśnamātre 'pi kiṃ phalam ||&phalaṃ yadi giraḥ kvāpi nānyat tac cāvabodhanāt |&vācaḥ pratyāyane śaktā nākṣadhūmādi sundaram ||&saṃvṛtau mānam iṣṭaṃ ced vicāro 'py eṣa saṃvṛtiḥ |&saṃvṛtāv api neṣṭaṃ ced vadan jetā yathā tathā || \edtext{}{\lemma{||}\Bfootnote{(JNA 363f.)}}&saṃvṛtiś ca vinā mānaṃ vāṅmātreṇa na sidhyati |&mānato yadi durvāraḥ pramāṇasya pari{\tiny $_{lb}$}grahaḥ ||\&[\smallbreak]
 
 
 	
