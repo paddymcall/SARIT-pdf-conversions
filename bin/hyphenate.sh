@@ -74,6 +74,26 @@ the thread starting here http://tug.org/pipermail/xetex/2016-March/026542.html."
 	(setq end-of-match nil))
       (buffer-substring-no-properties (point-min) (point-max)))))
 
+(defun hyph-hack/hyphenate-region (start end &optional max-length interactive)
+  "Hyphenate region from START to END, or whole buffer.
+
+If called with prefix (C-u), ask for MAX-LENGTH of a string to separate on."
+  (interactive
+   (let ((max (if current-prefix-arg
+		  (read-number "Separate after how many chars? " 50)
+		50)))       
+     (cond ((region-active-p) (list (region-beginning) (region-end) max 'interactive))
+	   ((yes-or-no-p "Hyphenate whole buffer? ") (list (point-min) (point-max) max 'interactive))
+	   (t (error "Please mark a region")))))
+  (let ((hyph-hack/long-word-regex (rx-to-string `(>= ,(or max-length 50) (syntax word)))))
+    (save-excursion
+      (goto-char start)
+      (atomic-change-group
+	(insert
+	 (hyph-hack/hyphenate-long-string
+	  (hyph-hack/devanāgarī-hyphenate-string
+	   (delete-and-extract-region start end))))))))
+
 ;; (message "argv: %s" argv)
 
 (defun hyph-hack/help ()
