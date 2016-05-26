@@ -18,18 +18,13 @@ before_install:
   # - cat /etc/environment
 
 script:
-  - xmlstarlet sel -N xi="http://www.w3.org/2001/XInclude" -t -m "//xi:include/@href" -o "./bin/convert_sarit_to_tex.sh " -o "SARIT-corpus/" -v "." -n  "./SARIT-corpus/saritcorpus.xml" > /tmp/conv.txt
+  - for i in `find ./TeX/ -type f -iname "*.tex"  -printf '%f\n' |  sed 's/tex$/xml/'`; do echo ./bin/convert_sarit_to_tex.sh ./SARIT-corpus/"$i"; done > /tmp/conv.txt
   - parallel < /tmp/conv.txt > /dev/null 2>&1
   - cd ./TeX
   - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
-  - echo "Checking TeX syntax"
-  - for i in `ls *tex`; do echo "echo Compiling \"$i\" && xelatex -no-pdf -shell-escape -8bit -interaction=batchmode \"$i\""; done > /tmp/tex.txt
-  - parallel < /tmp/tex.txt  >> general.log
-  - for i in `ls *tex`; do  echo "bibtex \""`basename $i .tex`"\""; done > /tmp/bibtex.txt
-  - echo "Bibtex ..."
-  - parallel < /tmp/bibtex.txt  >> general.log
-  - echo "Second latex run ..."
-  - parallel < /tmp/tex.txt  >> general.log
+  - echo "Checking TeX syntax only"
+  - for i in `ls *tex`; do echo "echo Compiling \"$i\" && ../bin/compile_xetex.sh \"$i\""; done > /tmp/tex.txt
+  - parallel < /tmp/tex.txt  > general.log
 
 after_script:
   # - echo "PDF stats:"
