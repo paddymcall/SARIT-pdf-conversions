@@ -24,7 +24,6 @@ script:
   - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
   - echo "Checking TeX syntax only"
   - for i in `ls *tex`; do echo "echo Compiling \"$i\" && ../bin/compile_xetex.sh \"$i\""; done > /tmp/tex.txt
-  - parallel < /tmp/tex.txt  > general.log
 
 after_script:
   # - echo "PDF stats:"
