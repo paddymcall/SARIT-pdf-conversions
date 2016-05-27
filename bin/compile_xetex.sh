@@ -31,11 +31,10 @@ COMPILEFILE="$(basename ${TEXFILE} .tex)"
 cd ${TEXDIR}
 
 # -8bit needed for the "^^I"/tab problem in minted environment
-latexmk -time -rules \
+latexmk -f -gg -time -rules \
 	-xelatex \
 	-file-line-error \
 	-8bit \
 	-shell-escape \
 	-interaction=batchmode \
-	-bibtex- \
 	${COMPILEFILE}
