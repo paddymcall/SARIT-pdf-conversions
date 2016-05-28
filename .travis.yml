@@ -27,6 +27,7 @@ script:
   - parallel < /tmp/tex.txt >> general.log 2>&1
   - parallel < /tmp/bib.txt >> general.log 2>&1
   - parallel < /tmp/tex.txt >> general.log 2>&1
+  - parallel < /tmp/bib.txt >> general.log 2>&1
   - parallel < /tmp/tex.txt >> general.log 2>&1
 
 after_script:
