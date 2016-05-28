@@ -18,13 +18,16 @@ before_install:
   # - cat /etc/environment
 
 script:
-  - for i in `find ./TeX/ -type f -iname "*.tex"  -printf '%f\n' |  sed 's/tex$/xml/'`; do echo ./bin/convert_sarit_to_tex.sh ./SARIT-corpus/"$i"; done > /tmp/conv.txt
+  - for i in `find ./TeX/ -type f -iname "*.tex"  -printf '%f\n' |  sed 's/tex$/xml/'`; do echo "./bin/convert_sarit_to_tex.sh \"./SARIT-corpus/$i\""; done > /tmp/conv.txt
   - parallel < /tmp/conv.txt > /dev/null 2>&1
   - cd ./TeX
-  - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
-  - echo "Checking TeX syntax only"
+  # - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
   - for i in `ls *tex`; do echo "xelatex -interaction=batchmode -8bit -shell-escape \"$i\""; done > /tmp/tex.txt
-  - parallel < /tmp/tex.txt > general.log 2>&1
+  - for i in `ls *tex`; do echo "biber \"`basename $i .tex`\""; done > /tmp/bib.txt
+  - parallel < /tmp/tex.txt >> general.log 2>&1
+  - parallel < /tmp/bib.txt >> general.log 2>&1
+  - parallel < /tmp/tex.txt >> general.log 2>&1
+  - parallel < /tmp/tex.txt >> general.log 2>&1
 
 after_script:
   # - echo "PDF stats:"
