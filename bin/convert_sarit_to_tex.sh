@@ -10,6 +10,7 @@ BASEDIR="$(dirname ${0})/../"
 XMLFILE="${1:-}"
 OUTDIR="${2:-}"
 STYLESHEET="$(realpath ${BASEDIR}./Stylesheets/profiles/sarit/latex/to.xsl)"
+REVISION=$(git rev-parse --short --verify HEAD || echo "No Revision")
 
 function cleanup {
     IFS=$OLDIFS
@@ -43,13 +44,13 @@ echo "Converting ${XMLFILE} to ${OUTPUT}"
 
 if type emacs > /dev/null 2>&1  && [ -f ${BASEDIR}/bin/hyphenate.sh ]; then
     echo "Hyphenating"
-    cat ${XMLFILE} | ${BASEDIR}/bin/hyphenate.sh | saxonb-xslt -ext:on -xsl:${STYLESHEET} -s:- -o:${OUTPUT}
+    cat ${XMLFILE} | ${BASEDIR}/bin/hyphenate.sh | saxonb-xslt -ext:on -xsl:${STYLESHEET} -s:- -o:${OUTPUT} revision="${REVISION}"
 else
     echo "Not hyphenating"
-    cat ${XMLFILE} | saxonb-xslt -ext:on -xsl:${STYLESHEET} -s:- -o:${OUTPUT}
+    cat ${XMLFILE} | saxonb-xslt -ext:on -xsl:${STYLESHEET} -s:- -o:${OUTPUT} revision="${REVISION}"
 fi
 
- # \
+# \
 # reencode=false  \
 # documentclass=memoir \
 # userpackage=bibsetup \

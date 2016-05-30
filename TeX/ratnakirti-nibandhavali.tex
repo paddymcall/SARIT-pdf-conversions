@@ -198,7 +198,7 @@
 	 sortlocale=en_US,%
 	 ]{biblatex}
 	 
-		 \addbibresource[location=remote]{https://raw.githubusercontent.com/paddymcall/Stylesheets/HEAD/profiles/sarit/latex/bib/sarit.bib}
+		 \addbibresource[location=remote]{https://raw.githubusercontent.com/paddymcall/Stylesheets/ca266e3/profiles/sarit/latex/bib/sarit.bib}
 	 \renewcommand*{\citesetup}{%
 	 \rmlatinfont
 	 \biburlsetup
@@ -216,8 +216,10 @@
 	   % pagestyles
 	   \pagestyle{ruled}
 	   
-	   \makeoddfoot{ruled}{{\tiny\rmlatinfont \textit{Compiled: \today}}}{}{\rmlatinfont\thepage}
-	   \makeevenfoot{ruled}{\rmlatinfont\thepage}{}{{\tiny\rmlatinfont \textit{Compiled: \today}}}
+	   \makeoddfoot{ruled}{{\tiny\rmlatinfont \textit{Compiled: \today}}}{%
+             {\tiny\rmlatinfont \textit{Rev: \href{https://github.com/paddymcall/SARIT-pdf-conversions/commit/ca266e3}{ca266e3}}}
+	   }{\rmlatinfont\thepage}
+	   \makeevenfoot{ruled}{\rmlatinfont\thepage}{{\tiny\rmlatinfont \textit{Rev: \href{https://github.com/paddymcall/SARIT-pdf-conversions/commit/ca266e3}{ca266e3}}}}{{\tiny\rmlatinfont \textit{Compiled: \today}}}
 	   
 	 
 	   \usepackage{perpage}
