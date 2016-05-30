@@ -2,12 +2,12 @@
 # It will NOT be updated and reflects only the                                                                                
 # installation profile at installation time.                                                                                  
 selected_scheme scheme-minimal
-TEXDIR /home/texy/texlive/2015
+TEXDIR ~/texlive/2015
 TEXMFCONFIG ~/.texlive2015/texmf-config
 TEXMFHOME ~/texmf
-TEXMFLOCAL /home/texy/texlive/texmf-local
-TEXMFSYSCONFIG /home/texy/texlive/2015/texmf-config
-TEXMFSYSVAR /home/texy/texlive/2015/texmf-var
+TEXMFLOCAL ~/texlive/texmf-local
+TEXMFSYSCONFIG ~/texlive/2015/texmf-config
+TEXMFSYSVAR ~/texlive/2015/texmf-var
 TEXMFVAR ~/.texlive2015/texmf-var
 binary_x86_64-linux 1
 collection-basic 1

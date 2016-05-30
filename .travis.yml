@@ -13,13 +13,14 @@ before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -qq emacs24 jing xmlstarlet libxml2-utils parallel libxml2 fonts-tibetan-machine fonts-texgyre ttf-indic-fonts realpath libsaxonb-java time poppler-utils python-pygments libwww-perl
   # install tex, see https://github.com/scottkosty/install-tl-ubuntu/
-  - wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
+  # - wget https://github.com/paddymcall/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
   # - wget http://ctan.mirror.rafal.ca/systems/texlive/Images/texlive.iso
-  - pwd
-  - ls -lha
-  - cat ./.texlive.profile ./.texlive.packages
-  - sudo ./install-tl-ubuntu -p ./.texlive.profile
-  - sudo tlmgr install `cat ./.texlive.packages`
+  - wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+  - tar zxf install-tl-unx.tar.gz
+  - cd ./install-tl-20160405/
+  - ./install-tl -profile ../.texlive.profile
+  - tlmgr install `cat ../.texlive.packages`
+  - cd ..
   # - cat /etc/environment
 
 script:
