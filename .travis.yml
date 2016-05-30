@@ -18,7 +18,7 @@ before_install:
   - pwd
   - ls -lha
   - cat ./.texlive.profile ./.texlive.packages
-  - sudo ./install-tl-ubuntu -profile ./.texlive.profile
+  - sudo ./install-tl-ubuntu -p ./.texlive.profile
   - sudo tlmgr install `cat ./.texlive.packages`
   # - cat /etc/environment
 
