@@ -15,8 +15,10 @@ before_install:
   # install tex, see https://github.com/scottkosty/install-tl-ubuntu/
   - wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
   # - wget http://ctan.mirror.rafal.ca/systems/texlive/Images/texlive.iso
-  - sudo ./install-tl-ubuntu -profile .texlive.profile
-  - sudo tlmgr install `cat .texlive.packages`
+  - pwd
+  - ls
+  - sudo ./install-tl-ubuntu -profile ./paddymcall/SARIT-pdf-conversions/.texlive.profile
+  - sudo tlmgr install `cat ./paddymcall/SARIT-pdf-conversions/.texlive.packages`
   # - cat /etc/environment
 
 script:
