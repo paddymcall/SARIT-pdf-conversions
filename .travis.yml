@@ -13,18 +13,28 @@ before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -qq emacs24 jing xmlstarlet libxml2-utils parallel libxml2 fonts-tibetan-machine fonts-texgyre ttf-indic-fonts realpath libsaxonb-java time poppler-utils python-pygments libwww-perl
   # install tex, see https://github.com/scottkosty/install-tl-ubuntu/
-  - wget https://github.com/scottkosty/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
-  - sudo ./install-tl-ubuntu
+  # - wget https://github.com/paddymcall/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
+  # - wget http://ctan.mirror.rafal.ca/systems/texlive/Images/texlive.iso
+  - wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+  - tar zxf install-tl-unx.tar.gz
+  - cd ./install-tl-20160405/
+  - ./install-tl -profile ../.texlive.profile
+  - tlmgr install `cat ../.texlive.packages`
+  - cd ..
   # - cat /etc/environment
 
 script:
-  - for i in `find ./TeX/ -type f -iname "*.tex"  -printf '%f\n' |  sed 's/tex$/xml/'`; do echo ./bin/convert_sarit_to_tex.sh ./SARIT-corpus/"$i"; done > /tmp/conv.txt
+  - for i in `find ./TeX/ -type f -iname "*.tex"  -printf '%f\n' |  sed 's/tex$/xml/'`; do echo "./bin/convert_sarit_to_tex.sh \"./SARIT-corpus/$i\""; done > /tmp/conv.txt
   - parallel < /tmp/conv.txt > /dev/null 2>&1
   - cd ./TeX
-  - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
-  - echo "Checking TeX syntax only"
+  # - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
   - for i in `ls *tex`; do echo "xelatex -interaction=batchmode -8bit -shell-escape \"$i\""; done > /tmp/tex.txt
-  - parallel < /tmp/tex.txt > general.log 2>&1
+  - for i in `ls *tex`; do echo "biber \"`basename $i .tex`\""; done > /tmp/bib.txt
+  - parallel < /tmp/tex.txt >> general.log 2>&1
+  - parallel < /tmp/bib.txt >> general.log 2>&1
+  - parallel < /tmp/tex.txt >> general.log 2>&1
+  - parallel < /tmp/bib.txt >> general.log 2>&1
+  - parallel < /tmp/tex.txt >> general.log 2>&1
 
 after_script:
   # - echo "PDF stats:"
