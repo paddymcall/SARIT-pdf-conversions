@@ -7,13 +7,12 @@ set -o nounset # don't allow uninitalized vars
 OLDIFS=$IFS
 IFS=$(echo -en "\n\b")
 
-BASEDIR="$(realpath $(dirname ${0})/../)"
 STARTDIR="$(pwd)"
 
 TEXFILE="${1:-}"
 
 function cleanup {
-    cd ${STARTDIR}
+    cd "${STARTDIR}"
     IFS=$OLDIFS
     echo "Cleaning up"
 }
@@ -25,10 +24,10 @@ if [ -z "${TEXFILE}" ]
     exit 1
 fi
 
-TEXDIR="$(dirname ${TEXFILE})"
-COMPILEFILE="$(basename ${TEXFILE} .tex)"
+TEXDIR=$(dirname "${TEXFILE}")
+COMPILEFILE=$(basename "${TEXFILE}" .tex)
 
-cd ${TEXDIR}
+cd "${TEXDIR}"
 
 # -8bit needed for the "^^I"/tab problem in minted environment
 latexmk -f -gg -time -rules \
@@ -37,4 +36,4 @@ latexmk -f -gg -time -rules \
 	-8bit \
 	-shell-escape \
 	-interaction=batchmode \
-	${COMPILEFILE}
+	"${COMPILEFILE}"

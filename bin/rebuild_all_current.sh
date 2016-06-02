@@ -7,7 +7,7 @@ set -o nounset # don't allow uninitalized vars
 OLDIFS=$IFS
 IFS=$(echo -en "\n\b")
 
-BASEDIR=$(realpath $(dirname "${0}")/../)
+BASEDIR=$(realpath "$(dirname "${0}")"/../)
 CONVERSIONSCRIPT=$(realpath "${BASEDIR}"/bin/convert_sarit_to_tex.sh)
 COMPILETEXSCRIPT=$(realpath "${BASEDIR}"/bin/compile_xetex.sh)
 
@@ -17,16 +17,17 @@ XMLDIR=$(realpath "$BASEDIR"/SARIT-corpus/)
 
 function cleanup {
     IFS=$OLDIFS
-    cd $STARTDIR
+    cd "$STARTDIR"
     echo "Results are in ${OUTDIR}."
 }
 trap cleanup EXIT
 
 echo "Converting to tex..."
 
-for i in `find "$OUTDIR" -type f -iname "*.tex"`; do
-    echo `basename "$i" .tex`.xml
+find "$OUTDIR" -type f -iname "*.tex" | while read i; do
+    basename "$i" .tex
 done
+
 
 find "$OUTDIR" -type f -iname "*.tex"  -printf '%f\n' | \
     sed 's/tex$/xml/' | \

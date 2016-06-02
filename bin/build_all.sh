@@ -30,19 +30,19 @@ OUTDIR="$(realpath "${OUTDIR}")"
 echo "Will save output to ${OUTDIR}"
 
 function cleanup {
-    cd $STARTDIR
+    cd "$STARTDIR"
     IFS=$OLDIFS
     echo "Cleaning up, results should be in ${OUTDIR}"
 }
 trap cleanup EXIT
 
-BASEDIR="$(realpath $(dirname ${0})"/../")"
-CONVERSIONSCRIPT="$(realpath ${BASEDIR}"/bin/convert_sarit_to_tex.sh")"
-COMPILETEXSCRIPT="$(realpath ${BASEDIR}"/bin/compile_xetex.sh")"
+BASEDIR=$(realpath "$(dirname "${0}")"/../)
+CONVERSIONSCRIPT=$(realpath "${BASEDIR}"/bin/convert_sarit_to_tex.sh)
+COMPILETEXSCRIPT=$(realpath "${BASEDIR}"/bin/compile_xetex.sh)
 
 
-CORPUS="$(realpath ${CORPUS})"
-XDIR="$(dirname ${CORPUS})"
+CORPUS=$(realpath "${CORPUS}")
+XDIR=$(dirname "${CORPUS}")
 
 
 cd "$XDIR"
