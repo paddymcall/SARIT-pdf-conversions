@@ -43,6 +43,8 @@ after_script:
   - tail -n 40 ./*log
   - echo "Erorrs in log files (if > 2 problematic):"
   - rgrep -c -i error ./*log
+  - echo "Erorrs in log files with context:"
+  - rgrep -C 4 -i error ./*log
 
 
   
