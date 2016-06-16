@@ -2,13 +2,13 @@
 # It will NOT be updated and reflects only the                                                                                
 # installation profile at installation time.                                                                                  
 selected_scheme scheme-minimal
-TEXDIR /home/travis/texlive/2015
-TEXMFCONFIG /home/travis/.texlive2015/texmf-config
+TEXDIR /home/travis/texlive/2016
+TEXMFCONFIG /home/travis/.texlive2016/texmf-config
 TEXMFHOME /home/travis/texmf
 TEXMFLOCAL /home/travis/texlive/texmf-local
-TEXMFSYSCONFIG /home/travis/texlive/2015/texmf-config
-TEXMFSYSVAR /home/travis/texlive/2015/texmf-var
-TEXMFVAR /home/travis/.texlive2015/texmf-var
+TEXMFSYSCONFIG /home/travis/texlive/2016/texmf-config
+TEXMFSYSVAR /home/travis/texlive/2016/texmf-var
+TEXMFVAR /home/travis/.texlive2016/texmf-var
 binary_x86_64-linux 1
 collection-basic 1
 collection-bibtexextra 1

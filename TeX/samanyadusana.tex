@@ -1,4 +1,6 @@
-\documentclass[article,12pt,a4paper]{memoir}%
+%% require snapshot package to record versions to log files
+    \RequirePackage[log]{snapshot}
+    \documentclass[article,12pt,a4paper]{memoir}%
     
       %% useful for debugging
       %% \usepackage{syntonly}%
@@ -14,7 +16,9 @@
   \setdefaultlanguage{sanskrit}
   % english etc. should also be available, notes and bib
   \setotherlanguages{english,german,italian,french}
-  \setotherlanguage[numerals=arabic]{tibetan}
+  
+	\setotherlanguage[numerals=arabic]{tibetan}
+      
   \usepackage{fontspec}
   %% redefine some chars (either changed by parsing, or not commonly in font)
   \catcode`⃥=\active \def⃥{\textbackslash}
@@ -173,6 +177,7 @@
        \def\select@lemmafont#1|#2|#3|#4|#5|#6|#7|%
        {}
        \makeatother
+       \AtEveryPstart{\refstepcounter{parCount}}
        \setlength{\stanzaindentbase}{20pt}
      \setstanzaindents{3,2,2,2,2,2,2,2,2,2,2,2,2,}
      % \setstanzapenalties{1,5000,10500}
@@ -213,9 +218,13 @@
        
 	   % pagestyles
 	   \pagestyle{ruled}
-	   
-	   \makeoddfoot{ruled}{{\tiny\rmlatinfont \textit{Compiled: \today}}}{}{\rmlatinfont\thepage}
-	   \makeevenfoot{ruled}{\rmlatinfont\thepage}{}{{\tiny\rmlatinfont \textit{Compiled: \today}}}
+	   \makeoddhead{ruled}{{Sāmānyadūṣaṇa}}{}{          Aśoka}
+	   \makeoddfoot{ruled}{{\tiny\rmlatinfont \textit{Compiled: \today}}}{%
+	   {\tiny\rmlatinfont \textit{Revision: \href{https://github.com/paddymcall/SARIT-pdf-conversions/commit/a0c8ae0}{a0c8ae0}}}%
+	   }{\rmlatinfont\thepage}
+	   \makeevenfoot{ruled}{\rmlatinfont\thepage}{%
+	   {\tiny\rmlatinfont \textit{Revision: \href{https://github.com/paddymcall/SARIT-pdf-conversions/commit/a0c8ae0}{a0c8ae0}}}%
+	   }{{\tiny\rmlatinfont \textit{Compiled: \today}}}
 	   
 	 
 	   \usepackage{perpage}
@@ -248,11 +257,10 @@
 	% new div opening: depth here is 0
 	
 	    
-	    \begingroup
 	    \beginnumbering% beginning numbering from div depth=0
 	    
 	  
-\chapter*[{॥ सामान्यदूषणम् ॥}]{॥ सामान्यदूषणम् ॥}\textsuperscript{\textenglish{11/tha}}{\tiny $_{lb}$}\textsuperscript{\textenglish{82a/msR}}{\tiny $_{lb}$}
+\chapter[{॥ सामान्यदूषणम् ॥}][{॥ सामान्यदूषणम् ॥}]{॥ सामान्यदूषणम् ॥}\textsuperscript{\textenglish{11/tha}}{\tiny $_{lb}$}\textsuperscript{\textenglish{82a/msR}}{\tiny $_{lb}$}
 	    
 	    \stanza[\smallbreak]
 	  व्यापकं नित्यमेकं च सामान्यं यैः प्रकल्पितम् ।&{\tiny $_{lb}$}मोहग्रन्थिच्छिदे तेषां तदभावः प्रसाध्यते ॥\&[\smallbreak]
@@ -260,10 +268,10 @@
 	  
 	  {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	कथमिदमवगम्यते परस्परविलक्षणक्षणेषु\edtext{}{\lemma{णेषु}\Bfootnote{°क्षणलक्षणेषु \cite{sādū-msR}}} प्रत्यक्षसमीक्ष्यमाणेष्वभिन्न{\tiny $_{lb}$}धीध्वनिप्रसवनिबन्धनमनुयायिरूपं सामान्यं न मान्यं मनीषिणामिति ?{\tiny $_{lb}$} साधकप्रमाणविरहाद् बाधकप्रमाणसंभवाच्चेति ब्रूमः ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 	    
@@ -273,192 +281,192 @@
 	  
 	  {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	\leavevmode\ledsidenote{\textenglish{82b/msR}} अस्ति च परस्परसंपर्कविकलकलासु कार्यादिव्यक्तिष्वनुगता{\tiny $_{lb}$}कारं विज्न्ँआनं तदनैकान्तिकतादोषाक्रान्तशरीरत्वान्न तद्भावसाधनायालम् ।{\tiny $_{lb}$} यतो भवति बहुषु पाचकेषु पाचकः पाचक इति एकाकारपरामर्शप्रत्ययः ।{\tiny $_{lb}$} न च तेष्वनुगतमेकं वस्तु समस्ति । तद्भावे हि प्रागेव तथाविधप्रत्ययोत्पाद{\tiny $_{lb}$}प्रसङ्गो दुर्वारप्रचारः ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	क्रियोपकारापेक्षाणां स्वलक्षणानां सामान्यव्यन्ँजकत्वादयमदोष इति{\tiny $_{lb}$} चेत् ? नैतदस्ति । नित्यानामनाधेयातिशयतयानुपकारिणि सहकारिण्यपेक्षा{\tiny $_{lb}$}योगात् । सातिशयत्वे वा प्रतिक्षणं विशरारुशरीरत्वात् क्रिया कुत इति{\tiny $_{lb}$} दोषो दुष्परिहरः । क्रियानिबन्धनत्वात् पाचकेष्वनुगताकारप्रत्ययस्य नानै{\tiny $_{lb}$}कान्तिकतादोष इत्यपि वार्तम् । प्रतिभेदं भिद्यमानानां कर्मणां तन्निबन्धनत्वा{\tiny $_{lb}$}योगात् । भिन्नानामप्यभिन्नाकारज्न्ँआननिबन्धनत्वे व्यक्तीनामपि तथाभावो{\tiny $_{lb}$} न राजदण्डनिवारितः । ततश्च सामान्यमेव नोपेयं स्यादिति मूलहरं{\tiny $_{lb}$} पक्षमाश्रयता देवानांप्रियेण सुष्ठु अनुकूलमाचरितम् । अनेनैव न्यायेन क्रिया{\tiny $_{lb}$}कारकसंबन्धमभिन्नज्न्ँआननिबन्धनमुपकल्पयन् प्रतिक्षिप्तः ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}{\tiny $_{lb}$}\textsuperscript{\textenglish{12/tha}}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	पाकक्रियात्वनिबन्धनः पाचकेष्वनुगताकारः प्रत्ययः । तता नानै{\tiny $_{lb}$}कान्तिकतादोष इत्यपि न मन्तव्यम् । न ह्यर्थान्तरसंबन्धिनी जातिरर्था{\tiny $_{lb}$}न्तरप्रत्ययोत्पत्तिहेतुः, अतिप्रसङ्गात् ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	स्यादेतत् । समवेतसमवायसंबन्धबलात् पाकक्रियासामान्यं पाचकेष्व{\tiny $_{lb}$}भिन्नाकारं परामर्शप्रत्ययमुपजनयति । ततो न यथोक्तो दोषः ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	तदिदमप्यसारम् । यत उदयानन्तरापवर्गितया\edtext{}{\lemma{या}\Bfootnote{यत् °वर्जितया \cite{sādū-S}}} कर्मणामेवासंभवात्,{\tiny $_{lb}$} विनष्टे कर्मणि तत्सामान्यं न कर्मणि तदभावादेव, नापि कर्तरीति संबद्ध{\tiny $_{lb}$}संबन्धोऽप्यस्य नास्तीति नाभिन्नप्रत्ययहेतुः । तस्मात् स्थितमेतत्{\tiny $_{lb}$} तदनैकान्तिकतादोषदुष्टत्वात् नेदमनुमानं सामान्यसत्तासाधनाय पर्याप्त{\tiny $_{lb}$}मिति ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	इतश्चापि न सामान्यसत्तासाधनमिदमनुमानम् । यथैव हि परस्परा{\tiny $_{lb}$}सङ्कीर्णस्वभावा अपि शाबलेयादयो भावाः कयाचिदेव तदेककार्यप्रति{\tiny $_{lb}$}नियमलक्षणया स्वहेतुबलायातया प्रकृत्या तदेकमभिमतमनुगतरूपमुप{\tiny $_{lb}$}कुर्वते, तदपरसामान्यान्तरमन्तरेणान्यथानवस्थाप्रसङ्गात्, तथा \edtext{}{\lemma{था}\Bfootnote{तमेकं \cite{sādū-S}}}तवैकं{\tiny $_{lb}$} परामर्शप्रत्ययमुपजनयन्तु किमन्तरालगडुना व्यतिरेकवता सामान्येनो{\tiny $_{lb}$}पगतेन ?
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	अथोच्यते । प्रतिनियतशक्तयः सर्व\leavevmode\ledsidenote{\textenglish{83a/msR}}भावाः । एतच्च सामान्याप{\tiny $_{lb}$}लापिभिरपि नियतमभ्युपगमनीयम् । अन्यथा कुतः शालिबीजं शाल्यङ्कुर{\tiny $_{lb}$}मेव जनयति न कोद्रवाङ्कुरमिति परपर्यनुयोगे भावप्रकृतिं मुक्त्वा किमपर{\tiny $_{lb}$}मिह वचनीयमस्ति ?
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	एतच्चोत्तरमस्माकमपि न वनौकःकुलकवलितम् । तथा हि वय{\tiny $_{lb}$}मप्येवं शक्ता एव वक्तुम् । सामान्यमेवोपकर्तुं शक्तिर्व्यक्तीनां भेदाविशेषेऽपि{\tiny $_{lb}$} न तदेकं विज्न्ँआनमुपजनयितुमिति ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	अनुत्तरं बत दोषसङ्कटमत्रभवान् दृष्टिदोषेण \edtext{}{\lemma{दृष्टिदोषेण}\Bfootnote{प्रविश्य \cite{sādū-S}}}प्रवेश्यमानोऽपि नात्मान{\tiny $_{lb}$}मात्मना संवेदयते । तथा हि शालिबीजतदङ्कुरयोरध्यक्षानुपलम्भनिबन्धने{\tiny $_{lb}$} कार्यकारणभावेऽवगते शालिबीजं शाल्यङ्कुरं जनयितुं शक्तं न कोद्रवाङ्कुर{\tiny $_{lb}$}मिति शक्यमभिधातुम् । नैवं सामान्यतद्वतोरुपकार्योपकारकभावः कुतश्चन{\tiny $_{lb}$} \leavevmode\ledsidenote{\textenglish{13/tha}} प्रमाणात् निश्चितः । तत् कथमिदमुत्तरमभिधीयमानमादधीत साधिमान{\tiny $_{lb}$}मित्यलमलीकनिर्बन्धनेन ? न साधकप्रमाणविरहमात्रेण प्रेक्षावताम्{\tiny $_{lb}$} असद्व्यवहारः । ततस्तदभावसाधकमनुमानमभिधीयमानमस्माभिराकल्प्य{\tiny $_{lb}$}ताम्\edtext{}{\lemma{ताम्}\Bfootnote{°राकल्य° \cite{sādū-S}}} ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	यद् यदुपलब्धिलक्षणप्राप्तं सन्नोपलभ्यते, तत्तदसदिति प्रेक्षावद्भिः{\tiny $_{lb}$} व्यवहर्तव्यम् ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	यथाम्बराम्बुरुहम् ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	नोपलभ्यते चोपलब्धिलक्षणप्राप्तं सामान्यं क्वचिदपीति स्वभावानु{\tiny $_{lb}$}पलब्धिः ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	न चात्रासिद्धिदोषोद्भावनया प्रत्यवस्थातव्यम् । तथा हि अत्रासिद्धिः{\tiny $_{lb}$} भवन्ती स्वरूपतो विशेषणतो वा भवेत् ? तत्र न तावदाद्या\edtext{}{\lemma{दाद्या}\Bfootnote{°दाद्यं \cite{sādū-S}}} संभवति,{\tiny $_{lb}$} अन्योपलम्भरूपस्यानुपलम्भस्याभ्युपगमात् । तस्य च स्वसंवेदनप्रत्यक्ष{\tiny $_{lb}$}साक्षात्कृतस्वरूपत्वात् कुतः स्वरूपासिद्धिदोषावकाशः ?
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	अथोच्यते स्वसंवेदनमेव न संभवति, स्वात्मनि क्रियाविरोधात् । न हि{\tiny $_{lb}$} तयैवासिधारया सैवासिधारा च्छिद्यते; तदेवाङ्गुल्यग्रं तेनैवाङ्गुल्यग्रेण स्पृश्यत{\tiny $_{lb}$} इति । अतोऽसिद्ध एवायं हेतुः । \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{तदेदं \cite{sādū-msR}}}तदिदं स्वसंवेदनशब्दार्थापरिज्न्ँआन{\tiny $_{lb}$}विजृम्भितमेव प्रकटयति वाचः ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	तथा हि कलसकलधौतकुवलयादिभ्यो व्यावृत्तं विज्न्ँआनमुपजायते । तेन{\tiny $_{lb}$} बोधरूपतयोत्पत्तिरेवास्य स्वसंवित्तिरुच्यते, प्रकाशवत् । न कर्मकर्तृक्रिया{\tiny $_{lb}$}भावात् । एकस्यानंशरूपस्य त्रैरूप्यानुपपत्तितः । यथैव हि प्रकाशकान्तर{\tiny $_{lb}$}निरपेक्षः प्रकाशः प्रकाशमान आत्मनः प्रकाशक उच्यते, तथा ज्न्ँआनमपि{\tiny $_{lb}$} ज्न्ँआनान्तरनिरपेक्षं प्रकाशमानमात्मनः प्रकाशकमुच्यते ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	ततोऽयं पर\leavevmode\ledsidenote{\textenglish{83b/msR}}मार्थः । न ज्न्ँआनं ज्न्ँआनान्तरसंवेद्यमुपपद्यते, नाप्य{\tiny $_{lb}$}संविदितमुच्यते । यथा प्रकारे च स्वसंवेदनशब्दार्थे विवक्षिते न किन्ँचिद्{\tiny $_{lb}$} \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{वचनीयकमस्ति \cite{sādū-S}}}वचनीयमस्ति कुतो यथोक्तदोषावसरः ?
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}\textsuperscript{\textenglish{14/tha}}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	नापि विशेषणासिद्ध्यासिद्धिरुद्भावनीया । उपलब्धिलक्षणप्राप्ततया{\tiny $_{lb}$} सामान्यस्य स्वयमेव परैरुपगमात् । तथानभ्युपगमे वा न सामान्यबलेन{\tiny $_{lb}$} \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{वा कुलेया° \cite{sādū-S}}}बाहुलेयादिष्वनुगताकारौ धीध्वनी स्याताम् । न हि यतो यत्र ज्न्ँआनाभिधान{\tiny $_{lb}$}प्रवृत्तिः, \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{°लम्भने ?}}तदनुपलक्षणे तस्य प्रतीतिर्भवति, दण्डिवत् ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
-	यत् पुनरिदमुद्द्योतितम् उदद्योतकरेण, किं सामान्यं प्रतिपद्यसे न वा ?{\tiny $_{lb}$} यदि प्रतिपद्यसे, कथमपह्नुषे ? अथ न प्रतिपद्यसे, तदा तस्यासिद्धत्वादा{\tiny $_{lb}$}श्रयासिद्धो हेतुः ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	यत् पुनरिदमुद्द्योतितम् \uline{उदद्योतकरेण}, किं सामान्यं प्रतिपद्यसे न वा ?{\tiny $_{lb}$} यदि प्रतिपद्यसे, कथमपह्नुषे ? अथ न प्रतिपद्यसे, तदा तस्यासिद्धत्वादा{\tiny $_{lb}$}श्रयासिद्धो हेतुः ।
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	तदिदं तस्य \edtext{}{\lemma{स्य}\Bfootnote{°पिता° \cite{sādū-S}}}धर्मिस्वरूपतानभिज्न्ँअताविजृम्भितमाभाति, यतो न वयं{\tiny $_{lb}$} बहीरूपतया सामान्यं धर्मितयाङ्गीकुर्महे, अन्तर्मात्रानिवेशिनो भावाभावो{\tiny $_{lb}$}भयानुभयाहितवासनापरिपाकप्रभवस्याध्यस्तबहिर्वस्तुनो ज्न्ँआनाकारस्य धर्मि{\tiny $_{lb}$}तयोपयोगात्\edtext{}{\lemma{योगात्}\Bfootnote{°नुभवाहित° \cite{sādū-S} °पगमात् \cite{sādū-msR}}} । स च स्वसंवेदनप्रत्यक्षसिद्धतया न शक्यः प्रतिक्षेप्तुम् ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	तदत्र धर्मिणि व्यवस्थिताः सदसत्त्वे चिन्तयन्ति । किमयं सामान्यशब्द{\tiny $_{lb}$}विकल्पप्रतिभासार्थो धर्मी परपरिकल्पितबहिःसामान्यनिबन्धनो वेति ? तस्य{\tiny $_{lb}$} बाह्यानुपादानत्वे \edtext{}{\lemma{त्वे}\Bfootnote{साध्ये तथानु° ?}}साध्यतयानुपलम्भो हेतुः । न पुनस्तस्यैवाभावः प्रसाध्यते,{\tiny $_{lb}$} तद्विषयशब्दाप्रयोगप्रसङ्गात् । एवंविधे च धर्मिणि विवक्षिते कुत आश्रया{\tiny $_{lb}$}सिद्धिदोषः ?
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	यत् तूच्यते, प्रत्यक्षप्रमाणसिद्धस्वभावतया सामान्यस्यासिद्ध एवायं{\tiny $_{lb}$} हेतुरिति तदयुक्तम्, तस्य स्वरूपेणाप्रतिभासनात् ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	इदमेव हि प्रत्यक्षस्य प्रत्यक्षत्वम्, यत् स्वरूपस्य स्वबुद्धौ समर्पणम् ।{\tiny $_{lb}$} इदं पुनर्मूल्यादानक्रयि सामान्यं स्वरूपं च नादर्शयति, प्रत्यक्षतां च स्वी{\tiny $_{lb}$}कर्तुमिच्छति । तथा हि न वयं परस्परासङ्कीर्णशाबलेयादिव्यक्तिभेदप्रति{\tiny $_{lb}$}भासनवेलायां तद्विलक्षणमपरमनुगतमध्यक्षेणेक्षामहे, \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{कण्ठेशन° \cite{sādū-S}}}कण्ठेगुणमिव भूतेषु,{\tiny $_{lb}$} शाबलेयसामान्यबुद्धेरसिद्धेः । तत् कथमदृष्टकल्पनयात्मानमात्मना विप्रल{\tiny $_{lb}$}भेमहि ? इति नासिद्धो हेतुः ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	नाप्यनैकान्तिकता शङ्काविषयमतिपतति, विपक्षवृत्त्यदर्शनात् । असपक्षे{\tiny $_{lb}$} संभवानुपलम्भात् साधारणानैकान्तिकता मा भूत्, सन्दिग्धविपक्षव्यावृत्ति{\tiny $_{lb}$}कता तु प्रतिबन्धादर्शनादनिवारितप्रसरैव ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}\textsuperscript{\textenglish{15/tha}}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	\edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{तदेतन्न समा° \cite{sādū-S}}}तदेतदनालोचिततर्ककर्कशधियामभिधानम्, विपर्यये बाधकप्रमाण{\tiny $_{lb}$}सामर्थ्यादप\leavevmode\ledsidenote{\textenglish{84a/msR}}सारितसद्भावत्वात् तदाशङ्कायाः । तथा हि असत्त्वे साध्ये{\tiny $_{lb}$} सत्त्वं विपक्षः । तत्र प्रत्यक्षवृत्त्या भवितव्यम्, यतो यद् यदाविकलाप्रतिहत{\tiny $_{lb}$}सामर्थ्यम्, तत् तदा भवत्येव । तद् यथा अविकलबलसकलकारणकलापो{\tiny $_{lb}$}ऽङ्कुरः । सति च चक्षुरादिसाकल्ये दृश्ये वस्तुन्यविकलाप्रतिबद्धशक्तिकारणं{\tiny $_{lb}$} प्रत्यक्षं ज्न्ँआनमिति स्वभावहेतुः । ततो विरुद्धोपलम्भाद् विपक्षाद् व्यावर्त{\tiny $_{lb}$}मानो हेतुरसद्व्यवहारयोग्यत्वेन व्याप्यत इति व्याप्तिसिद्धेर्नानैकान्तिकः ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	अभिमतसाध्यप्रतिबन्धसिद्धेस्तु विरुद्धता दूरतरसमुत्सारितरभस{\tiny $_{lb}$}प्रसरैव ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
-	ततोऽसिद्धतादिदूषणशङ्काकलङ्कानङ्किताद्धेतोः\edtext{}{\lemma{ङ्किताद्धेतोः}\Bfootnote{अतः...\add{क ?} लङ्कि \add{कृ}ता° \cite{sādū-S}}} प्रस्तुतवस्तुसिद्धौ सिद्धम्{\tiny $_{lb}$} असत्त्वं सामान्यस्येत्यलमतिबहुविस्तरविसारिण्या कथयेति विरम्यते ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	ततोऽसिद्धतादिदूषणशङ्काकलङ्कानङ्किताद्धेतोः\edtext{}{\lemma{ङ्किताद्धेतोः}\Bfootnote{अतः...[क ?] लङ्कि [कृ]ता° \cite{sādū-S}}} प्रस्तुतवस्तुसिद्धौ सिद्धम्{\tiny $_{lb}$} असत्त्वं सामान्यस्येत्यलमतिबहुविस्तरविसारिण्या कथयेति विरम्यते ।
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	न च वस्तुसंस्थानवत् सामान्यं\edtext{}{\lemma{सामान्यं}\Bfootnote{सामान्यं न ? \cite{sādū-msR}}} व्यक्तेर्लक्षणम् । न चानुवृत्तव्यावृत्त{\tiny $_{lb}$}वर्णाद्यात्मके जातिव्यक्ती वर्णादिनियतप्रतिभासप्रतीतिप्रसङ्गात्, व्यक्तेरे{\tiny $_{lb}$}वासौ प्रतिभास इति चेत् ? कोऽपरस्तर्हि सामान्यस्यानुगताकार इति चेत् ?{\tiny $_{lb}$} ननु वर्णसंस्थाने विरहय्य किमपरमनुगामि विद्यते ? जातिव्यक्त्योः समवाय{\tiny $_{lb}$}बलादविभावितविभागयोः क्षीरोदकयोरिव परस्परमिश्रणेन प्रतिपत्तिरिति{\tiny $_{lb}$} चेत् ? न तर्हि सामान्यविशेषयोरेकतरस्यापि रूपं गृहीतम् । स्वरूपाग्रहणे{\tiny $_{lb}$} अनयोरप्यग्रहणमिति निरालम्बनैव सा तादृशी प्रतिपत्तिरिति परमार्थ आवे{\tiny $_{lb}$}दितस्तावत् । निरालम्बनया च प्रतीत्या व्यवस्थाप्यमानं सामान्यं सुव्यव{\tiny $_{lb}$}स्थापितम् ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 	    
@@ -468,7 +476,7 @@
 	  
 	  {\tiny $_{lb}$}
 
-	  \refstepcounter{parCount}
+	  
 	  \pstart \leavevmode% starting standard par
 	असद्व्यवहारानपेक्षत्वेन हि दृश्यानुपलम्भो व्याप्तः । यदि हि सन्नपि{\tiny $_{lb}$} तत्र न प्रवर्तयेत्, इह सापेक्षः स्यात् । ततो विपक्षाद् व्यापकविरुद्धावरुद्धाद्{\tiny $_{lb}$} \leavevmode\ledsidenote{\textenglish{16/tha}} व्यावर्तमानोऽसद्व्यवहारे विश्राम्यतीति । अतस्तेनासद्व्यवहारेणानुपलम्भो{\tiny $_{lb}$} \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{व्याप्यत इति \cite{sādū-S}}}व्याप्त इति कुतोऽनेकान्तः ? ततश्च स एवार्थः समायातः ।{\tiny $_{lb}$} 
 	    \pend% close preceding par
@@ -482,12 +490,12 @@
 	    \pstart  \leavevmode% new par for following
 	    \hphantom{.}
 	  {\tiny $_{lb}$} इति ।
-	{\color{gray}{\textsuperscript{§~\theparCount}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
 	\pend% ending standard par
       {\tiny $_{lb}$}
 	    
 	    \stanza[\smallbreak]
-	  सर्वस्य च पूर्वोक्तस्यायं परमार्थः ।&{\tiny $_{lb}$}प्रत्यक्षप्रतिभासिवर्ष्मसु न पन्ँचस्वङ्गुलीषु स्थितं\edtext{}{\lemma{स्थितं}\Bfootnote{°वर्त्म न पन्ँच…लीषु स्थितम् \cite{sādū-S}, °भासि धर्मसु \cite{sādū-S}. \textenglish{See →} Intro. p. V, °ष्ववस्थितम् \cite{sādū-msR}.}}&{\tiny $_{lb}$}सामान्यं प्रतिभासते न च विकल्पाकारबुद्धौ तथा ।&{\tiny $_{lb}$}ता एवास्फुटमूर्तयोऽत्र हि विभासन्ते \leavevmode\ledsidenote{\textenglish{84b/msR}} न जातिस्ततः&{\tiny $_{lb}$}सादृश्यभ्रमकारणौ पुनरिमावेकोपलब्धिध्वनी ॥&{\tiny $_{lb}$}इति सामान्यसिद्धिदूषणा दिक् प्रसाधिता\edtext{}{\lemma{साधिता}\Bfootnote{प्रसारिता \cite{sādū-S}.}} ॥\&[\smallbreak]
+	  सर्वस्य च पूर्वोक्तस्यायं परमार्थः ।&{\tiny $_{lb}$}प्रत्यक्षप्रतिभासिवर्ष्मसु न पन्ँचस्वङ्गुलीषु स्थितं\edtext{}{\lemma{स्थितं}\Bfootnote{°वर्त्म न पन्ँच…लीषु स्थितम् \cite{sādū-S}, °भासि धर्मसु \cite{sādū-S}. \begin{english}\textenglish{See →} Intro. p. V\end{english}, °ष्ववस्थितम् \cite{sādū-msR}.}}&{\tiny $_{lb}$}सामान्यं प्रतिभासते न च विकल्पाकारबुद्धौ तथा ।&{\tiny $_{lb}$}ता एवास्फुटमूर्तयोऽत्र हि विभासन्ते \leavevmode\ledsidenote{\textenglish{84b/msR}} न जातिस्ततः&{\tiny $_{lb}$}सादृश्यभ्रमकारणौ पुनरिमावेकोपलब्धिध्वनी ॥&{\tiny $_{lb}$}इति सामान्यसिद्धिदूषणा दिक् प्रसाधिता\edtext{}{\lemma{साधिता}\Bfootnote{प्रसारिता \cite{sādū-S}.}} ॥\&[\smallbreak]
 	  
 	  
 	  {\tiny $_{lb}$}
@@ -501,7 +509,6 @@
 	      
 	    
 	    \endnumbering% ending numbering from div
-	    \endgroup
 	    
 	  % running endDocumentHook
      \backmatter 
@@ -519,7 +526,7 @@
 	        </principal>
          <respStmt>
             <resp>data entry by</resp>
-            <name xml:id="aurorachana">Aurorachana, Auroville</name>
+            <name key="aurorachana">Aurorachana, Auroville</name>
          </respStmt>
          <respStmt>
             <resp>prepared for SARIT by</resp>
@@ -617,8 +624,8 @@
             <item>In the source file, there were two types of line breaks: returns (and possible surrounding space) and hyphens+returns. These were replaced with lb-elements. The ed-attribute "tha" refers to <ref target="#sādū-thakur-book">Thakur's 1974 edition</ref>.</item>
             <item>The folio numbers were encoded as pb-elements with the ed-attribute "msR", which refers to the <ref target="#sādū-msR">manuscript used by Thakur</ref>.</item>
             <item>Round brackets (1 occurrence) were encoded as <tag>hi rend="brackets"</tag>.</item>
-            <item>Additions in square brackets were enclosed in an add-element.</item>
-            <item>Underlined items were enclosed in a <tag>hi rend="underlined"</tag>.</item>
+            <item>Additions in square brackets were enclosed in a supplied-element.</item>
+            <item>Underlined items were enclosed in a <tag>hi rend="underline"</tag>.</item>
             <item>In the note-elements the <tag>lb</tag>s were removed.</item>
             <item>The footnotes were encoded as note-elements with their corresponding n-attribute. The footnote references were replaced by the note-elements.</item>
          </list>
@@ -627,6 +634,7 @@
    <profileDesc><!-- ... --></profileDesc>
    <revisionDesc>
       <change who="#sarit-encoder-sādū" when="2016-05-26">Corrected the second reference to footnote 13-3 to 13-4.</change>
+      <change who="#sarit-encoder-sādū" when="2016-05-31">Replaced <tag>add</tag> with <tag>supplied</tag> and updated the encoding description.</change>
    </revisionDesc>
 </teiHeader>
 	 \end{minted}

@@ -16,7 +16,9 @@
   \setdefaultlanguage{sanskrit}
   % english etc. should also be available, notes and bib
   \setotherlanguages{english,german,italian,french}
-  \setotherlanguage[numerals=arabic]{tibetan}
+  
+	\setotherlanguage[numerals=arabic]{tibetan}
+      
   \usepackage{fontspec}
   %% redefine some chars (either changed by parsing, or not commonly in font)
   \catcode`⃥=\active \def⃥{\textbackslash}
@@ -201,7 +203,7 @@
 	 sortlocale=en_US,%
 	 ]{biblatex}
 	 
-		 \addbibresource{/home/beta/webstuff/indology.info/SARIT-pdf-conversions/Stylesheets/profiles/sarit/latex/bib/sarit.bib}
+		 \addbibresource[location=remote]{https://raw.githubusercontent.com/paddymcall/Stylesheets/HEAD/profiles/sarit/latex/bib/sarit.bib}
 	 \renewcommand*{\citesetup}{%
 	 \rmlatinfont
 	 \biburlsetup
@@ -218,12 +220,12 @@
        
 	   % pagestyles
 	   \pagestyle{ruled}
-	   
+	   \makeoddhead{ruled}{{Vākyapadīya}}{}{          Bhartṛhari}
 	   \makeoddfoot{ruled}{{\tiny\rmlatinfont \textit{Compiled: \today}}}{%
-	   {\tiny\rmlatinfont \textit{Revision: \href{https://github.com/paddymcall/SARIT-pdf-conversions/commit/HEAD}{HEAD}}}%
+	   {\tiny\rmlatinfont \textit{Revision: \href{https://github.com/paddymcall/SARIT-pdf-conversions/commit/a0c8ae0}{a0c8ae0}}}%
 	   }{\rmlatinfont\thepage}
 	   \makeevenfoot{ruled}{\rmlatinfont\thepage}{%
-	   {\tiny\rmlatinfont \textit{Revision: \href{https://github.com/paddymcall/SARIT-pdf-conversions/commit/HEAD}{HEAD}}}%
+	   {\tiny\rmlatinfont \textit{Revision: \href{https://github.com/paddymcall/SARIT-pdf-conversions/commit/a0c8ae0}{a0c8ae0}}}%
 	   }{{\tiny\rmlatinfont \textit{Compiled: \today}}}
 	   
 	 

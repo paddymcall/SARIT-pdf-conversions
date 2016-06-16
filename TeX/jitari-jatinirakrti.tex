@@ -1,0 +1,839 @@
+%% require snapshot package to record versions to log files
+    \RequirePackage[log]{snapshot}
+    \documentclass[article,12pt,a4paper]{memoir}%
+    
+      %% useful for debugging
+      %% \usepackage{syntonly}%
+      %%\syntaxonly%
+    
+	  \usepackage[normalem]{ulem}
+	  \usepackage{eulervm}
+	  \usepackage{xltxtra}
+  \usepackage{polyglossia}
+  \PolyglossiaSetup{sanskrit}{
+  hyphenmins={2,3},% default is {1,3}
+  }
+  \setdefaultlanguage{sanskrit}
+  % english etc. should also be available, notes and bib
+  \setotherlanguages{english,german,italian,french}
+  
+	\setotherlanguage[numerals=arabic]{tibetan}
+      
+  \usepackage{fontspec}
+  %% redefine some chars (either changed by parsing, or not commonly in font)
+  \catcode`⃥=\active \def⃥{\textbackslash}
+  \catcode`‿=\active \def‿{\textunderscore}
+  \catcode`❴=\active \def❴{\{}
+  \catcode`❵=\active \def❵{\}}
+  \catcode`〔=\active \def〔{{[}}% translate 〔OPENING TORTOISE SHELL BRACKET
+  \catcode`〕=\active \def〕{{]}}% translate 〕CLOSING TORTOISE SHELL BRACKET
+  \catcode` =\active \def {\,}
+  \catcode`·=\active \def·{\textbullet}
+  %% BREAK PERMITTED HERE: \discretionary{-}{}{}\nobreak\hspace{0pt}
+  \catcode`=\active \def{\-}
+  \catcode`ꣵ=\active \defꣵ{%
+  म्\textsuperscript{cb}%for candrabindu
+  }
+  %% show a lot of tolerance
+  \tolerance=9000
+  \def\textJapanese{\fontspec{Kochi Mincho}}
+  \def\textChinese{\fontspec{HAN NOM A}}
+  \def\textKorean{\fontspec{Baekmuk Gulim} }
+  % make sure English font is there
+  \newfontfamily\englishfont[Mapping=tex-text]{TeX Gyre Schola}
+    % set up a devanagari font
+  \newfontfamily\devanagarifont{TeX Gyre Pagella}
+	\newfontfamily\rmlatinfont[Mapping=tex-text]{TeX Gyre Pagella}
+	\newfontfamily\tibetanfont[Script=Tibetan,Scale=1.2]{Tibetan Machine Uni}
+  \newcommand\bo\tibetanfont
+  
+    \defaultfontfeatures{Scale=MatchLowercase,Mapping=tex-text}
+	\setmainfont{TeX Gyre Pagella}
+    \setsansfont{TeX Gyre Bonum}
+  
+  \setmonofont{DejaVu Sans Mono}
+	  %% page layout start: fit to a4 and US letterpaper (example in memoir.pdf)
+	  %% page layout start
+	  % stocksize (actual size of paper in the printer) is a4 as per class
+	  % options;
+	  
+	  % trimming, i.e., which part should be cut out of the stock (this also
+	  % sets \paperheight and \paperwidth):
+	  % \settrimmedsize{0.9\stockheight}{0.9\stockwidth}{*}
+	  % \settrimmedsize{225mm}{150mm}{*}
+	  % % say where you want to trim
+	  \setlength{\trimtop}{\stockheight}    % \trimtop = \stockheight
+	  \addtolength{\trimtop}{-\paperheight} %           - \paperheight
+	  \setlength{\trimedge}{\stockwidth}    % \trimedge = \stockwidth
+	  \addtolength{\trimedge}{-\paperwidth} %           - \paperwidth
+	  % % this makes trims equal on top and bottom (which means you must cut
+	  % % twice). if in doubt, cut on top, so that dust won't settle when book
+	  % % is in shelf
+	  \settrims{0.5\trimtop}{0.5\trimedge}
+
+	  % figure out which font you're using
+	  \setxlvchars
+	  \setlxvchars
+	  % \typeout{LENGTH: lxvchars: \the\lxvchars}
+	  % \typeout{LENGTH: xlvchars: \the\xlvchars}
+
+	  % set the size of the text block next:
+	  % this sets \textheight and \textwidth (not the whole page including
+	  % headers and footers)
+	  \settypeblocksize{230mm}{130mm}{*}
+
+	  % left and right margins:
+	  % this way spine and edge margins are the same
+	  % \setlrmargins{*}{*}{*}
+	  \setlrmargins{*}{*}{1.5}
+
+	  % upper and lower, same logic as before
+	  % \setulmargins{*}{*}{*}% upper = lower margin
+	  % \uppermargin = \topmargin + \headheight + \headsep
+	  %\setulmargins{*}{*}{1.5}% 1.5*upper = lower margin
+	  \setulmargins{*}{*}{1.5}% 
+
+	  % header and footer spacings
+	  \setheadfoot{2\baselineskip}{2\baselineskip}
+
+	  % \setheaderspaces{ headdrop }{ headsep }{ ratio }
+	  \setheaderspaces{*}{*}{1.5}
+
+	  % see memman p. 51 for this solution to widows/orphans 
+	  \setlength{\topskip}{1.6\topskip}
+	  % fix up layout
+	  \checkandfixthelayout
+	  %% page layout end
+	
+	  \sloppybottom
+	
+	    % numbering depth
+	    \maxtocdepth{section}
+	    % set up layout of toc
+	    \setpnumwidth{4em}
+	    \setrmarg{5em}
+	    \setsecnumdepth{all}
+	    \newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
+	    \newenvironment{docDate}{}{\ifvmode\par\fi }
+	    \newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
+	    % \newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
+	    \newcommand{\docTitle}[1]{#1}
+	    \newenvironment{titlePart}{ }{ }
+	    \newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
+	    % setup title page; see CTAN /info/latex-samples/TitlePages/, and memoir
+	  \newcommand*{\plogo}{\fbox{$\mathcal{SARIT}$}}
+	  \newcommand*{\makeCustomTitle}{\begin{english}\begingroup% from example titleTH, T&H Typography
+	  \thispagestyle{empty}
+	  \raggedleft
+	  \vspace*{\baselineskip}
+	  
+	      % author(s)
+	    {\Large Jitāri}\\[0.167\textheight]
+	    % maintitle
+	    {\Huge Jātinirākṛti}\\[\baselineskip]
+	    {\Large SARIT}\\\vspace*{\baselineskip}\plogo\par
+	  \vspace*{3\baselineskip}
+	  \endgroup
+	  \end{english}}
+	  \newcommand{\gap}[1]{}
+	  \newcommand{\corr}[1]{($^{x}$#1)}
+	  \newcommand{\sic}[1]{($^{!}$#1)}
+	  \newcommand{\reg}[1]{#1}
+	  \newcommand{\orig}[1]{#1}
+	  \newcommand{\abbr}[1]{#1}
+	  \newcommand{\expan}[1]{#1}
+	  \newcommand{\unclear}[1]{($^{?}$#1)}
+	  \newcommand{\add}[1]{($^{+}$#1)}
+	  \newcommand{\deletion}[1]{($^{-}$#1)}
+	  \newcommand{\quotelemma}[1]{\textcolor{cyan}{#1}}
+	  \newcommand{\name}[1]{#1}
+	  \newcommand{\persName}[1]{#1}
+	  \newcommand{\placeName}[1]{#1}
+	  % running latexPackages template
+     \usepackage[x11names]{xcolor}
+     \definecolor{shadecolor}{gray}{0.95}
+     \usepackage{longtable}
+     \usepackage{ctable}
+     \usepackage{rotating}
+     \usepackage{lscape}
+     \usepackage{ragged2e}
+     
+	 \usepackage{titling}
+	 \usepackage{marginnote}
+	 \renewcommand*{\marginfont}{\color{black}\rmlatinfont\scriptsize}
+	 \setlength\marginparwidth{.75in}
+	 \usepackage{graphicx}
+	 \graphicspath{{images/}}
+	 \usepackage{csquotes}
+       
+	 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
+       
+      \usepackage[noend,series={A,B}]{reledmac}
+       % simplify what ledmac does with fonts, because it breaks. From the documentation of ledmac:
+       % The notes are actually given seven parameters: the page, line, and sub-line num-
+       % ber for the start of the lemma; the same three numbers for the end of the lemma;
+       % and the font specifier for the lemma. 
+       \makeatletter
+       \def\select@lemmafont#1|#2|#3|#4|#5|#6|#7|%
+       {}
+       \makeatother
+       \AtEveryPstart{\refstepcounter{parCount}}
+       \setlength{\stanzaindentbase}{20pt}
+     \setstanzaindents{3,2,2,2,2,2,2,2,2,2,2,2,2,}
+     % \setstanzapenalties{1,5000,10500}
+     \lineation{page}
+     % \linenummargin{inner}
+     \linenumberstyle{arabic}
+     \firstlinenum{5}
+    \linenumincrement{5}
+    \renewcommand*{\numlabfont}{\normalfont\scriptsize\color{black}}
+    \addtolength{\skip\Afootins}{1.5mm}
+    \Xnotenumfont{\bfseries\footnotesize}
+    \sidenotemargin{outer}
+    \linenummargin{inner}
+    \Xarrangement{twocol}
+    \arrangementX{twocol}
+    %% biblatex stuff start
+	 \usepackage[backend=biber,%
+	 citestyle=authoryear,%
+	 bibstyle=authoryear,%
+	 language=english,%
+	 sortlocale=en_US,%
+	 ]{biblatex}
+	 
+		 \addbibresource[location=remote]{https://raw.githubusercontent.com/paddymcall/Stylesheets/HEAD/profiles/sarit/latex/bib/sarit.bib}
+	 \renewcommand*{\citesetup}{%
+	 \rmlatinfont
+	 \biburlsetup
+	 \frenchspacing}
+	 \renewcommand{\bibfont}{\rmlatinfont}
+	 \DeclareFieldFormat{postnote}{:#1}
+	 \renewcommand{\postnotedelim}{}
+	 %% biblatex stuff end
+	 
+	 \setcounter{errorcontextlines}{400}
+       
+	 \usepackage{lscape}
+	 \usepackage{minted}
+       
+	   % pagestyles
+	   \pagestyle{ruled}
+	   \makeoddhead{ruled}{{Jātinirākṛti}}{}{          Jitāri}
+	   \makeoddfoot{ruled}{{\tiny\rmlatinfont \textit{Compiled: \today}}}{%
+	   {\tiny\rmlatinfont \textit{Revision: \href{https://github.com/paddymcall/SARIT-pdf-conversions/commit/a0c8ae0}{a0c8ae0}}}%
+	   }{\rmlatinfont\thepage}
+	   \makeevenfoot{ruled}{\rmlatinfont\thepage}{%
+	   {\tiny\rmlatinfont \textit{Revision: \href{https://github.com/paddymcall/SARIT-pdf-conversions/commit/a0c8ae0}{a0c8ae0}}}%
+	   }{{\tiny\rmlatinfont \textit{Compiled: \today}}}
+	   
+	 
+	   \usepackage{perpage}
+           \MakePerPage{footnote}
+	 
+       \usepackage[destlabel=true,% use labels as destination names; ; see dvipdfmx.cfg, option 0x0010, if using xelatex
+       pdftitle={Jātinirākṛti // Jitāri},
+       pdfauthor={SARIT: Search and Retrieval of Indic Texts. DFG/NEH Project (NEH-No.
+	HG5004113), 2013-2017 },
+       unicode=true]{hyperref}
+       
+       \renewcommand\UrlFont{\rmlatinfont}
+       \newcounter{parCount}
+       \setcounter{parCount}{0}
+       % cleveref should come last; note: also consider zref, this could become more useful than cleveref?
+       \usepackage[english]{cleveref}% clashes with eledmac < 1.10.1 standard
+       \crefname{parCount}{§}{§§}
+     
+\begin{document}
+    
+     \makeCustomTitle
+     \let\tabcellsep&
+	\frontmatter
+	\tableofcontents
+	% \listoffigures
+	% \listoftables
+	\cleardoublepage
+        \mainmatter 
+	  
+	% new div opening: depth here is 0
+	
+	    
+	    \beginnumbering% beginning numbering from div depth=0
+	    
+	  
+\chapter[{Jātinirākṛti}][{Jātinirākṛti}]{Jātinirākṛti}\textsuperscript{\textenglish{30/gb}}{\tiny $_{lb}$}\footnote{\begin{english}
+	  \bigskip
+	  \begingroup
+	 --- Dieser Text gehört wie wahrscheinlich auch der folgende zur Sammlung der vādasthānas Jitāris. Er ist bereits von TUCCI \textenglish{See →} 1930 und von IYENGAR \textenglish{See →} 1952 ediert worden. TUCCIs Text weist mehrere Lücken auf und gibt viele von IYENGARs Manuskript abweichende Lesarten. IYENGAR hat in seiner Edition TUCCIs Edition benutzt, hat jedoch die abweichenden Lesarten nicht verzeichnet.  --- Das vorliegende Manuskript kommt in seinen Lesarten TUCCIs Manuskript sehr nahe, weist aber nicht die dort vorhandene Lücke (57.27; vgl. IYENGAR 76.4-77.15) auf. Dafür bricht der Text 58.14 (TUCCI) bzw. 79.5 (IYENGAR) ab. Möglicherweise befindet sich der Schluß des Textes auch unter den unlesbaren Teilen des Manuskripts. Der erhaltene Text umfaßt die Folios IB|2|9; IA|2|9; IIB|4; IIA|4; IIB|5; IIA|5; IIB|7; IIA|7; IIB|8; IIA|8. [...] --- Für die folgende Edition wurden die Lesarten des vorliegenden Manuskripts zur Grundlage genommen, die sich in vielen Fällen mit TUCCIs Text decken. Dem letzten Teil, der im Manuskript nicht mehr erhalten ist, wurde TUCCIs Text zugrundegelegt. Das gleiche Prinzip gilt beim Gebrauch der Daṇḍas. IYENGARs Text ist an vielen Stellen ausführlicher und bringt einfachere Lesarten.
+	  \endgroup
+	\end{english} \cref{jāni-buehnemann-1982}, pp. 17-18.}\textsuperscript{\textenglish{\cite[T.56]{jāni-T}}}\textsuperscript{\textenglish{\cite[IB.2.9]{jāni-ms}}}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	namaḥ samantabhadrāya\edtext{}{\lemma{samantabhadrāya}\Bfootnote{\begin{sanskrit}mañjuśriye\end{sanskrit} \cite{jāni-T}}} ||
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+	    
+	    \stanza[\smallbreak]
+	  mugdhāṅgulīkisalayāṅghrisuvarṇakumbha\edtext{}{\lemma{mugdhāṅgulīkisalayāṅghrisuvarṇakumbha}\Bfootnote{\begin{sanskrit}°kumbhād\end{sanskrit} Konjektur \cite{jāni-T}}}&{\tiny $_{lb}$}vāntena kāntipayasā ghusṛṇāruṇena |&{\tiny $_{lb}$}yo vandamānam abhiṣiñcati\edtext{}{\lemma{abhiṣiñcati}\Bfootnote{\begin{sanskrit}abhisi°\end{sanskrit} \cite{jāni-T}}} dharmarājye&{\tiny $_{lb}$}jāgartu vo hitasukhāya sa mañjuvajraḥ\edtext{}{\lemma{mañjuvajraḥ}\Bfootnote{\begin{sanskrit}mañjunāthaḥ\end{sanskrit} \cite{jāni-T}}} |[|]&{\tiny $_{lb}$}\leavevmode\ledsidenote{\textenglish{\cite[I.72]{jāni-I}}} \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{Hier beginnt \cite{jāni-I} mit \begin{sanskrit}buddhānām anu°\end{sanskrit}}}suhṛdām anurodhena yathāmati yathāsmṛti\edtext{}{\lemma{yathāsmṛti}\Bfootnote{\begin{sanskrit}śrutismṛti\end{sanskrit} \cite{jāni-I}}} [|]&{\tiny $_{lb}$}hriyaṃ vihāya likhyante vādasthānāni kānicit\edtext{}{\lemma{kānicit}\Bfootnote{\begin{sanskrit}°sthānāna kānāna kāni\end{sanskrit} \cite{jāni-ms}}} |[|]\&[\smallbreak]
+	  
+	  
+	  {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	tatra tāvad ādau jātivāda eva nirākriyate |{\tiny $_{lb}$} iha\edtext{}{\lemma{iha}\Bfootnote{\begin{sanskrit}ca iha\end{sanskrit} \cite{jāni-ms}}} yad yad\edtext{}{\lemma{yad}\Bfootnote{fehlt \cite{jāni-I}, \cite{jāni-T}}} vastuno bhedābhedābhyām abhidheyaṃ na bhavati |{\tiny $_{lb}$} tat tat\edtext{}{\lemma{tat}\Bfootnote{fehlt \cite{jāni-I}, \cite{jāni-T}}} sarvaṃ\edtext{}{\lemma{sarvaṃ}\Bfootnote{fehlt \cite{jāni-I}}} vastu na bhavati |{\tiny $_{lb}$} yathā vyomakamalam |{\tiny $_{lb}$} na ca vastuno\edtext{}{\lemma{vastuno}\Bfootnote{\begin{sanskrit}fehlt \cite{jāni-I}\end{sanskrit}}} bhedābhedābhyām abhidheyaṃ sāmānyam iti vyā{\tiny $_{lb}$}pakānupalabdhiḥ |{\tiny $_{lb}$} na tāvad ayam asiddho hetuḥ |{\tiny $_{lb}$} na hi vyaktibhyo bhinnam abhinnaṃ vā sāmānyaṃ śakyam abhidhātum{\tiny $_{lb}$} ubhayathāpy asāmānyasvabhāvatāprasaṅgāt\edtext{}{\lemma{asāmānyasvabhāvatāprasaṅgāt}\Bfootnote{\begin{sanskrit}°bhāvata°\end{sanskrit} \cite{jāni-ms}, \begin{sanskrit}°mānyātmatāsvabhāvapra°\end{sanskrit} \cite{jāni-T}}} | tathā hi yadi tā{\tiny $_{lb}$}vad vyaktibhyo \edtext{}{\lemma{vyaktibhyo}\Bfootnote{\cite{jāni-ms} läßt aus von \begin{sanskrit}arthā°\end{sanskrit} bis \begin{sanskrit}gor aśvaḥ\end{sanskrit}}}arthāntaram eva sāmānyābhimataṃ\edtext{}{\lemma{sāmānyābhimataṃ}\Bfootnote{\begin{sanskrit}sāmānyam abhi°\end{sanskrit} \cite{jāni-I}}} vastu tadā{\tiny $_{lb}$} kathaṃ\edtext{}{\lemma{kathaṃ}\Bfootnote{\begin{sanskrit}na\end{sanskrit} \cite{jāni-I}}} tat tāsāṃ sāmānyaṃ nāma | yat khalu yato 'rthāntaraṃ{\tiny $_{lb}$} na tat tasya sāmānyam | yathā gor aśvaḥ | arthāntaraṃ ca gor\edtext{}{\lemma{gor}\Bfootnote{fehlt \cite{jāni-I}, \cite{jāni-ms}}}{\tiny $_{lb}$} gotvam iti viruddhavyāptopalabdhiḥ\edtext{}{\lemma{viruddhavyāptopalabdhiḥ}\Bfootnote{\begin{sanskrit}°palambhaḥ\end{sanskrit} \cite{jāni-T}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	nanu\edtext{}{\lemma{nanu}\Bfootnote{\begin{sanskrit}nana\end{sanskrit} \cite{jāni-ms}}} ca vyaktibhyo arthā \leavevmode\ledsidenote{\textenglish{\cite[IA.2.9]{jāni-ms}}}ntaraṃ ca syāt | sāmā{\tiny $_{lb}$}nyaṃ ca tāsām iti na\edtext{}{\lemma{na}\Bfootnote{\begin{sanskrit}mana\end{sanskrit} \cite{jāni-ms}}} virodhaṃ\edtext{}{\lemma{virodhaṃ}\Bfootnote{\begin{sanskrit}°dha\end{sanskrit} \cite{jāni-ms}; \begin{sanskrit}°dham iha\end{sanskrit} \cite{jāni-T}}} paśyāmaḥ | na caitan manta{\tiny $_{lb}$}\leavevmode\ledsidenote{\textenglish{\cite[I.73]{jāni-I}}} vyam arthāntaraṃ ced arthāntarasya sāmānyaṃ \edtext{}{\lemma{sāmānyaṃ}\Bfootnote{\cite{jāni-ms} läßt aus \begin{sanskrit}sarvaṃ sarvasya sāmānyaṃ\end{sanskrit}}}sarvaṃ sarvasya{\tiny $_{lb}$} \leavevmode\ledsidenote{\textenglish{31/gb}} sāmānyaṃ syāt viśeṣābhāvād iti || yad dhi khalv ekaṃ\edtext{}{\lemma{ekaṃ}\Bfootnote{\begin{sanskrit}ekaṃm\end{sanskrit} \cite{jāni-ms}}} vastv{\tiny $_{lb}$} anekatra\edtext{}{\lemma{anekatra}\Bfootnote{\begin{sanskrit}anekatva\end{sanskrit} \cite{jāni-ms}}} samavetaṃ\edtext{}{\lemma{samavetaṃ}\Bfootnote{\begin{sanskrit}satataṃ\end{sanskrit} \cite{jāni-ms}}} tat\edtext{}{\lemma{tat}\Bfootnote{\begin{sanskrit}ta\end{sanskrit} \cite{jāni-ms}}} tadīyaṃ sāmānyam | goṣu cāśvo na{\tiny $_{lb}$} samaveta iti katham asau gavāṃ sāmānyaṃ syād iti kuto viśe{\tiny $_{lb}$}ṣābhāvaḥ | tad ayam anaikāntiko hetuḥ katham iṣṭasiddhaye{\tiny $_{lb}$} paryāpnuyāt\edtext{}{\lemma{paryāpnuyāt}\Bfootnote{\begin{sanskrit}°yad iti cet\end{sanskrit} \cite{jāni-I}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	tad etad api bālapralāpam anuharati\edtext{}{\lemma{anuharati}\Bfootnote{\begin{sanskrit}°sarati\end{sanskrit} \cite{jāni-I}}} | sa hi viśeṣo bu{\tiny $_{lb}$}ddhimatā vaktavyo yaḥ sāmānyābhimatapadārthamātrabhāvī\edtext{}{\lemma{sāmānyābhimatapadārthamātrabhāvī}\Bfootnote{\begin{sanskrit}abhimata\end{sanskrit} fehlt \cite{jāni-I}}} san{\tiny $_{lb}$} na saṃkareṇa\edtext{}{\lemma{saṃkareṇa}\Bfootnote{\begin{sanskrit}°ṃṅkareṇa\end{sanskrit} \cite{jāni-ms}}} vyavasthām upapādayet | ayaṃ cānekasamavāyaḥ\edtext{}{\lemma{cānekasamavāyaḥ}\Bfootnote{\begin{sanskrit}cānekārtha°\end{sanskrit} \cite{jāni-T}}}{\tiny $_{lb}$} saṃkhyāsaṃyogakāryadravyādiṣv\edtext{}{\lemma{saṃkhyāsaṃyogakāryadravyādiṣv}\Bfootnote{\begin{sanskrit}°saṃyogādīnām avayavikārya°\end{sanskrit} \cite{jāni-I}}} apy astīti tāny api saṃkhyādi{\tiny $_{lb}$}saṃmatāni\edtext{}{\lemma{saṃmatāni}\Bfootnote{\begin{sanskrit}°ādimatāṃ\end{sanskrit} \cite{jāni-T}}} sāmānyāni syuḥ |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	atha\edtext{}{\lemma{atha}\Bfootnote{\begin{sanskrit}athaivaṃ\end{sanskrit} \cite{jāni-T}}} manyetāḥ | saty api anekārthasamavāye yad eva sa{\tiny $_{lb}$}mānañānābhidhānapravṛttinimittaṃ tad eva sāmānyaṃ nānyat\edtext{}{\lemma{nānyat}\Bfootnote{\begin{sanskrit}nānyad iti\end{sanskrit} \cite{jāni-I}}} |{\tiny $_{lb}$} samānānāṃ\edtext{}{\lemma{samānānāṃ}\Bfootnote{\begin{sanskrit}samānāṃ\end{sanskrit} \cite{jāni-ms}}} hi\edtext{}{\lemma{hi}\Bfootnote{fehlt \cite{jāni-I}}} bhāvaḥ sāmānyaṃ [|] bhavato asmā\leavevmode\ledsidenote{\textenglish{\cite[IIB.4]{jāni-ms}}}d\edtext{}{\lemma{d}\Bfootnote{\begin{sanskrit}asmad\end{sanskrit} \cite{jāni-ms}}}{\tiny $_{lb}$} abhidhānapratyayāv iti ca\edtext{}{\lemma{ca}\Bfootnote{fehlt \cite{jāni-I}, \cite{jāni-T}}} bhāvaḥ | tad āhākṣapādaḥ\edtext{}{\lemma{āhākṣapādaḥ}\Bfootnote{\begin{sanskrit}°pādāḥ\end{sanskrit} \cite{jāni-ms}, \begin{sanskrit}akṣapādāḥ\end{sanskrit} fehlt \cite{jāni-T}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	\edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\href{http://sarit.indology.info/?cref=ns\%C5\%AB.2.2.68}{NS II.2. 68}}}samānaprasavātmikā\edtext{}{\lemma{samānaprasavātmikā}\Bfootnote{\begin{sanskrit}samānañānābhidhānapra°\end{sanskrit} \cite{jāni-I}, \cite{jāni-T}}} jātir iti |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	etad api svaprakriyāmātraparidīpanam\edtext{}{\lemma{svaprakriyāmātraparidīpanam}\Bfootnote{\begin{sanskrit}tejākriyā°\end{sanskrit} \cite{jāni-ms}}} | tathā hy atra | \leavevmode\ledsidenote{\textenglish{\cite[I.74]{jāni-I}}}{\tiny $_{lb}$} vikalpadvitayam\edtext{}{\lemma{vikalpadvitayam}\Bfootnote{\begin{sanskrit}vikalpadvayam\end{sanskrit} \cite{jāni-I}, \cite{jāni-T}}} udayate | kiṃ te\edtext{}{\lemma{te}\Bfootnote{\begin{sanskrit}te bhedāḥ\end{sanskrit} \cite{jāni-I}}} svarūpeṇa samānāḥ svahe{\tiny $_{lb}$}tor\edtext{}{\lemma{tor}\Bfootnote{\begin{sanskrit}svahe\end{sanskrit} fehlt \cite{jāni-T}}} utpannā yeṣu tatsāmānyaṃ tathāvidhabodhābhidhānaprava{\tiny $_{lb}$}ṇam\edtext{}{\lemma{ṇam}\Bfootnote{\begin{sanskrit}°pramāṇam\end{sanskrit} \cite{jāni-I}}} āhosvid asamānā eveti |{\tiny $_{lb}$} tatra yadi\edtext{}{\lemma{yadi}\Bfootnote{\begin{sanskrit}te yadi\end{sanskrit} \cite{jāni-I}}} te\edtext{}{\lemma{te}\Bfootnote{\begin{sanskrit}te yadi\end{sanskrit} \cite{jāni-I}}} svata eva samānāḥ samāne\edtext{}{\lemma{samāne}\Bfootnote{\begin{sanskrit}samāna\end{sanskrit} \cite{jāni-I}}} ñānābhidhāne\edtext{}{\lemma{ñānābhidhāne}\Bfootnote{\begin{sanskrit}°dhānaṃ\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}°dhāna\end{sanskrit}\begin{english}\textit{lacuna}\end{english}\begin{sanskrit}m eva\end{sanskrit} \cite{jāni-T}}} \leavevmode\ledsidenote{\textenglish{\cite[T.57]{jāni-T}}}{\tiny $_{lb}$} svayam eva pravartayiṣyanti | kiṃ tatra sāmānyenārthānta{\tiny $_{lb}$}reṇa | tathā ca tad asāmānyam eva [|] tadbalena samānayor\edtext{}{\lemma{samānayor}\Bfootnote{\begin{sanskrit}sāmānyena\end{sanskrit} \cite{jāni-I}}}{\tiny $_{lb}$} ñānābhidhānayor avṛtteḥ\edtext{}{\lemma{avṛtteḥ}\Bfootnote{\begin{sanskrit}aprayukteḥ\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}apravṛtteḥ\end{sanskrit} \cite{jāni-T}}} |{\tiny $_{lb}$} athāsamānāḥ | na tarhi teṣāṃ sāmānyam asti | samānānāṃ hi\edtext{}{\lemma{hi}\Bfootnote{fehlt \cite{jāni-I}, \cite{jāni-T}}}{\tiny $_{lb}$} \leavevmode\ledsidenote{\textenglish{32/gb}} bhāvaḥ sāmānyam ity uktavān asi\edtext{}{\lemma{asi}\Bfootnote{cf. 31. 24f.}} | asamānānāṃ\edtext{}{\lemma{asamānānāṃ}\Bfootnote{\begin{sanskrit}asamānāṃ\end{sanskrit} \cite{jāni-T}}} ca\edtext{}{\lemma{ca}\Bfootnote{fehlt \cite{jāni-I}}} bhāvaḥ sā{\tiny $_{lb}$}mānyam iti bruvāṇaḥ\edtext{}{\lemma{bruvāṇaḥ}\Bfootnote{\begin{sanskrit}°naḥ kathaṃ\end{sanskrit} \cite{jāni-I}}} ślāghanīyapraño\edtext{}{\lemma{ślāghanīyapraño}\Bfootnote{\begin{sanskrit}°pratiño\end{sanskrit} \cite{jāni-I}}} devānāṃpriyaḥ |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	svayam asamānasvabhāvā api tenaiva samānās ta iti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	kiṃ\edtext{}{\lemma{kiṃ}\Bfootnote{\begin{sanskrit}na; tathā hi kiṃ...\end{sanskrit} \cite{jāni-I}}} te kriyante āhosvid\edtext{}{\lemma{āhosvid}\Bfootnote{\begin{sanskrit}kiṃ nu vai\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}athāho°\end{sanskrit} \cite{jāni-T}}} adhyavasīyante\edtext{}{\lemma{adhyavasīyante}\Bfootnote{\begin{sanskrit}vyava°\end{sanskrit} \cite{jāni-I}}} | \leavevmode\ledsidenote{\textenglish{\cite[IIA.4]{jāni-ms}}} tatra{\tiny $_{lb}$} na tāvat kriyante teṣāṃ svahetubhir eva kṛtatvāt | kṛtasya ca{\tiny $_{lb}$} punaḥ karaṇāyogāt | abhūtaprādurbhāvalakṣaṇatvāt karaṇasya |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	samānātmanā kriyanta iti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	nanu yeṣāṃ niṣpannatayā kṛñaḥ\edtext{}{\lemma{kṛñaḥ}\Bfootnote{\begin{sanskrit}kṛteḥ\end{sanskrit} \cite{jāni-I}}} karmatā nāsti kathaṃ te{\tiny $_{lb}$} kriyante nāma |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	syād etat | yena dharmirūpeṇa\edtext{}{\lemma{dharmirūpeṇa}\Bfootnote{\begin{sanskrit}dharma°\end{sanskrit} \cite{jāni-ms}}} te niṣpannā\edtext{}{\lemma{niṣpannā}\Bfootnote{\begin{sanskrit}°nnāḥ\end{sanskrit} \cite{jāni-I}}} na tena ka{\tiny $_{lb}$}roteḥ karmabhāvam anubhavanti | samānena\edtext{}{\lemma{samānena}\Bfootnote{\begin{sanskrit}kim tu samānena punā\end{sanskrit} \cite{jāni-I}; \begin{sanskrit}°nena punā\end{sanskrit} \cite{jāni-T}}} rūpeṇa\edtext{}{\lemma{rūpeṇa}\Bfootnote{\begin{sanskrit}°ṇā\end{sanskrit} \cite{jāni-I}, \cite{jāni-ms} ?}} niṣpannāḥ{\tiny $_{lb}$} kriyanta\edtext{}{\lemma{kriyanta}\Bfootnote{\begin{sanskrit}tena kri°\end{sanskrit} \cite{jāni-T}}} iti na kiṃcid atrānupapannam\edtext{}{\lemma{atrānupapannam}\Bfootnote{\begin{sanskrit}atra\end{sanskrit} fehlt \cite{jāni-I}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	evaṃ tarhi tad eva samānaṃ rūpaṃ sāmānyena kriyata\edtext{}{\lemma{kriyata}\Bfootnote{\begin{sanskrit}kriyanta\end{sanskrit} \cite{jāni-I}}} iti{\tiny $_{lb}$} syāt | tasya ca\edtext{}{\lemma{ca}\Bfootnote{\begin{sanskrit}ca bhāvi°\end{sanskrit} \cite{jāni-I}; \begin{sanskrit}vibhāva°\end{sanskrit} \cite{jāni-ms}}} bhāvaniṣpattav\edtext{}{\lemma{bhāvaniṣpattav}\Bfootnote{\begin{sanskrit}ca bhāvi°\end{sanskrit} \cite{jāni-I}; \begin{sanskrit}vibhāva°\end{sanskrit} \cite{jāni-ms}}} aniṣpannasya kāraṇāntarataḥ{\tiny $_{lb}$} paścād upajāyamānasya tadbhāvatā\edtext{}{\lemma{tadbhāvatā}\Bfootnote{\begin{sanskrit}vyaktivad bhāvasvabhāvatā\end{sanskrit} \cite{jāni-I}}} brahmaṇāpy aśakyā\edtext{}{\lemma{aśakyā}\Bfootnote{\begin{sanskrit}aśaktā\end{sanskrit} \cite{jāni-T}}} sādha{\tiny $_{lb}$}yitum [|]
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	arthāntaram eva tad bhavatu na kiṃcid aniṣṭam āpadyata{\tiny $_{lb}$} iti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	\leavevmode\ledsidenote{\textenglish{\cite[I.75]{jāni-I}}} sāmānyāntaram eva tarhi tan nityasāmānyajanyam\edtext{}{\lemma{nityasāmānyajanyam}\Bfootnote{\begin{sanskrit}nety asāmānyajanmam\end{sanskrit} \cite{jāni-T}}} abhyupe{\tiny $_{lb}$}taṃ syāt | tathā ca tad api\edtext{}{\lemma{api}\Bfootnote{\begin{sanskrit}tad api\end{sanskrit} fehlt \cite{jāni-I}}} bhedānām asamānānāṃ kathaṃ sāmā{\tiny $_{lb}$}nyam i\leavevmode\ledsidenote{\textenglish{\cite[IIB.5]{jāni-ms}}}ti paryanuyoge\edtext{}{\lemma{paryanuyoge}\Bfootnote{\begin{sanskrit}°yogi\end{sanskrit} \cite{jāni-I}}} tenāpi tadvyatiriktasamānarūpa{\tiny $_{lb}$}karaṇopagame\edtext{}{\lemma{karaṇopagame}\Bfootnote{\begin{sanskrit}°sāmānya°\end{sanskrit} \cite{jāni-I}}} saty aparāparakāryasāmānyaparikalpanātmakam\edtext{}{\lemma{aparāparakāryasāmānyaparikalpanātmakam}\Bfootnote{\begin{sanskrit}°karmasāmānya°\end{sanskrit} \cite{jāni-T}}}{\tiny $_{lb}$} anavasthānam apratividhānam āsajyeta\edtext{}{\lemma{āsajyeta}\Bfootnote{\begin{sanskrit}āsajyet\end{sanskrit} \cite{jāni-ms}; \begin{sanskrit}āsajyate\end{sanskrit} \cite{jāni-T}}} | na ca\edtext{}{\lemma{ca}\Bfootnote{\begin{sanskrit}cā\end{sanskrit} \cite{jāni-I}}} bhedānām{\tiny $_{lb}$} asamānarūpaṃ\edtext{}{\lemma{asamānarūpaṃ}\Bfootnote{\begin{sanskrit}asamānaṃ rū°\end{sanskrit} \cite{jāni-I}}} pracyaveta\edtext{}{\lemma{pracyaveta}\Bfootnote{\begin{sanskrit}°vet\end{sanskrit} \cite{jāni-ms}; \begin{sanskrit}°vate\end{sanskrit} \cite{jāni-T}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}\textsuperscript{\textenglish{33/gb}}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	nāpi dvitīyapakṣāśrayaṇaṃ\edtext{}{\lemma{dvitīyapakṣāśrayaṇaṃ}\Bfootnote{\begin{sanskrit}°pakṣa°\end{sanskrit} \cite{jāni-T}; cf. 32. 4}} śreyaḥ | na hy anyenānye samānā{\tiny $_{lb}$} nāma pratīyante [|] tadvanto\edtext{}{\lemma{tadvanto}\Bfootnote{\begin{sanskrit}tadvad anye\end{sanskrit} \cite{jāni-I}}} nāma pratīyeran | bhūtavat ka{\tiny $_{lb}$}ṇṭhe\edtext{}{\lemma{ṇṭhe}\Bfootnote{\begin{sanskrit}kathaṃ\end{sanskrit} \cite{jāni-I}}} guṇena [|] anyathā hi yena kenacid\edtext{}{\lemma{kenacid}\Bfootnote{\cite{jāni-T} fügt ein: \begin{sanskrit}apy\end{sanskrit}}} anyena ye kecana{\tiny $_{lb}$} samānāḥ pratīyeran pratiniyamanibandhanābhāvāt\edtext{}{\lemma{pratiniyamanibandhanābhāvāt}\Bfootnote{\begin{sanskrit}°yatāṃ bandhanā°\end{sanskrit} \cite{jāni-I}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	ekenānekasamavāyinānyenānye\edtext{}{\lemma{ekenānekasamavāyinānyenānye}\Bfootnote{\begin{sanskrit}°samavāyinārthena\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}ekena neka°\end{sanskrit} \cite{jāni-ms}, \begin{sanskrit}°samavāyenā°\end{sanskrit} \cite{jāni-T}}} samānāḥ pratīyante | tato{\tiny $_{lb}$} nātiprasaṅga\edtext{}{\lemma{nātiprasaṅga}\Bfootnote{\begin{sanskrit}°ṅgam\end{sanskrit} \cite{jāni-ms}}} iti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	\edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\begin{sanskrit}vārtam etat | na khalv ava°\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}vārtam etat | na hy ava°\end{sanskrit} \cite{jāni-T}}}na khalv avayavidravyadvitvādisaṃkhyānām apy ekatvāneka{\tiny $_{lb}$}samavāyitve\edtext{}{\lemma{samavāyitve}\Bfootnote{\begin{sanskrit}°vayidvitve\end{sanskrit} \cite{jāni-I}}} na\edtext{}{\lemma{na}\Bfootnote{\begin{sanskrit}nāsta\end{sanskrit} \cite{jāni-ms}}} staḥ\edtext{}{\lemma{staḥ}\Bfootnote{\begin{sanskrit}nāsta\end{sanskrit} \cite{jāni-ms}}} | yena tebhyo 'vayavādayo na tathā{\tiny $_{lb}$}vagamyeran\edtext{}{\lemma{vagamyeran}\Bfootnote{\begin{sanskrit}gamyeran\end{sanskrit} \cite{jāni-T}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	atha teṣāṃ svāśrayeṣu samānañānābhidhānavidhānasāmarthyā{\tiny $_{lb}$}bhāvād\edtext{}{\lemma{bhāvād}\Bfootnote{\begin{sanskrit}vidhāna\end{sanskrit} fehlt \cite{jāni-I}, \cite{jāni-T}}} adoṣa eṣaḥ |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	nanu sāmānyam api bhedeṣv ekatvānekasamavā\leavevmode\ledsidenote{\textenglish{\cite[IIA.5]{jāni-ms}}}yābhyām{\tiny $_{lb}$} eva samānapratyayāpratyayatayā\edtext{}{\lemma{samānapratyayāpratyayatayā}\Bfootnote{\begin{sanskrit}samānapratyayahetutayā\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}samapratyayahetutayā\end{sanskrit} \cite{jāni-T}}} parikalpitam | tau\edtext{}{\lemma{tau}\Bfootnote{\begin{sanskrit}atha te ca avaya°\end{sanskrit} \cite{jāni-I}}} cāvaya{\tiny $_{lb}$}vyādīnām\edtext{}{\lemma{vyādīnām}\Bfootnote{\begin{sanskrit}vāyav°\end{sanskrit} \cite{jāni-ms}, \cite{jāni-T}}} api yuṣmābhir\edtext{}{\lemma{yuṣmābhir}\Bfootnote{\begin{sanskrit}°ṣmabhir\end{sanskrit} \cite{jāni-ms}}} abhyupetāv iti teṣām api tathābhāvaḥ{\tiny $_{lb}$} katham apākriyeta\edtext{}{\lemma{apākriyeta}\Bfootnote{\begin{sanskrit}°yet\end{sanskrit} \cite{jāni-ms}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	asāmānyasvabhāvatvān\edtext{}{\lemma{asāmānyasvabhāvatvān}\Bfootnote{\begin{sanskrit}°tvā\end{sanskrit} \cite{jāni-ms}}} na te samānañānahetava\edtext{}{\lemma{samānañānahetava}\Bfootnote{\begin{sanskrit}anumānahetava\end{sanskrit} \cite{jāni-I}}} iti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	nanu samānañānahetutve sati sāmānyasvabhāvatā\edtext{}{\lemma{sāmānyasvabhāvatā}\Bfootnote{\begin{sanskrit}asāmānyasva°\end{sanskrit} \cite{jāni-ms}, \begin{sanskrit}asamānasva°\end{sanskrit} \cite{jāni-T}}} | tasyāṃ{\tiny $_{lb}$} ca satyāṃ samānañānahetutvam iti sthiram\edtext{}{\lemma{sthiram}\Bfootnote{\begin{sanskrit}stharam\end{sanskrit} \cite{jāni-ms}, \begin{sanskrit}sphuṭam\end{sanskrit} \cite{jāni-I}, \cite{jāni-T}}} itaretarāśraya{\tiny $_{lb}$}tvam\edtext{}{\lemma{tvam}\Bfootnote{\begin{sanskrit}°śrayitvam\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}itiretarāśrayatvam\end{sanskrit} \cite{jāni-ms}}} | tathā hy\edtext{}{\lemma{hy}\Bfootnote{\begin{sanskrit}heka°\end{sanskrit} \cite{jāni-ms}}} ekatvādeḥ\edtext{}{\lemma{ekatvādeḥ}\Bfootnote{\begin{sanskrit}heka°\end{sanskrit} \cite{jāni-ms}}} samānatvāt\edtext{}{\lemma{samānatvāt}\Bfootnote{\begin{sanskrit}sāmānyatvāt nimittasya\end{sanskrit} \cite{jāni-I}}} | sāmānyābhi{\tiny $_{lb}$}matabhāvavad ārabdhadravyāder\edtext{}{\lemma{ārabdhadravyāder}\Bfootnote{\begin{sanskrit}ārabhya°\end{sanskrit} \cite{jāni-ms}, \cite{jāni-T}}} api kiṃ na sāmānyarūpateti pa-\leavevmode\ledsidenote{\textenglish{\cite[I.76]{jāni-I}}}{\tiny $_{lb}$} ryanuyoge\edtext{}{\lemma{ryanuyoge}\Bfootnote{cf. 33.7 f.}} samānapratyayāpratyayatvād\edtext{}{\lemma{samānapratyayāpratyayatvād}\Bfootnote{\begin{sanskrit}samānapratyayatvād\end{sanskrit} \cite{jāni-I}}} ity uttaram uktavān{\tiny $_{lb}$} asi\edtext{}{\lemma{asi}\Bfootnote{cf. 33.8 f.}} | tatas tad api samānapratītinimittatvaṃ\edtext{}{\lemma{samānapratītinimittatvaṃ}\Bfootnote{\begin{sanskrit}°pratītinimittasya\end{sanskrit} \cite{jāni-T}}} nimittasya\edtext{}{\lemma{nimittasya}\Bfootnote{\begin{sanskrit}°pratītinimittasya\end{sanskrit} \cite{jāni-T}}}{\tiny $_{lb}$} samānatvāt samānam avayavyāder api kiṃ na syād ity asmadīye\edtext{}{\lemma{asmadīye}\Bfootnote{\begin{sanskrit}°yeṣu\end{sanskrit} \cite{jāni-I}}}{\tiny $_{lb}$} \leavevmode\ledsidenote{\textenglish{34/gb}} punaḥ paryanuyoge\edtext{}{\lemma{paryanuyoge}\Bfootnote{cf. 33.12f.}} saty asāmānyarūpatvād iti bruvāṇaḥ\edtext{}{\lemma{bruvāṇaḥ}\Bfootnote{cf. 33.16}} |{\tiny $_{lb}$} \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\cite{jāni-T} fehlt ein größerer Abschnitt.}}katham itaretarāśrayadoṣān muktim āsādayasi [|] etenaitad{\tiny $_{lb}$} api prayuktaṃ yad uktam uddyotakareṇa\edtext{}{\lemma{uddyotakareṇa}\Bfootnote{\begin{sanskrit}udyo°\end{sanskrit} \cite{jāni-I}}} [|] \leavevmode\ledsidenote{\textenglish{\cite[IIB.7]{jāni-ms}}} \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{cf.\href{http://sarit.indology.info/?cref=nv.2.2.65}{NV II.2.65 p.318. 17-25}: \begin{sanskrit}yad idaṃ gotvaṃ goṣv anuvṛttipratyayakāraṇaṃ tat kiṃ gavi varttate āhosvid agavi yadi tāvad gavi prāk gotvayogād gaur evāsāv iti vyarthaṃ gotvam |...na ca prāk gotvayogād vastu vidyate na cāvidyamānaṃ gaur ity agaur iti ca śakyaṃ vyapadeṣṭuṃ yadaiva vastu tadaiva gotvenābhisaṃbadhyate...\end{sanskrit}}}na\edtext{}{\lemma{na}\Bfootnote{fehlt \cite{jāni-ms}}} gavi{\tiny $_{lb}$} gotvaṃ yena\edtext{}{\lemma{yena}\Bfootnote{\begin{sanskrit}yo na\end{sanskrit} \cite{jāni-ms}}} gotvayogāt | prāg gaur evāsāv iti vyarthaṃ{\tiny $_{lb}$} gotvaṃ syāt | api tu yadaiva vastu tadaiva gotvena saṃbadhya{\tiny $_{lb}$}te | gotvayogāt\edtext{}{\lemma{gotvayogāt}\Bfootnote{\begin{sanskrit}na ca go°...vastv asti\end{sanskrit} \cite{jāni-I}}} prāg vastv eva nāsti [|] na cāvidyamānaṃ{\tiny $_{lb}$} gaur iti vā\edtext{}{\lemma{vā}\Bfootnote{fehlt \cite{jāni-I}}} agaur iti\edtext{}{\lemma{iti}\Bfootnote{\begin{sanskrit}itā\end{sanskrit} \cite{jāni-ms}}} vā śakyaṃ vyapadeṣṭum iti |{\tiny $_{lb}$} tathā hi yadaiva vastu tadaiva\edtext{}{\lemma{tadaiva}\Bfootnote{\begin{sanskrit}tad eva\end{sanskrit} \cite{jāni-ms}}} yadi gorūpaṃ\edtext{}{\lemma{gorūpaṃ}\Bfootnote{\begin{sanskrit}°rūpa\end{sanskrit} \cite{jāni-ms}}} tat\edtext{}{\lemma{tat}\Bfootnote{\begin{sanskrit}tatra\end{sanskrit} \cite{jāni-ms}}} svahetor{\tiny $_{lb}$} utpannaṃ kiṃ tasyānyena gotvena | athāgorūpaṃ na tarhi tasyā{\tiny $_{lb}$}śvāder\edtext{}{\lemma{śvāder}\Bfootnote{\begin{sanskrit}tasyāgor iti vāśvāder iti vā gotvena\end{sanskrit} \cite{jāni-I}}} iva gotvena saha saṃbandhaḥ syāt | na hy agor\edtext{}{\lemma{agor}\Bfootnote{\begin{sanskrit}ago\end{sanskrit} \cite{jāni-I}}} bhāvo{\tiny $_{lb}$} gotvaṃ nāma | tasmān nārthāntaram arthāntarasya\edtext{}{\lemma{arthāntarasya}\Bfootnote{fehlt \cite{jāni-I}}} sāmānyam ity{\tiny $_{lb}$} asāmānyarūpatayārthāntaratvaṃ vyāptaṃ sāmānyātmatām apahasta{\tiny $_{lb}$}yatīti\edtext{}{\lemma{yatīti}\Bfootnote{\begin{sanskrit}°yati\end{sanskrit} \cite{jāni-I}}} kuto anekāntaḥ |{\tiny $_{lb}$} abhinnam eva tarhi sāmānyam\edtext{}{\lemma{sāmānyam}\Bfootnote{\begin{sanskrit}°yat\end{sanskrit} \cite{jāni-ms}}} astv\edtext{}{\lemma{astv}\Bfootnote{\begin{sanskrit}astīti\end{sanskrit} \cite{jāni-I}}} iti\edtext{}{\lemma{iti}\Bfootnote{\begin{sanskrit}astīti\end{sanskrit} \cite{jāni-I}}} vyatiriktasāmānyani{\tiny $_{lb}$}rākaraṇe\edtext{}{\lemma{rākaraṇe}\Bfootnote{\begin{sanskrit}vyaktivyatiriktasāmānyanirākaraṇāt\end{sanskrit} \cite{jāni-I}}} dattasāhāyyakaḥ\edtext{}{\lemma{dattasāhāyyakaḥ}\Bfootnote{\begin{sanskrit}°sahāyakaḥ\end{sanskrit} \cite{jāni-I}}} sāṃkhya idānīṃ pratyavatiṣṭhate |{\tiny $_{lb}$} sa evaṃ\edtext{}{\lemma{evaṃ}\Bfootnote{\begin{sanskrit}e\end{sanskrit} \cite{jāni-ms}}} vaktavyaḥ | kiṃ nu vai bhavān vyaktīnāṃ sāmānyasaṃ{\tiny $_{lb}$}ñākaraṇakāma\edtext{}{\lemma{ñākaraṇakāma}\Bfootnote{\begin{sanskrit}sāmāna°\end{sanskrit} \cite{jāni-ms}}} āhosvid\edtext{}{\lemma{āhosvid}\Bfootnote{\begin{sanskrit}yad vā\end{sanskrit} \cite{jāni-I}}} ātmātiśayapratipādanakāmaḥ | ādye{\tiny $_{lb}$} \leavevmode\ledsidenote{\textenglish{\cite[I.77]{jāni-I}}} pakṣe na kiṃci\leavevmode\ledsidenote{\textenglish{\cite[IIA.7]{jāni-ms}}}t kṣīyate\edtext{}{\lemma{kṣīyate}\Bfootnote{\begin{sanskrit}kṣa°\end{sanskrit} \cite{jāni-ms}}} | na hi\edtext{}{\lemma{hi}\Bfootnote{fehlt \cite{jāni-I}}} vayaṃ nāmni viva{\tiny $_{lb}$}dāmahe | dvitīyo 'pi\edtext{}{\lemma{pi}\Bfootnote{\begin{sanskrit}pa\end{sanskrit} \cite{jāni-ms}}} pakṣo mahatīṃ manorājyasaṃpadam āve{\tiny $_{lb}$}dayati | tathā hy atrāpi vikalpadvayam udayate | kiṃ vyakti{\tiny $_{lb}$}bhyaḥ sāmānyasyābhedaḥ\edtext{}{\lemma{sāmānyasyābhedaḥ}\Bfootnote{\begin{sanskrit}°bhida\end{sanskrit} \cite{jāni-ms}}} | uta vyaktīnāṃ sāmānyād iti |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}\textsuperscript{\textenglish{35/gb}}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	ādye\edtext{}{\lemma{ādye}\Bfootnote{\begin{sanskrit}ādyapakṣe\end{sanskrit} \cite{jāni-I}}} vikalpe\edtext{}{\lemma{vikalpe}\Bfootnote{\begin{sanskrit}ādyapakṣe\end{sanskrit} \cite{jāni-I}}} vyaktivad anekatvam anityatvaṃ\edtext{}{\lemma{anityatvaṃ}\Bfootnote{\begin{sanskrit}asattvaṃ\end{sanskrit} \cite{jāni-I}}} ca sāmānyasya{\tiny $_{lb}$} syād [|] iti\edtext{}{\lemma{iti}\Bfootnote{fehlt \cite{jāni-I}}} prayogaḥ | vyaktibhyo yad abhinnaṃ tad anekam{\tiny $_{lb}$} anityaṃ ca yathā tāsāṃ prātisvikaṃ\edtext{}{\lemma{prātisvikaṃ}\Bfootnote{\begin{sanskrit}prati°\end{sanskrit} \cite{jāni-ms}}} rūpaṃ [|] vyaktibhyaś{\tiny $_{lb}$} cābhinnaṃ\edtext{}{\lemma{cābhinnaṃ}\Bfootnote{\begin{sanskrit}tv abhi°\end{sanskrit} \cite{jāni-I}}} sāmānyam iti svabhāvahetuprasaṅgaḥ\edtext{}{\lemma{svabhāvahetuprasaṅgaḥ}\Bfootnote{\begin{sanskrit}°hetuḥ pra°\end{sanskrit} \cite{jāni-I}}} | nānaikānti{\tiny $_{lb}$}ko hetur ekatvanityatvayoḥ sāmānyasya viruddhadharmādhyāsena{\tiny $_{lb}$} vyaktibhyaḥ sukhādibhya iva caitanyasyaikāntena\edtext{}{\lemma{caitanyasyaikāntena}\Bfootnote{\begin{sanskrit}anyasya ekā°\end{sanskrit} \cite{jāni-I}}} bhedapra{\tiny $_{lb}$}saṅgāt\edtext{}{\lemma{saṅgāt}\Bfootnote{\begin{sanskrit}bhedabhaṅgāt\end{sanskrit} \cite{jāni-I}}} |{\tiny $_{lb}$} aparasmin punar vikalpe sāmānyavad vyaktīnām\edtext{}{\lemma{vyaktīnām}\Bfootnote{\begin{sanskrit}°nam\end{sanskrit} \cite{jāni-I}}} apy ekatvanitya{\tiny $_{lb}$}tve syātām | prayogaḥ | yad sāmānyād abhinnaṃ na tad bhinnaṃ{\tiny $_{lb}$} anityaṃ ca yathā tasyaiva sāmānyatā\edtext{}{\lemma{sāmānyatā}\Bfootnote{\begin{sanskrit}sāmānyasyātmā | sāmānyad\end{sanskrit} \cite{jāni-ms}}} | sāmānyād\edtext{}{\lemma{sāmānyād}\Bfootnote{\begin{sanskrit}sāmānyasyātmā | sāmānyad\end{sanskrit} \cite{jāni-ms}}} abhinnam{\tiny $_{lb}$} ca vyaktīnāṃ rūpam iti | vyāpakaviruddhopalabdhipra \leavevmode\ledsidenote{\textenglish{\cite[IIB.8]{jāni-ms}}}{\tiny $_{lb}$}saṅgaḥ\edtext{}{\lemma{saṅgaḥ}\Bfootnote{\begin{sanskrit}°labdhiḥ pra°\end{sanskrit} \cite{jāni-I}}} | na cānekāntaḥ\edtext{}{\lemma{cānekāntaḥ}\Bfootnote{\begin{sanskrit}cānaikāntikaḥ\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}sānekāntaḥ\end{sanskrit} \cite{jāni-ms}}} [|] sāmānyād abhinnaṃ hi sāmānyam{\tiny $_{lb}$} eva | tac caikaṃ nityaṃ ceti\edtext{}{\lemma{ceti}\Bfootnote{\begin{sanskrit}cet\end{sanskrit} \cite{jāni-I}}} kathaṃ tad abhinnaṃ bhinnam{\tiny $_{lb}$} anityaṃ ca nāma | evaṃ hi\edtext{}{\lemma{hi}\Bfootnote{fehlt \cite{jāni-I}}} bruvāṇaḥ sāmānyam evānekam\edtext{}{\lemma{evānekam}\Bfootnote{\cite{jāni-T} beginnt nach der Lücke mit \begin{sanskrit}nekaṃ\end{sanskrit}}} ani{\tiny $_{lb}$}tyaṃ\edtext{}{\lemma{tyaṃ}\Bfootnote{fehlt \cite{jāni-T}}} ca brūyāt | tasya ca sākṣād ekatvanityatve\edtext{}{\lemma{ekatvanityatve}\Bfootnote{\begin{sanskrit}abhinnatvani°\end{sanskrit} \cite{jāni-I}}} pratiñāya{\tiny $_{lb}$} punar upadeśāntareṇa\edtext{}{\lemma{upadeśāntareṇa}\Bfootnote{\begin{sanskrit}ayaṃ deśāntarata eva\end{sanskrit} \cite{jāni-I}}} te\edtext{}{\lemma{te}\Bfootnote{\begin{sanskrit}tata\end{sanskrit} \cite{jāni-T}}} eva prativahatīti\edtext{}{\lemma{prativahatīti}\Bfootnote{\begin{sanskrit}pratibhātīti\end{sanskrit} \cite{jāni-I}}} kathaṃ nonma{\tiny $_{lb}$}ttaḥ\edtext{}{\lemma{ttaḥ}\Bfootnote{\begin{sanskrit}°mataḥ\end{sanskrit} \cite{jāni-ms}, \cite{jāni-T}}} | tasmād bhedābhedābhyām avācyaṃ\edtext{}{\lemma{avācyaṃ}\Bfootnote{fehlt \cite{jāni-T}}} sāmānyam iti siddham |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	nanv\edtext{}{\lemma{nanv}\Bfootnote{\begin{sanskrit}na cāyam\end{sanskrit} \cite{jāni-I}}} ayam\edtext{}{\lemma{ayam}\Bfootnote{\begin{sanskrit}na cāyam\end{sanskrit} \cite{jāni-I}}} anaikāntiko hetuḥ | yady api hi sāmānyaṃ{\tiny $_{lb}$} bhedābhedābhyāṃ\edtext{}{\lemma{bhedābhedābhyāṃ}\Bfootnote{\begin{sanskrit}bhedābhedā vyaktaya eva ābhyām\end{sanskrit} \cite{jāni-I}}} kevalābhyām avācyaṃ\edtext{}{\lemma{avācyaṃ}\Bfootnote{\begin{sanskrit}vācyaṃ\end{sanskrit} \cite{jāni-T}}} tathāpi nāvastu\edtext{}{\lemma{nāvastu}\Bfootnote{\begin{sanskrit}avastu\end{sanskrit} fehlt \cite{jāni-I}, \begin{sanskrit}na tathāpi avastu\end{sanskrit} \cite{jāni-T}}} pra{\tiny $_{lb}$}kārāntarasyāpy ubhayātmatālakṣaṇasya\edtext{}{\lemma{ubhayātmatālakṣaṇasya}\Bfootnote{\begin{sanskrit}°yātmanā la°\end{sanskrit} \cite{jāni-T}}} saṃbhavāt | bhinnā{\tiny $_{lb}$}bhinnam eva hi sāmānyaṃ jainajaiminīyāḥ\edtext{}{\lemma{jainajaiminīyāḥ}\Bfootnote{\begin{sanskrit}caivam iti jaināḥ\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}jaini°\end{sanskrit} \cite{jāni-ms}}} pratijānate | yad{\tiny $_{lb}$} āhuḥ | \leavevmode\ledsidenote{\textenglish{\cite[I.78]{jāni-I}}}
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}\textsuperscript{\textenglish{36/gb}}
+	    
+	    \stanza[\smallbreak]
+	  \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\href{http://sarit.indology.info/?cref=\%C4\%81m\%C4\%AB.3.59}{ĀM III 59}}}ghaṭamaulisuvarṇārthī\edtext{}{\lemma{ghaṭamaulisuvarṇārthī}\Bfootnote{\begin{sanskrit}°suvarṇānāṃ\end{sanskrit} I}} nāśotpādasthitiṣv ayam |&{\tiny $_{lb}$}\leavevmode\ledsidenote{\textenglish{\cite[T.58]{jāni-T}}} śokapramodamādhyasthyaṃ\edtext{}{\lemma{śokapramodamādhyasthyaṃ}\Bfootnote{\begin{sanskrit}śokapramoha°\end{sanskrit} ĀM}} jano yāti sahetukam |[|]\&[\smallbreak]
+	  
+	  
+	  {\tiny $_{lb}$}
+	    
+	    \stanza[\smallbreak]
+	  \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\href{http://sarit.indology.info/?cref=\%C4\%81m\%C4\%AB.3.57}{ĀM III 57}}}na sāmānyātmanodeti na vyeti vyaktam anvayāt |&{\tiny $_{lb}$}vyety udeti viśeṣeṇa sahaikatrodayādima\leavevmode\ledsidenote{\textenglish{\cite[IIA.8]{jāni-ms}}}t\edtext{}{\lemma{t}\Bfootnote{\begin{sanskrit}°sat\end{sanskrit} \href{http://sarit.indology.info/?cref=\%C4\%81m\%C4\%AB}{ĀM}, \cite{jāni-I}, \cite{jāni-T}}} |[|]\&[\smallbreak]
+	  
+	  
+	  {\tiny $_{lb}$}
+	    
+	    \stanza[\smallbreak]
+	  \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\href{http://sarit.indology.info/?cref=\%C5\%9Bv-\%C4\%81k\%E1\%B9\%9Bti.57-58}{ŚV ākṛtivāda 57cd u. 58ab}}}yathā kalmāṣavarṇasya yatheṣṭhaṃ\edtext{}{\lemma{yatheṣṭhaṃ}\Bfootnote{\begin{sanskrit}yatheṣṭa\end{sanskrit} \cite{jāni-T}}} varṇanigrahaḥ\edtext{}{\lemma{varṇanigrahaḥ}\Bfootnote{\begin{sanskrit}°vigrahaḥ\end{sanskrit} \cite{jāni-T}}} |&{\tiny $_{lb}$}citratvād vastuno 'py evaṃ bhedābhedāvadhāraṇā\edtext{}{\lemma{bhedābhedāvadhāraṇā}\Bfootnote{\begin{sanskrit}°dāvaraṇā\end{sanskrit} \cite{jāni-ms}}} ||\&[\smallbreak]
+	  
+	  
+	  {\tiny $_{lb}$}
+	    
+	    \stanza[\smallbreak]
+	  \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\href{http://sarit.indology.info/?cref=\%C5\%9Bv-\%C4\%81k\%E1\%B9\%9Bti.62-63}{ŚV ākṛtivāda 62cd u. 63ab}}}yadā tu śabalaṃ vastu yugapat\edtext{}{\lemma{yugapat}\Bfootnote{\begin{sanskrit}yumayat\end{sanskrit} \cite{jāni-ms}, \begin{sanskrit}yugavat\end{sanskrit} \cite{jāni-T}}} pratipadyate [|]&{\tiny $_{lb}$}tadānyānanyabhedādi\edtext{}{\lemma{tadānyānanyabhedādi}\Bfootnote{\begin{sanskrit}°bhedena\end{sanskrit} \cite{jāni-I}}} sarvam eva pralīyate\edtext{}{\lemma{pralīyate}\Bfootnote{\begin{sanskrit}pratī°\end{sanskrit} \cite{jāni-I}, \cite{jāni-T}}} |[|]\&[\smallbreak]
+	  
+	  
+	  {\tiny $_{lb}$}
+	    
+	    \stanza[\smallbreak]
+	  \edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\href{http://sarit.indology.info/?cref=\%C5\%9Bv-\%C5\%9B\%C5\%ABnya.219-220}{ŚV śūnyavāda 219cd u. 220ab}}}ekātmakaṃ\edtext{}{\lemma{ekātmakaṃ}\Bfootnote{\begin{sanskrit}ekākāraṃ\end{sanskrit} \href{http://sarit.indology.info/?cref=\%C5\%9Bv}{ŚV}.}} bhaved ekam\edtext{}{\lemma{ekam}\Bfootnote{\begin{sanskrit}etad\end{sanskrit} \cite{jāni-I}}} iti neśvarabhāṣitam [|]&{\tiny $_{lb}$}tathā\edtext{}{\lemma{tathā}\Bfootnote{\begin{sanskrit}tat tathaiva prapattavyaṃ\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}hi tathā hi\end{sanskrit} \cite{jāni-ms}, \begin{sanskrit}tathaiva\end{sanskrit} \href{http://sarit.indology.info/?cref=\%C5\%9Bv}{ŚV}}} hi tad upaitavyaṃ\edtext{}{\lemma{upaitavyaṃ}\Bfootnote{\begin{sanskrit}upe°\end{sanskrit} \cite{jāni-I}, \href{http://sarit.indology.info/?cref=\%C5\%9Bv}{ŚV}, \cite{jāni-T}}} yad yathaivopalabhyate [||]\&[\smallbreak]
+	  
+	  
+	  {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	iti
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	atra pratividhīyate [|] bhedābhedayor anyonyaniṣedharūpa{\tiny $_{lb}$}tvād\edtext{}{\lemma{tvād}\Bfootnote{\begin{sanskrit}pratiṣedha°\end{sanskrit} \cite{jāni-I}, \cite{jāni-T}}} ekavidher aparaniṣedhanāntarīyakatvāt katham\edtext{}{\lemma{katham}\Bfootnote{\begin{sanskrit}tat kathaṃ\end{sanskrit} \cite{jāni-I}}} anayor{\tiny $_{lb}$} ekādhikaraṇatvaṃ mattonmattetaraḥ pratipadyeta | tathā hi tan{\tiny $_{lb}$} \leavevmode\ledsidenote{\textenglish{\cite[I.79]{jāni-I}}} nāma tasmād\edtext{}{\lemma{tasmād}\Bfootnote{\begin{sanskrit}tasmābhinnaṃ\end{sanskrit} \cite{jāni-ms}}} abhinnaṃ\edtext{}{\lemma{abhinnaṃ}\Bfootnote{\begin{sanskrit}tasmābhinnaṃ\end{sanskrit} \cite{jāni-ms}}} yad eva yat | bhinnaṃ ca tat tasmād{\tiny $_{lb}$} yad yan na bhavati [|] ataś ca vyaktibhyaḥ sāmānyaṃ bhinnam{\tiny $_{lb}$} abhinnaṃ ceti bruvāṇo vyaktayaḥ sāmānyaṃ\edtext{}{\lemma{sāmānyaṃ}\Bfootnote{\begin{sanskrit}sa°\end{sanskrit} \cite{jāni-ms}}} na ca\edtext{}{\lemma{ca}\Bfootnote{fehlt \cite{jāni-I}}} vyaktayaḥ\edtext{}{\lemma{vyaktayaḥ}\Bfootnote{\begin{sanskrit}vyaktibhyaḥ\end{sanskrit} \cite{jāni-I}}}{\tiny $_{lb}$} sāmānyam\edtext{}{\lemma{sāmānyam}\Bfootnote{\begin{sanskrit}sa°\end{sanskrit} \cite{jāni-ms}}} iti brūte [|] kathaṃ ca\edtext{}{\lemma{ca}\Bfootnote{fehlt \cite{jāni-I}}} svasthacetanaś\edtext{}{\lemma{svasthacetanaś}\Bfootnote{\begin{sanskrit}°cetāś\end{sanskrit} \cite{jāni-I}}} cetasy\edtext{}{\lemma{cetasy}\Bfootnote{\begin{sanskrit}°cetasyā\end{sanskrit} \cite{jāni-ms}}}{\tiny $_{lb}$} api tad etad āropayet\edtext{}{\lemma{āropayet}\Bfootnote{\begin{sanskrit}°yati\end{sanskrit} \cite{jāni-I}}} [|] prayogaḥ | yad yad eva\edtext{}{\lemma{eva}\Bfootnote{\begin{sanskrit}evaṃ\end{sanskrit} \cite{jāni-T}}} na tad atad{\tiny $_{lb}$} bhavati yathoṣṇaṃ vahnirūpaṃ nānuṣṇam\edtext{}{\lemma{nānuṣṇam}\Bfootnote{\begin{sanskrit}nāmo°\end{sanskrit} \cite{jāni-I}}} [|] vyaktaya eva\edtext{}{\lemma{eva}\Bfootnote{Hier bricht das \cite{jāni-ms} ab.}}{\tiny $_{lb}$} sāmānyam iti svabhāvaviruddhopalabdhiprasaṅgaḥ\edtext{}{\lemma{svabhāvaviruddhopalabdhiprasaṅgaḥ}\Bfootnote{\begin{sanskrit}°dhiḥ pra°\end{sanskrit} \cite{jāni-I}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}\textsuperscript{\textenglish{37/gb}}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	ubhayathā pratīter ubhayopagama iti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	nanu pratītir apratīter bādhikā na tu mithyāpratīteḥ |{\tiny $_{lb}$} vitathasyāpi pratītidarśanāt | anyathā hi pratītipathānusā{\tiny $_{lb}$}riṇā\edtext{}{\lemma{riṇā}\Bfootnote{\begin{sanskrit}°yathānu°\end{sanskrit} \cite{jāni-T}}} bhavatā dvicandrādayo \edtext{}{\lemma{dvicandrādayo}\Bfootnote{\begin{sanskrit}'pi\end{sanskrit} bis \begin{sanskrit}bādhaka\end{sanskrit} fehlt \cite{jāni-T} \begin{english}\textit{lacuna}\end{english}}}'pi na nihnotavyāḥ |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	bādhakavaśāt te nihnūyanta iti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	ihāpy etad anumānam asiddhyādidoṣatrayarahitaliṅgajaṃ\edtext{}{\lemma{asiddhyādidoṣatrayarahitaliṅgajaṃ}\Bfootnote{\begin{sanskrit}api bādhyādidoṣatrayarahitaliṅgajaṃ bādhakaṃ\end{sanskrit} \cite{jāni-I}}} kiṃ{\tiny $_{lb}$} na paśyati devānāṃpriyaḥ |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	\edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\begin{sanskrit}na...bādhā:\end{sanskrit} Upendravajrā - Viertel. Wahrscheinlich ein Zitat.}}na saṃvido yuktibhir asti bādheti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	nanu kim iyaṃ rāñām āñā yenāvicārya gṛhyate [|]
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	pratyakṣasvabhāvā saṃvit | tac ca jyeṣṭhaṃ\edtext{}{\lemma{jyeṣṭhaṃ}\Bfootnote{\begin{sanskrit}jyeṣṭa\end{sanskrit} \cite{jāni-T}}} pramāṇam ato{\tiny $_{lb}$} na bādhyata iti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	\edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\cite{jāni-T} läßt aus von \begin{sanskrit}kiṃ\end{sanskrit} bis \begin{sanskrit}cet.\end{sanskrit}}}kiṃ punar anumānaṃ lakṣaṇopetam api bādhyate |{\tiny $_{lb}$} evam etad iti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	na tarhi tad\edtext{}{\lemma{tad}\Bfootnote{\begin{sanskrit}idam\end{sanskrit} \cite{jāni-I}}} anumānaṃ pramāṇaṃ syāt | lakṣaṇayukte\edtext{}{\lemma{lakṣaṇayukte}\Bfootnote{\begin{sanskrit}°yukte 'pi\end{sanskrit} \cite{jāni-I}}} bā{\tiny $_{lb}$}dhāsaṃbhave\edtext{}{\lemma{dhāsaṃbhave}\Bfootnote{\begin{sanskrit}bādhasaṃ°\end{sanskrit} \cite{jāni-I}}} tal lakṣaṇam eva dūṣitaṃ syād iti sarvatrānāśvā{\tiny $_{lb}$}saḥ\edtext{}{\lemma{saḥ}\Bfootnote{\begin{sanskrit}°trānumāne 'nāśvāsaḥ\end{sanskrit} \cite{jāni-I}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	athānumānābhāso\edtext{}{\lemma{athānumānābhāso}\Bfootnote{\begin{sanskrit}yathānu°\end{sanskrit} \cite{jāni-T}}} bādhyate [|]
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	\edtext{\textsuperscript{*}}{\lemma{*}\Bfootnote{\begin{sanskrit}pratyakṣa°\end{sanskrit} bis \begin{sanskrit}bādhyate\end{sanskrit} fehlt \cite{jāni-I}}}pratyakṣābhāso 'pi kiṃ na bādhyate |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	bādhyatām adhyakṣābhāsaḥ | pratyakṣaiva\edtext{}{\lemma{pratyakṣaiva}\Bfootnote{\begin{sanskrit}pratyakṣeṇaiva\end{sanskrit} \cite{jāni-I}}} punar iyaṃ saṃ{\tiny $_{lb}$}vittis tat katham iti\edtext{}{\lemma{iti}\Bfootnote{\begin{sanskrit}na\end{sanskrit} \cite{jāni-T}}} bādhyata iti cet |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	nanv iyam api pratyakṣābhāsa\edtext{}{\lemma{pratyakṣābhāsa}\Bfootnote{\begin{sanskrit}pratyakṣābhāsaiva anumānena\end{sanskrit} \cite{jāni-I}}} [e]vānumānena\edtext{}{\lemma{vānumānena}\Bfootnote{\begin{sanskrit}pratyakṣābhāsaiva anumānena\end{sanskrit} \cite{jāni-I}}} bādhyamāna{\tiny $_{lb}$}tvāt |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}\textsuperscript{\textenglish{38/gb}}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	atha pratyakṣam eva pratyakṣasya tadābhāsatāṃ bādhyatvāt\edtext{}{\lemma{bādhyatvāt}\Bfootnote{\begin{sanskrit}bādhakatvāt\end{sanskrit} \cite{jāni-I}}}{\tiny $_{lb}$} sādhayati na tv anumānam ity abhiniveśaḥ |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+
+	  
+	  \pstart \leavevmode% starting standard par
+	\leavevmode\ledsidenote{\textenglish{\cite[I.80]{jāni-I}}} kathaṃ tarhi jvālādiviṣayāyāḥ pratyabhiñāyāḥ\edtext{}{\lemma{pratyabhiñāyāḥ}\Bfootnote{\begin{sanskrit}°āyā vyaktyapekṣayā\end{sanskrit} \cite{jāni-T}}} pratyakṣā{\tiny $_{lb}$}yāḥ\edtext{}{\lemma{yāḥ}\Bfootnote{\begin{sanskrit}°āyā vyaktyapekṣayā\end{sanskrit} \cite{jāni-T}}} pratyakṣābhāsatā vyavasthāpyate\edtext{}{\lemma{vyavasthāpyate}\Bfootnote{\begin{sanskrit}°yeta\end{sanskrit} \cite{jāni-I}}} | na khalu jvālādīnāṃ\edtext{}{\lemma{jvālādīnāṃ}\Bfootnote{\begin{sanskrit}°nām api\end{sanskrit} \cite{jāni-I}}}{\tiny $_{lb}$} kṣaṇikatvam\edtext{}{\lemma{kṣaṇikatvam}\Bfootnote{\begin{sanskrit}akṣa°\end{sanskrit} \cite{jāni-T}}} adhyakṣam avadhārayet | tasmād anumānam eva jvā{\tiny $_{lb}$}lādīnāṃ kṣaṇikatāṃ\edtext{}{\lemma{kṣaṇikatāṃ}\Bfootnote{\begin{sanskrit}°tvaṃ\end{sanskrit} \cite{jāni-I}, \begin{sanskrit}kṣaṇekatvaṃ\end{sanskrit} \cite{jāni-T}}} sādhayat\edtext{}{\lemma{sādhayat}\Bfootnote{\begin{sanskrit}°yet\end{sanskrit} \cite{jāni-T}}} | bādhakam etasyā\edtext{}{\lemma{etasyā}\Bfootnote{\begin{sanskrit}eva tasyā\end{sanskrit} \cite{jāni-I}}} ityakāmenā{\tiny $_{lb}$}pi\edtext{}{\lemma{pi}\Bfootnote{\begin{sanskrit}°nāpi tu\end{sanskrit} \cite{jāni-I}}} kumārilenābhyupetavyam | na\edtext{}{\lemma{na}\Bfootnote{\begin{sanskrit}na ca\end{sanskrit} \cite{jāni-I}}} śakyaṃ vaktuṃ sāmānyam eva{\tiny $_{lb}$} kevalaṃ tayā viṣayīkriyata iti [|] tathābhāve\edtext{}{\lemma{tathābhāve}\Bfootnote{\begin{sanskrit}tathā\end{sanskrit} \cite{jāni-I}}} hi tad evedaṃ{\tiny $_{lb}$} jvālātvam\edtext{}{\lemma{jvālātvam}\Bfootnote{\begin{sanskrit}buddhijvā°\end{sanskrit} \cite{jāni-T}}} iti syāt na saivaṃ jvāleti |{\tiny $_{lb}$} tasmān nānaikāntiko hetur ity alaṃ bahubhāṣitayeti\edtext{}{\lemma{bahubhāṣitayeti}\Bfootnote{\begin{sanskrit}bahupralāpatayā\end{sanskrit} \cite{jāni-I}}} |
+	{\color{gray}{\rmlatinfont\textsuperscript{§~\theparCount}}}
+	\pend% ending standard par
+      {\tiny $_{lb}$}
+		
+		\pstart
+		\begin{center}
+	      jātinirākṛtir iyaṃ jitāripādānām\footnote{\begin{english}\begin{sanskrit}jitāripādānāṃ kṛtir jātinirākṛtis samāptā\end{sanskrit} || \cite{jāni-I}\end{english}} ||
+		\end{center}
+		\pend
+		
+	      
+	    
+	    \endnumbering% ending numbering from div
+	    
+	  % running endDocumentHook
+     \backmatter 
+	 \chapter{The TEI Header}
+	 \begin{minted}[fontfamily=rmfamily,fontsize=\footnotesize,breaklines=true]{xml}
+       <teiHeader xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
+   <fileDesc>
+      <titleStmt>
+         <title>Jātinirākṛti</title>
+         <author>Jitāri</author>
+         <funder>Deutsche Forschungsgemeinschaft</funder>
+         <funder>The National Endowment for the Humanities</funder>
+         <principal>
+	           <persName>Birgit Kellner</persName>
+	        </principal>
+         <respStmt>
+            <resp>data entry by</resp>
+            <name key="aurorachana">Aurorachana, Auroville</name>
+         </respStmt>
+         <respStmt xml:id="sarit-encoder-jāni">
+            <resp>prepared for SARIT by</resp>
+            <persName>Liudmila Olalde</persName>
+         </respStmt>
+      </titleStmt>
+      <editionStmt>
+         <p> </p>
+      </editionStmt>
+      <publicationStmt>
+         <publisher>SARIT: Search and Retrieval of Indic Texts. DFG/NEH Project (NEH-No.
+	HG5004113), 2013-2017 </publisher>
+         <availability status="restricted">
+            <p>Copyright Notice:</p>
+            <p>Copyright 2016 SARIT</p>
+            <licence> 
+	              <p>Distributed under a <ref target="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International licence.</ref> Under this licence, you are free to:</p>
+	              <list>
+                  <item>Share — copy and redistribute the material in any medium or format.</item>
+                  <item>Adapt — remix, transform, and build upon the material for any purpose, even commercially.</item>
+               </list>
+	              <p>The licensor cannot revoke these freedoms as long as you follow the license terms.</p>
+	              <p>Under the following terms:</p>
+	              <list>
+                  <item>Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</item>
+                  <item>ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</item>
+               </list>
+	              <p>More information and fuller details of this license are given on the Creative Commons website.</p>
+	           </licence>
+            <p>SARIT assumes no responsibility for unauthorised use that infringes the
+	  rights of any copyright owners, known or unknown.</p>
+         </availability>
+         <date>2016</date>
+      </publicationStmt>
+      <sourceDesc>
+         <biblStruct xml:id="jāni-buehnemann-1982">
+            <analytic>
+               <title level="a">Jātinirākṛti</title>
+               <author>Jitāri</author>
+            </analytic>
+            <monogr>
+               <title level="m">Jitāri: Kleine Texte</title>
+               <author>Jitāri</author>
+               <editor xml:id="jāni-bue">
+                  <forename>Gudrun</forename> 
+                  <surname>Bühnemann</surname>
+               </editor>
+               <imprint>
+                  <publisher>Arbeitskreis für tibetische und buddhisitsche Studien Universität Wien</publisher>
+                  <pubPlace>Wien</pubPlace>
+                  <date>1982</date>
+                  <biblScope unit="pp">30-38</biblScope>
+               </imprint>
+            </monogr>
+            <series>
+	              <title level="s">Wiener Studien zur Tibetologie und Buddhismskunde</title>
+	              <biblScope unit="heft">8</biblScope>
+	           </series>
+            <note>
+               <title>Kleine Texte</title> is an edition of: <title>Vedāprāmāṇyasiddhi</title>, <title>Sarvajñasiddhi</title>, <title>Nairātmyasiddhi</title>, <title>Jātinirākṛti</title>, and <title>*Īśvaravādimataparīkṣa</title>. Bühneman's edition is based on the manuscript described below.</note>
+         </biblStruct>
+         <listWit>
+            <witness xml:id="jāni-ms">
+	              <msDesc>
+                  <msIdentifier>
+                     <settlement>Patna</settlement>
+                     <repository>Bihar Research Society</repository>
+                     <idno>Glass plate negatives IA, IB, IIA, and  IIB.</idno>
+                     <altIdentifier>
+                        <idno/>
+                        <note>See manuscript description in <bibl>JBORS 21. 1935, pt. I, 41. No. 33(2) 158</bibl>; <bibl>JBORS 23. 1937, pt. I, 55, No. 27</bibl>.</note>
+                     </altIdentifier>
+                  </msIdentifier>
+                  <msContents>
+                     <msItem n="1">
+                        <author>Jitāri</author>
+                        <title>Apohasiddhi</title>
+                     </msItem>
+                     <msItem n="2">
+                        <author>Jitāri</author>
+                        <title>Kṣaṇajabhaṅga</title>
+                     </msItem>
+                     <msItem n="3">
+                        <author>Jitāri</author>
+                        <title>Śrutikartṛsiddhi</title>
+                     </msItem>
+                     <msItem n="4">
+                        <locus>IB.1.14; IA.1.14; IB.2.10; IA.2.10; IB.2.11; IA.2.11; IB.2.13; IA.2.13</locus>
+                        <author>Jitāri</author>
+                        <title>Vedāprāmāṇyasiddhi</title>
+                     </msItem>
+                     <msItem n="5">
+                        <locus>IA.2.13 (Fol. Nr. 23a); IB.2.14 (Fol. Nr. 24b); IA.2.14; IB.2.15 (Fol. Nr. 25)</locus>
+                        <note>one folio is missing (23b und 24a)</note>
+                        <author>Jitāri</author>
+                        <title>Sarvajñasiddhi</title>
+                     </msItem>
+                     <msItem n="6">
+                        <author>Jitāri</author>
+                        <title>Vyāpakānupalambha</title>
+                     </msItem>
+                     <msItem n="7">
+                        <locus>IB.2.7; IA.2.7</locus>
+                        <author>Jitāri</author>
+                        <title>Nairātmyasiddhi</title>
+                     </msItem>
+                     <msItem n="8">
+                        <locus>IB.2.9; IA.2.9; IIB.4; IIA.4; IIB.5; IIA.5; IIB.7; IIA.7; IIB.8; IIA.8.</locus>
+                        <author>Jitāri</author>
+                        <title>Jātinirākṛti</title>
+                     </msItem>
+                     <msItem n="9">
+                        <locus>IIB.9; IIA.9; IIB.6; IIA.6; IIB.11; IIA.11; IIB.10; IIA.10; IIB.12; IIA.12</locus>
+                        <author>Jitāri</author>
+                        <title>*Īśvaravādimataparīkṣa</title>
+                     </msItem>
+                     <msItem n="10">
+                        <locus>IIA.13</locus>
+                        <title/>
+                        <note>Not identified.</note>
+                     </msItem>
+                  </msContents>
+                  <physDesc>
+                     <objectDesc>
+                        <p>
+                           <note>This is the description given by Bühnemann in the introduction (in German) to the her <ref target="#jāni-buehnemann-1982">1982 edition</ref>, pp. 8-9.</note>Low quality photographs of the manuscript, which is therefore difficult to read. Only parts of the manuscript were photographed; the beginning and the end are missing, as well as  other folios. The preserved folios are not arranged in order. The numbers given on the margin seem not to correspond to the reconstructed sequence of the folios (for this reason Bühneman did not reproduced them in her edition). The script is Proto-Maithili. The manuscript has several mistakes.</p>
+                        <p>The references to the folios are by number of the glass plate, column, and folio number (counting from the top to the bottom), e.g. IA.2.13 = glass plate IA, colum 2, folio 13.</p>
+                     </objectDesc>
+                  </physDesc>
+                  <history>
+                     <p>Rāhula Sāṅkṛtyāyana took pictures of the manuscripts in Tibet <note>Cf. Bühneman's introduction to her <ref target="#jāni-buehnemann-1982">1982 edition</ref>, pp. 8-9</note>.</p>
+                  </history>
+               </msDesc>
+	           </witness>
+            <witness xml:id="jāni-T">
+	              <biblStruct sameAs="http://east.uni-hd.de/buddh/ind/26/75/566/">
+                  <analytic>
+                     <author>Giuseppe Tucci</author>
+                     <title level="a">Jātinirākṛti of Jitāri</title>
+                  </analytic>
+                  <monogr>
+                     <title level="j">Annals of the Bhandarkar Oriental Research Institute</title>
+                     <imprint>
+                        <biblScope unit="vol">11</biblScope>
+                        <biblScope unit="pp">54-58</biblScope>
+                        <date>1930</date>
+                     </imprint>
+                  </monogr>
+               </biblStruct>
+	           </witness>
+            <witness xml:id="jāni-I">
+	              <biblStruct sameAs="http://east.uni-hd.de/buddh/ind/26/75/570/">
+                  <monogr>
+                     <author>H. R. Rangaswamy Iyengar</author>
+                     <title>Tarkabhāṣa and Vādasthāna of Mokṣākaragupta and Jitāripāda</title>
+                     <imprint>
+                        <publisher>Hindusthan Press</publisher>
+                        <pubPlace>Mysore</pubPlace>
+                        <date>1952</date>
+                        <biblScope unit="pp">72-80</biblScope>
+                        <note>2nd edition; 1st edition 1944</note>
+                     </imprint>
+                  </monogr>
+               </biblStruct>
+	           </witness>
+         </listWit>
+      </sourceDesc>
+   </fileDesc>
+   <encodingDesc>
+      <p>
+         <list>
+            <item>Line brakes: In the source file, there were two types of line breaks: returns (and possible surrounding space) and hyphens+returns. These were replaced with lb-elements. The ed-attribute "gb" refers to Bühnemann's <ref target="#jāni-buehnemann-1982">1982 edition</ref>.</item>
+            <item>The glass plate numbers were encoded as pb-elements with the edRef-attribute "#jāni-ms".</item>
+            <item>The corresponding page an line number in <ref target="#jāni-T">Tucci</ref>'s and <ref target="#jāni-I">Iyengar</ref>'s editions were encoded as pb-elements with the edRef-attribute "#jāni-T" and "#jāni-I" respectively.</item>
+            <item>The variant readings in the footnotes were enclosed in a <tag>q type="variant"</tag>.</item>
+            <item>References were enclosed in a ref-element.</item>
+            <item>Square brackets were encoded as <tag>surplus</tag>. This follows <ref target="#jāni-buehnemann-1982">Bühnemann 1982</ref> p. 48: <q xml:lang="de">[ ] auszulassen</q>.</item>
+            <item>Angle brackets were encoded as <tag>supplied</tag>. This 	follows <ref target="#jāni-buehnemann-1982">Bühnemann 1982</ref> p. 48: <q xml:lang="de">&lt; &gt; zu ergänzen</q>.</item>
+            <item>The footnotes were encoded as note-elements with their corresponding n-attribute. The footnote references were replaced with the corresponding note. Line brakes in the notes have been removed</item>
+         </list>
+      </p>
+      <p>Abbreviations used in the cRef-attributes in this file. The editions are those consulted by Bühnemann:
+      <list ana="abbreviations">
+            <item>āmī = <bibl>
+                  <title>Āptamīmāṃsā</title> by <author>Samantabhadra</author>, ed. <editor>Gajādharalāl Jaina</editor>. <pubPlace>Benares</pubPlace> 
+                  <date>1914</date>.</bibl>
+            </item>
+            <item>nsū = Nyāyasūtra. <bibl>
+                  <title>Nyāyadarśana. The Sūtras of Gotama and Bhāṣya of Vātsyāyana</title>. 2nd. ed. by <editor>Ḍhuṇḍhirāja Shāstrī</editor>. <pubPlace>Benares</pubPlace> 
+                  <date>1970</date>
+               </bibl>.</item>
+            <item>nv = Nyāyavārttika: <bibl>
+                  <title>Nyāyadarśana-Vātsyāyana-bhāṣyopabṛṃhaṇam. pararṣibhāradvāj-Oddyotakara-viracitam</title>. <editor>V. P. Dvivedin</editor>. <pubPlace>Benares</pubPlace> 
+                  <date>1916</date>.</bibl>
+            </item>
+            <item>śv = <bibl>
+                  <title>Ślokavārttika of Śrī Kumārila Bhaṭṭa. With the Commentary Nyāyaratnākara of Śrī Pārthasārathi Miśra</title>, ed. and rev. by <editor>Swāmī Dvārikādāsa Śāstrī</editor>. <pubPlace>Benares</pubPlace>. <date>1978</date>
+               </bibl>. Chapters:
+	<list>
+                  <item>śv-ākṛti = Ślokavārttika Ākṛtivāda </item>
+                  <item>śv-śūnya = Ślokavārttika Śūnyavāda</item>
+               </list>
+            </item>
+         </list>
+      </p>
+   </encodingDesc>
+   <profileDesc><!-- ... --></profileDesc>
+   <revisionDesc>
+      <change/>
+   </revisionDesc>
+</teiHeader>
+	 \end{minted}
+       
+      \clearpage
+      \begin{english}
+      \printshorthands
+      \printbibliography
+      \end{english}
+    
+\end{document}
