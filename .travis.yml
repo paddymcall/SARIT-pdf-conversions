@@ -15,10 +15,10 @@ before_install:
   # install tex, see https://github.com/scottkosty/install-tl-ubuntu/
   # - wget https://github.com/paddymcall/install-tl-ubuntu/raw/master/install-tl-ubuntu && chmod +x ./install-tl-ubuntu
   # - wget http://ctan.mirror.rafal.ca/systems/texlive/Images/texlive.iso
-  - wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+  - wget ftp://tug.org/historic/systems/texlive/2015/tlnet-final/install-tl.zip
   - tar zxf install-tl-unx.tar.gz
   - cd ./install-tl-20160405/
-  - ./install-tl -profile ../.texlive.profile
+  - ./install-tl -repository ftp://tug.org/historic/systems/texlive/2015/tlnet-final/ -profile ../.texlive.profile
   - tlmgr install `cat ../.texlive.packages`
   - cd ..
   # - cat /etc/environment
