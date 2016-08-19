@@ -32,11 +32,11 @@ script:
   - for i in `ls *tex`; do echo "biber \"`basename $i .tex`\""; done > /tmp/bib.txt
   - cat /tmp/tex.txt
   - cat /tmp/bib.txt
-  - parallel < /tmp/tex.txt >> general.log 2>&1
-  - parallel < /tmp/bib.txt >> general.log 2>&1
-  - parallel < /tmp/tex.txt >> general.log 2>&1
-  - parallel < /tmp/bib.txt >> general.log 2>&1
-  - parallel < /tmp/tex.txt >> general.log 2>&1
+  - parallel < /tmp/tex.txt 
+  - parallel < /tmp/bib.txt 
+  - parallel < /tmp/tex.txt 
+  - parallel < /tmp/bib.txt 
+  - parallel < /tmp/tex.txt 
 
 after_script:
   # - echo "PDF stats:"
