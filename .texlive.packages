@@ -2,7 +2,6 @@ bigfoot
 cleveref
 csquotes
 ctable
-euenc
 eulervm
 fancyvrb
 float
@@ -15,7 +14,6 @@ memoir
 minted
 ms
 reledmac
-rotating
 snapshot
 ulem
 xargs
