@@ -30,6 +30,8 @@ script:
   # - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
   - for i in `ls *tex`; do echo "xelatex -interaction=batchmode -8bit -shell-escape \"$i\""; done > /tmp/tex.txt
   - for i in `ls *tex`; do echo "biber \"`basename $i .tex`\""; done > /tmp/bib.txt
+  - cat /tmp/tex.txt
+  - cat /tmp/bib.txt
   - parallel < /tmp/tex.txt >> general.log 2>&1
   - parallel < /tmp/bib.txt >> general.log 2>&1
   - parallel < /tmp/tex.txt >> general.log 2>&1
