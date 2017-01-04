@@ -17,7 +17,7 @@ before_install:
   # - wget http://ctan.mirror.rafal.ca/systems/texlive/Images/texlive.iso
   - wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   - tar zxf install-tl-unx.tar.gz
-  - cd ./install-tl-20160405/
+  - cd ./install-tl-*
   - ./install-tl -profile ../.texlive.profile
   - tlmgr install `cat ../.texlive.packages`
   - cd ..
@@ -30,11 +30,13 @@ script:
   # - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
   - for i in `ls *tex`; do echo "xelatex -interaction=batchmode -8bit -shell-escape \"$i\""; done > /tmp/tex.txt
   - for i in `ls *tex`; do echo "biber \"`basename $i .tex`\""; done > /tmp/bib.txt
-  - parallel < /tmp/tex.txt >> general.log 2>&1
-  - parallel < /tmp/bib.txt >> general.log 2>&1
-  - parallel < /tmp/tex.txt >> general.log 2>&1
-  - parallel < /tmp/bib.txt >> general.log 2>&1
-  - parallel < /tmp/tex.txt >> general.log 2>&1
+  - cat /tmp/tex.txt
+  - cat /tmp/bib.txt
+  - parallel < /tmp/tex.txt 
+  - parallel < /tmp/bib.txt 
+  - parallel < /tmp/tex.txt 
+  - parallel < /tmp/bib.txt 
+  - parallel < /tmp/tex.txt 
 
 after_script:
   # - echo "PDF stats:"
@@ -43,6 +45,8 @@ after_script:
   - tail -n 40 ./*log
   - echo "Erorrs in log files (if > 2 problematic):"
   - rgrep -c -i error ./*log
+  - echo "Erorrs in log files with context:"
+  - rgrep -C 4 -i error ./*log
 
 
   
