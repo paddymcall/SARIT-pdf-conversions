@@ -32,36 +32,45 @@ information on the following points:
 
 The more infos you give, the better.
 
-** Devanagari fonts
+* Devanagari fonts
 
-A *very* incomplete list:
+A *very* incomplete list, with some subjective evaluations:
 
 1) Chandas/Uttara (http://www.sanskritweb.net/cakram/)
    1) Many ligatures
    2) Poor ratio of arabic numerals to Devanagari chars
    3) No bold/italic
    4) GPL licensed
-2) Sanskrit 2003
+2) Shobhika
+   1) two weights—regular and bold; over 1600 Devanagari glyphs; also
+      Vedic accents
+   2) https://github.com/Sandhi-IITBombay/Shobhika
+   3) See http://list.indology.info/pipermail/indology_list.indology.info/2016-November/044671.html
+3) Sanskrit 2003
    1) Many ligatures
-   2) Good ratio
+   2) Good ratio Latin <-> Devanagari sizes
    3) License unclear
-3) Annapurna SIL
-   1) Good ratio of Latin numerals to Devanagari letters
+4) Annapurna SIL
+   1) Good ratio of Latin to Devanagari letters
    2) Ligatures not so great (ddhya?)
    3) Real bold
-4) Sahadeva & Nakula
+5) Sahadeva & Nakula
    1) No bold italic
    2) Good ligature coverage
-5) Samyak
+6) Samyak
    1) Not too many ligatures
    2) No bold/italic
-6) Lohit Devanagari
+7) Lohit Devanagari
    1) Missing ligatures (ddhya, e.g.)
    2) No bold/italic
+8) Noto Serif/Sans Devanagari
+   1) SIL Open Font License, Version 1.1
+   2) http://www.google.com/get/noto/#sans-deva
+   3) http://www.google.com/get/noto/#serif-deva
 
 
 
-*** See also
+** See also
 
 1) https://bhusunda.wordpress.com/2015/11/09/comparison-of-devanagari-fonts-on-os-x-using-the-807-documented-ligatures-of-classical-sanskrit-according-to-the-research-of-ulrich-stiehl/
    1) links to: https://spideroak.com/share/MJUHK43VNZSGC/stuff/Users/det/SpiderOak%20Hive/SpiderShare/Sanskrit6.numbers.pdf
