@@ -47,10 +47,12 @@ XDIR=$(dirname "${CORPUS}")
 
 cd "$XDIR"
 
-echo "Calling xmlstarlet"
+echo "Converting to TeX, log will be written to ${OUTDIR}/conversion.log"
 
 xmlstarlet sel -N xi='http://www.w3.org/2001/XInclude' -t -v '//xi:include/@href'  "${CORPUS}" | \
-    parallel --gnu -q --jobs -1 "${CONVERSIONSCRIPT}" "{}" "${OUTDIR}"
+    parallel --gnu -q --jobs -1 "${CONVERSIONSCRIPT}" "{}" "${OUTDIR}" > "${OUTDIR}"/conversion.log 2>&1
+
+echo "Finished conversion to TeX, log can be found in ${OUTDIR}/conversion.log"
 
 cd "${OUTDIR}"
 
