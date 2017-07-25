@@ -21,32 +21,21 @@ before_install:
   - ./install-tl -profile ../.texlive.profile
   - tlmgr install `cat ../.texlive.packages`
   - cd ..
+  - mkdir ~/test-build
   # - cat /etc/environment
 
 script:
-  - for i in `find ./TeX/ -type f -iname "*.tex"  -printf '%f\n' |  sed 's/tex$/xml/'`; do echo "./bin/convert_sarit_to_tex.sh \"./SARIT-corpus/$i\""; done > /tmp/conv.txt
-  - parallel < /tmp/conv.txt > /dev/null 2>&1
-  - cd ./TeX
-  # - sed -i '0,/%%\\syntaxonly/{s/%%\\syntaxonly/\\syntaxonly/}' ./*tex
-  - for i in `ls *tex`; do echo "xelatex -interaction=batchmode -8bit -shell-escape \"$i\""; done > /tmp/tex.txt
-  - for i in `ls *tex`; do echo "biber \"`basename $i .tex`\""; done > /tmp/bib.txt
-  - cat /tmp/tex.txt
-  - cat /tmp/bib.txt
-  - parallel < /tmp/tex.txt 
-  - parallel < /tmp/bib.txt 
-  - parallel < /tmp/tex.txt 
-  - parallel < /tmp/bib.txt 
-  - parallel < /tmp/tex.txt 
+  - ./bin/build_all.sh SARIT-corpus/saritcorpus.xml ~/test-build
 
 after_script:
   # - echo "PDF stats:"
   # - for i in `ls ./*pdf`; do echo "==== For $i"; pdfinfo "$i"; done
   - echo "Last 40 lines of log files:"
-  - tail -n 40 ./*log
+  - tail -n 40 ~/test-build/*log
   - echo "Erorrs in log files (if > 2 problematic):"
-  - rgrep -c -i error ./*log
+  - rgrep -c -i error ~/test-build/*log
   - echo "Erorrs in log files with context:"
-  - rgrep -C 4 -i error ./*log
+  - rgrep -C 4 -i error ~/test-build/*log
 
 
   
