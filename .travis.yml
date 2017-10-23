@@ -25,7 +25,7 @@ before_install:
   # - cat /etc/environment
 
 script:
-  - ./bin/build_all.sh SARIT-corpus/saritcorpus.xml ~/test-build
+  - travis_wait 59 ./bin/build_all.sh SARIT-corpus/saritcorpus.xml ~/test-build
 
 after_script:
   # - echo "PDF stats:"
