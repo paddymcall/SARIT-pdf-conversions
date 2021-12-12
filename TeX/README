@@ -1,0 +1,26 @@
+# -*- org -*-
+
+
+This directory contains the ConTeXt project for SARIT.  The layout is
+as follows (following [[https://wiki.contextgarden.net/Project_structure#File_and_directory_setup][contextgarden]] and [[http://www.pragma-ade.nl/general/magazines/mag-1101.pdf][Hagen 2011]]):
+
+1) *Project:* the “project” is a set of PDFs, usually one per text
+   file in the SARIT-corpus.  The project is defined by a given
+   revision of the texts in the SARIT-corpus and a given revision of
+   the software that transforms it to the set of PDFs.  The files that
+   (for ConTeXt) define the layout and content of this project are:
+   - [[./project_sarit.tex]] (lists the products,
+   - [[./env_sarit.tex]]
+2) *Book* (“product” in ConTeXt): think of this as the wrapping or
+   packaging around each single volume that makes up SARIT’s
+   collection.  Typically, such a book will be a PDF file generated
+   for an XML document at a given revision SARIT’s collection of
+   texts, and will result in a ConTeXt file in the [[./books/]] directory
+   prefixed with ~p_~.  This file acts as a container for the actual
+   content, and sets up the content within the overall project.  E.g.:
+   - [[./books/p_jitari-vedapramanyasiddhi.tex]]
+3) *Content* (“component” in ConTeXt): a part or chapter of one
+   “book”.  In SARIT’s case, this will be usually be the whole content
+   in a single file, prefixed with ~c_~.  E.g.,
+   - [[./books/c_jitari-vedapramanyasiddhi.tex]]
+
