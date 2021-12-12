@@ -1,0 +1,13 @@
+\startenvironment env_sarit
+\project project_sarit
+
+% where \product and \component look for TeX input files
+\usepath[{books}]
+
+% where to look for images
+\setupexternalfigures[directory={./images}]
+% \doifmodeelse{*product}
+%  {\setupexternalfigures[directory={./images}]}
+%  {\setupexternalfigures[directory={../general_img, img}]}
+
+\stopenvironment

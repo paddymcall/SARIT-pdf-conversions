@@ -1,2 +1,7 @@
-TeX
 *~
+*.log
+*.tuc
+TeX/context/
+TeX/auto/
+TeX/books/
+
